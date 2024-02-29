@@ -30,17 +30,10 @@
         app:layout_constraintVertical_bias="1.0"
         />
 
+    <include layout="@layout/global_top_appbar"/>
 
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView2"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Welcome insert_username_string"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
