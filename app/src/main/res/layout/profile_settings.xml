@@ -85,9 +85,11 @@
             android:layout_height="wrap_content"
             android:text="Notifications    "
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/geolocation_toggle"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/geolocation_toggle"
@@ -95,9 +97,11 @@
             android:layout_height="wrap_content"
             android:text="Geolocation    "
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/push_notifications_toggle" />
+            app:layout_constraintStart_toEndOf="@+id/push_notifications_toggle"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -105,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/logout_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
