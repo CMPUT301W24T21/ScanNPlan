@@ -1,21 +1,22 @@
 package com.example.project_3;
 
+import android.graphics.drawable.Icon;
 import android.media.Image;
 
 public class Profile {
-    private Image profile_picture;
+    private Icon profile_picture;
     private String name;
     private String contact_info;
     private String social_link;
 
-    public Profile(Image image, String name, String contact_info, String social_link){
+    public Profile(Icon image, String name, String contact_info, String social_link){
         this.profile_picture = image;
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;
     }
 
-    public void setProfilePicture(Image profile_picture) {
+    public void setProfilePicture(Icon profile_picture) {
         this.profile_picture = profile_picture;
     }
 
@@ -31,7 +32,7 @@ public class Profile {
         this.social_link = social_link;
     }
 
-    public Image getProfilePicture(){
+    public Icon getProfilePicture(){
         return this.profile_picture;
     }
     public String getName(){
