@@ -22,47 +22,62 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_date"
+        style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_time"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_poster" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_time"
+        style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
-        style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_location"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_date" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_location"
+        style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_details"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_time" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_details"
+        style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Details"
-        style="@style/TextAppearance.Material3.DisplaySmall"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/register_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_location" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_button"
+        android:text="Register"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_details" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
