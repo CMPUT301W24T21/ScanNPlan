@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/profiles_list_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="Profile Image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    </ImageView>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profiles_list_username"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:text="@string/username"
+        android:textAlignment="center"
+        android:gravity="center"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        app:layout_constraintStart_toEndOf="@+id/profiles_list_image"
+        app:layout_constraintTop_toTopOf="parent">
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/delete"
+        app:layout_constraintLeft_toRightOf="@id/profiles_list_username"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.button.MaterialButton>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
