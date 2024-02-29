@@ -10,46 +10,29 @@
         layout="@layout/global_top_appbar" />
 
     <ImageView
-        android:id="@+id/event_poster"
+        android:id="@+id/profile_image"
         android:layout_width="284dp"
         android:layout_height="231dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_name_editText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/upload_new_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload\nNew"
-        app:layout_constraintBottom_toBottomOf="@+id/event_poster"
-        app:layout_constraintStart_toStartOf="@+id/event_poster" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/delete_photo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="@+id/event_poster"
-        app:layout_constraintEnd_toEndOf="@+id/event_poster" />
-
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profile_name_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        style="@style/TextAppearance.Material3.DisplayMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile name"
         app:layout_constraintBottom_toTopOf="@+id/homepage_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_poster" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/homepage_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        style="@style/TextAppearance.Material3.DisplayMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Homepage"
@@ -58,72 +41,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_editText" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/contact_info_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        style="@style/TextAppearance.Material3.DisplayMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact info"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/delete_profile_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homepage_editText" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/save_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_info_editText">
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/push_notifications_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notifications    "
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/geolocation_toggle"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/geolocation_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Geolocation    "
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/push_notifications_toggle"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_button"
+        android:id="@+id/delete_profile_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Delete Profile"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/logout_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logout_button"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_button" />
+        app:layout_constraintTop_toBottomOf="@+id/contact_info_editText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
