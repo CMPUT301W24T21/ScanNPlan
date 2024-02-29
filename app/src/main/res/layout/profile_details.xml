@@ -10,7 +10,7 @@
         layout="@layout/global_top_appbar" />
 
     <ImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/event_poster"
         android:layout_width="284dp"
         android:layout_height="231dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_name_editText"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/homepage_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+        app:layout_constraintTop_toBottomOf="@+id/event_poster" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/homepage_editText"
