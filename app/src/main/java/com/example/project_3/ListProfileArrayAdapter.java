@@ -29,15 +29,18 @@ public class ListProfileArrayAdapter extends ArrayAdapter<Profile> {
         if (convertview == null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.profiles_list_content, parent, false);
         }
-        else{
+        else {
             view = convertview;
         }
+        // update view with the profile at the position
         Profile profile = getItem(position);
         ImageView image = view.findViewById(R.id.profiles_list_image);
         MaterialTextView username = view.findViewById(R.id.profiles_list_username);
-        MaterialButton back = view.findViewById(R.id.back_button_profiles);
         assert profile != null;
+        //code yet to be finished for back button
+        MaterialButton back = view.findViewById(R.id.delete_button_profiles_list);
         image.setImageIcon(profile.getProfilePicture());
+
         username.setText(profile.getName());
         return view;
     }
