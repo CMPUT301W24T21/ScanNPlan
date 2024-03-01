@@ -4,7 +4,24 @@
             "outputFile": "com.example.project_3.app-mergeDebugResources-29:/values-mn/values-mn.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\cae0069d1585611eb98b1d4f16fa8d6e\\transformed\\appcompat-1.6.1\\res\\values-mn\\values-mn.xml",
+                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\16088aea6844a21f0ae8707202a192eb\\transformed\\core-1.9.0\\res\\values-mn\\values-mn.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "102",
+                        "startColumns": "4",
+                        "startOffsets": "8570",
+                        "endColumns": "100",
+                        "endOffsets": "8666"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\b1741c2033ae6eec819ff5ea06ca1704\\transformed\\appcompat-1.6.1\\res\\values-mn\\values-mn.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\0b1b1a158da0668ca4bdcd3e34d70499\\transformed\\material-1.11.0\\res\\values-mn\\values-mn.xml",
+                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\7bf998f9f4bdd84f156fbe08c4253964\\transformed\\material-1.11.0\\res\\values-mn\\values-mn.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -37,23 +54,6 @@
                         "endLines": "5,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100",
                         "endColumns": "12,78,76,78,86,84,97,118,84,64,97,80,58,92,61,62,57,70,61,53,120,56,60,53,70,132,83,82,132,81,77,131,89,79,53,50,65,70,77,85,78,74,77,79,82,104,87,78,89,92,73,69,90,53,79,66,83,84,61,63,62,70,103,114,96,113,57,54,83",
                         "endOffsets": "310,3081,3158,3237,3324,3409,3507,3626,3711,3776,3874,3955,4014,4107,4169,4232,4290,4361,4423,4477,4598,4655,4716,4770,4841,4974,5058,5141,5274,5356,5434,5566,5656,5736,5790,5841,5907,5978,6056,6142,6221,6296,6374,6454,6537,6642,6730,6809,6899,6992,7066,7136,7227,7281,7361,7428,7512,7597,7659,7723,7786,7857,7961,8076,8173,8287,8345,8400,8484"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\87f22283ee55c8414d476f8251d5c8dc\\transformed\\core-1.9.0\\res\\values-mn\\values-mn.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "102",
-                        "startColumns": "4",
-                        "startOffsets": "8570",
-                        "endColumns": "100",
-                        "endOffsets": "8666"
                     }
                 }
             ]

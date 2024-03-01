@@ -3,7 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Project_3</string>
-    <style name="Base.Theme.Project_3" parent="Theme.Material3.DayNight.NoActionBar">
+    <string name="delete">Delete</string>
+    <string name="username">Username</string>
+    <style name="Base.Theme.Project_3" parent="Theme.Material3.Dark">
         
         
     </style>

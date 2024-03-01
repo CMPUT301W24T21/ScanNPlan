@@ -32,8 +32,16 @@
         "source": "com.example.project_3.app-main-33:/xml/backup_rules.xml"
     },
     {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_global_top_appbar.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/global_top_appbar.xml"
+    },
+    {
         "merged": "com.example.project_3.app-merged_res-31:/mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "com.example.project_3.app-main-33:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_login_page.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/login_page.xml"
     },
     {
         "merged": "com.example.project_3.app-merged_res-31:/mipmap-xxhdpi_ic_launcher.webp.flat",
@@ -48,6 +56,14 @@
         "source": "com.example.project_3.app-main-33:/mipmap-hdpi/ic_launcher.webp"
     },
     {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_registered_event_details.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/registered_event_details.xml"
+    },
+    {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_profiles_list_content.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/profiles_list_content.xml"
+    },
+    {
         "merged": "com.example.project_3.app-merged_res-31:/drawable_ic_launcher_foreground.xml.flat",
         "source": "com.example.project_3.app-main-33:/drawable/ic_launcher_foreground.xml"
     },
@@ -60,11 +76,19 @@
         "source": "com.example.project_3.app-main-33:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_admin_profiles.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/admin_profiles.xml"
+    },
+    {
         "merged": "com.example.project_3.app-merged_res-31:/drawable_ic_launcher_background.xml.flat",
         "source": "com.example.project_3.app-main-33:/drawable/ic_launcher_background.xml"
     },
     {
         "merged": "com.example.project_3.app-merged_res-31:/mipmap-mdpi_ic_launcher.webp.flat",
         "source": "com.example.project_3.app-main-33:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_event_page_list.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/event_page_list.xml"
     }
 ]
