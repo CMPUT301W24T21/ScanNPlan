@@ -1,9 +1,11 @@
-package com.example.project_3;
-
+package com.example.project_3.event_stuff;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,6 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.project_3.R;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@SuppressWarnings("deprecation")
 public class AddEventFragment extends DialogFragment {
     private AddEventDialogListener listener;
     private Event editEvent;
@@ -49,12 +62,15 @@ public class AddEventFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_add_event, null);
+        // initializing editable text and check-boxes
         EditText editEventName = view.findViewById(R.id.editTextEventText);
         CheckBox checkBoxPromoEvent = view.findViewById(R.id.checkBoxPromoEvent);
+        CheckBox checkBoxReuseEvent = view.findViewById(R.id.checkBoxReuseEvent);
 
         if (editEvent != null){
             editEventName.setText(editEvent.getName());
             checkBoxPromoEvent.setChecked(editEvent.isPromoEvent());
+            checkBoxReuseEvent.setChecked(editEvent.isReuseEvent());
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -71,6 +87,7 @@ public class AddEventFragment extends DialogFragment {
                 .setPositiveButton("Add", (dialog, which) -> {
                     String eventName = editEventName.getText().toString();
                     boolean isPromoEvent = checkBoxPromoEvent.isChecked();
+                    boolean isReuseEvent = checkBoxReuseEvent.isChecked();
 
                     if(eventName.isEmpty()){
                         Toast.makeText(getContext(), "No Event Added", Toast.LENGTH_SHORT).show();
@@ -80,34 +97,43 @@ public class AddEventFragment extends DialogFragment {
                     if(editEvent != null){
                         editEvent.setName(eventName);
                         editEvent.setPromoEvent(isPromoEvent);
+                        editEvent.setReuseEvent(isReuseEvent);
+                        editEvent.setQrCode(QRCodeGenerator.generateQRCode(eventName));
                         listener.editEvent(editEvent);
                     } else {
-                        listener.addEvent(new Event(eventName, isPromoEvent));
+                        listener.addEvent(new Event(eventName, isPromoEvent, isReuseEvent));
                     }
                 })
                 .create();
     }
+}
 
-//
-//    // OpenAI, 2024, ChatGPT, https://chat.openai.com/share/efb51df2-3c20-4d43-983c-8f66fa7a19f3
-//    // got this function below to implement typechecking on input for Author Name
-//    public class AlphaInputFilter implements InputFilter {
-//
-//        @Override
-//        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-//            // Iterate through each character in the input
-//            for (int i = start; i < end; i++) {
-//                char c = source.charAt(i);
-//                // Check if the character is not an alphabetic character or space
-//                if (!Character.isLetter(c) && c != ' ' && c != '.') {
-//                    // Return empty string to reject the character
-//                    return "";
-//                }
-//
-//            }
-//            // Accept the character
-//            return null;
-//        }
-//    }
+class QRCodeGenerator {
 
+    private static final int QR_CODE_SIZE = 512; // Change this value according to your requirement
+
+    public static Bitmap generateQRCode(String data) {
+        try {
+            // Encode the data into a QR Code
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            BitMatrix bitMatrix = new QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, QR_CODE_SIZE, QR_CODE_SIZE, hints);
+
+            // Create a bitmap from the BitMatrix
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap qrCodeBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+
+            // Fill the bitmap with the QR Code data
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    qrCodeBitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            return qrCodeBitmap;
+        } catch (WriterException e) {
+            Log.e("QRCodeGenerator", "Error generating QR Code", e);
+            return null;
+        }
+    }
 }

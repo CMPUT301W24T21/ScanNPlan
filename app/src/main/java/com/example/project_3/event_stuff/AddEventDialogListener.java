@@ -1,4 +1,4 @@
-package com.example.project_3;
+package com.example.project_3.event_stuff;
 
 public interface AddEventDialogListener {
     void addEvent(Event event);

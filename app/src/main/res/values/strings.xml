@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Project_3</string>
+    <string name="app_name">List of Events</string>
     <string name="username">Username</string>
     <string name="delete">Delete</string>
-    <string name="event_name">even name</string>
+    <string name="event_name">Event Name:</string>
     <string name="add_an_event">Add an Event</string>
-
 </resources>
