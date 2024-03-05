@@ -24,8 +24,22 @@
         android:padding="30dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/qr_button_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:contentDescription="@string/qr_event_press"
+        android:focusable="true"
+        android:padding="30dp"
+        app:srcCompat="@drawable/baseline_qr_code_24" />
+
     <TextView
-        android:id="@+id/text_no_events"
+        android:id="@+id/text_events"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

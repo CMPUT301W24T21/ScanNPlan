@@ -4,4 +4,5 @@
     <string name="delete">Delete</string>
     <string name="event_name">Event Name:</string>
     <string name="add_an_event">Add an Event</string>
+    <string name="qr_event_press">qr_event_pressable</string>
 </resources>

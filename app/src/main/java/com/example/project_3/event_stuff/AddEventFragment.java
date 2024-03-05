@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -67,6 +68,19 @@ public class AddEventFragment extends DialogFragment {
         CheckBox checkBoxPromoEvent = view.findViewById(R.id.checkBoxPromoEvent);
         CheckBox checkBoxReuseEvent = view.findViewById(R.id.checkBoxReuseEvent);
 
+        // buttons that appear once the PROMO checkbox has been checked
+        Button buttonPoster = view.findViewById(R.id.buttonPoster);
+        Button buttonLink = view.findViewById(R.id.buttonLink);
+        checkBoxPromoEvent.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                buttonPoster.setVisibility(View.VISIBLE);
+                buttonLink.setVisibility(View.VISIBLE);
+            } else {
+                buttonPoster.setVisibility(View.GONE);
+                buttonLink.setVisibility(View.GONE);
+            }
+        });
+
         if (editEvent != null){
             editEventName.setText(editEvent.getName());
             checkBoxPromoEvent.setChecked(editEvent.isPromoEvent());
@@ -109,9 +123,7 @@ public class AddEventFragment extends DialogFragment {
 }
 
 class QRCodeGenerator {
-
     private static final int QR_CODE_SIZE = 512; // Change this value according to your requirement
-
     public static Bitmap generateQRCode(String data) {
         try {
             // Encode the data into a QR Code
