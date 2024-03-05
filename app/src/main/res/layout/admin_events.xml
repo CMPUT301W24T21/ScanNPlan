@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/global_top_appbar"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/list_events_text"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="List of Events"
+        android:textSize="20sp">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <ListView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    </ListView>
+
+
+</LinearLayout>
