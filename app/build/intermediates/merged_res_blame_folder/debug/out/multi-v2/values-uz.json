@@ -4,7 +4,7 @@
             "outputFile": "com.example.project_3.app-mergeDebugResources-29:/values-uz/values-uz.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\b1741c2033ae6eec819ff5ea06ca1704\\transformed\\appcompat-1.6.1\\res\\values-uz\\values-uz.xml",
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\b1741c2033ae6eec819ff5ea06ca1704\\transformed\\appcompat-1.6.1\\res\\values-uz\\values-uz.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\7bf998f9f4bdd84f156fbe08c4253964\\transformed\\material-1.11.0\\res\\values-uz\\values-uz.xml",
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\16088aea6844a21f0ae8707202a192eb\\transformed\\core-1.9.0\\res\\values-uz\\values-uz.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "102",
+                        "startColumns": "4",
+                        "startOffsets": "8626",
+                        "endColumns": "100",
+                        "endOffsets": "8722"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\7bf998f9f4bdd84f156fbe08c4253964\\transformed\\material-1.11.0\\res\\values-uz\\values-uz.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -37,23 +54,6 @@
                         "endLines": "5,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100",
                         "endColumns": "12,76,79,82,93,86,94,126,83,63,102,69,66,108,62,66,58,73,62,53,114,57,61,53,74,128,89,88,140,81,81,138,85,83,59,50,65,72,77,85,80,71,76,74,70,100,93,78,95,93,73,75,85,52,86,65,84,90,61,63,62,68,101,100,95,100,63,54,82",
                         "endOffsets": "328,3076,3156,3239,3333,3420,3515,3642,3726,3790,3893,3963,4030,4139,4202,4269,4328,4402,4465,4519,4634,4692,4754,4808,4883,5012,5102,5191,5332,5414,5496,5635,5721,5805,5865,5916,5982,6055,6133,6219,6300,6372,6449,6524,6595,6696,6790,6869,6965,7059,7133,7209,7295,7348,7435,7501,7586,7677,7739,7803,7866,7935,8037,8138,8234,8335,8399,8454,8537"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\16088aea6844a21f0ae8707202a192eb\\transformed\\core-1.9.0\\res\\values-uz\\values-uz.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "102",
-                        "startColumns": "4",
-                        "startOffsets": "8626",
-                        "endColumns": "100",
-                        "endOffsets": "8722"
                     }
                 }
             ]

@@ -4,7 +4,7 @@
             "outputFile": "com.example.project_3.app-mergeDebugResources-29:/values-pa/values-pa.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\b1741c2033ae6eec819ff5ea06ca1704\\transformed\\appcompat-1.6.1\\res\\values-pa\\values-pa.xml",
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\b1741c2033ae6eec819ff5ea06ca1704\\transformed\\appcompat-1.6.1\\res\\values-pa\\values-pa.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\7bf998f9f4bdd84f156fbe08c4253964\\transformed\\material-1.11.0\\res\\values-pa\\values-pa.xml",
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\16088aea6844a21f0ae8707202a192eb\\transformed\\core-1.9.0\\res\\values-pa\\values-pa.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "102",
+                        "startColumns": "4",
+                        "startOffsets": "8425",
+                        "endColumns": "100",
+                        "endOffsets": "8521"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\dpate\\.gradle\\caches\\transforms-3\\7bf998f9f4bdd84f156fbe08c4253964\\transformed\\material-1.11.0\\res\\values-pa\\values-pa.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -37,23 +54,6 @@
                         "endLines": "5,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100",
                         "endColumns": "12,76,78,80,98,88,107,111,82,63,91,68,58,84,62,61,57,63,60,53,113,57,59,53,69,126,80,78,134,75,76,128,83,81,54,54,65,68,76,85,78,67,75,69,64,101,94,72,93,92,73,68,93,55,82,66,83,87,61,63,62,66,96,105,90,101,58,58,76",
                         "endOffsets": "308,3047,3126,3207,3306,3395,3503,3615,3698,3762,3854,3923,3982,4067,4130,4192,4250,4314,4375,4429,4543,4601,4661,4715,4785,4912,4993,5072,5207,5283,5360,5489,5573,5655,5710,5765,5831,5900,5977,6063,6142,6210,6286,6356,6421,6523,6618,6691,6785,6878,6952,7021,7115,7171,7254,7321,7405,7493,7555,7619,7682,7749,7846,7952,8043,8145,8204,8263,8340"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Murk_\\.gradle\\caches\\transforms-3\\16088aea6844a21f0ae8707202a192eb\\transformed\\core-1.9.0\\res\\values-pa\\values-pa.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "102",
-                        "startColumns": "4",
-                        "startOffsets": "8425",
-                        "endColumns": "100",
-                        "endOffsets": "8521"
                     }
                 }
             ]
