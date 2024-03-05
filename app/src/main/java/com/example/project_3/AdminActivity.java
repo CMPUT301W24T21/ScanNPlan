@@ -1,10 +1,13 @@
 package com.example.project_3;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+
+import android.content.Intent;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -19,11 +22,5 @@ public class AdminActivity extends AppCompatActivity {
         this.manage_events = findViewById(R.id.manage_events);
         this.manage_images = findViewById(R.id.manage_images);
         this.manage_profiles = findViewById(R.id.manage_profiles);
-        manage_events.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 }
