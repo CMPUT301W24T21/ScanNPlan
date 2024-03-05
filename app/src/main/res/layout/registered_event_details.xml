@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/global_top_appbar" />
+
     <ImageView
         android:id="@+id/event_poster"
         android:layout_width="284dp"
@@ -13,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_title_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -60,42 +64,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_location" />
 
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/event_title_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        style="@style/Widget.Material3.AppBarLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                style="@style/Widget.Material3.Button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/event_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Event Title"
-                style="@style/TextAppearance.Material3.ActionBar.Title"
-                android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
