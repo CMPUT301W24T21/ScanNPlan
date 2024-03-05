@@ -20,7 +20,12 @@ public class AdminTest {
 
     @Rule
     public ActivityScenarioRule<AdminActivity> scenario = new ActivityScenarioRule<AdminActivity>(AdminActivity.class);
-    
+
+    @Test
+    public void testAdmin(){
+        onView(withId(R.id.manage_profiles)).perform(click());
+        onView(withId(R.id.list_profiles_admin)).check(matches(isDisplayed()));
+    }
 
 
 }
