@@ -1,5 +1,6 @@
 package com.example.project_3;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -38,32 +39,32 @@ public class AttendeeActivity extends AppCompatActivity {
             }
         });
         
-        
-        String[] EventNames = {"concert1", "party2", "boardgames3"};
-        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
+//
+//        String[] EventNames = {"concert1", "party2", "boardgames3"};
+//        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
+//
+//
+//        ArrayList<Event> dataList= new ArrayList<Event>();
+//        for (int i = 0; i < EventNames.length; i++) {
+//            boolean details = dataList.add(new Event(EventNames[i], LocalDateTime.of(2003, 10, 28, 3, 23), EventLocation[i], "DETAILS"));
+//        }
+//
+//
+//        eventAdapter = new EventArrayAdapter(this, dataList);
+//        eventList = findViewById(R.id.event_listView);
+//        eventList.setAdapter(eventAdapter);
+//        eventList.setOnItemClickListener(listSelector);
+//
+//    }
 
-
-        ArrayList<Event> dataList= new ArrayList<Event>();
-        for (int i = 0; i < EventNames.length; i++) {
-            boolean details = dataList.add(new Event(EventNames[i], LocalDateTime.of(2003, 10, 28, 3, 23), EventLocation[i], "DETAILS"));
-        }
-
-
-        eventAdapter = new EventArrayAdapter(this, dataList);
-        eventList = findViewById(R.id.event_listView);
-        eventList.setAdapter(eventAdapter);
-        eventList.setOnItemClickListener(listSelector);
-
-    }
-
-    AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //SEND INFO TO DIALOG FRAGMENT HERE
-            Event selectedEvent = (Event) eventList.getItemAtPosition(position);
-            Integer EventIndex = position;
-            new EditCityFragment(selectedEvent).show(getSupportFragmentManager(), "Edit City");
-        }
+//    AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
+//        @Override
+//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            //SEND INFO TO DIALOG FRAGMENT HERE
+//            Event selectedEvent = (Event) eventList.getItemAtPosition(position);
+//            Integer EventIndex = position;
+//            new EditCityFragment(selectedEvent).show(getSupportFragmentManager(), "Edit City");
+//        }
     };
 
 }

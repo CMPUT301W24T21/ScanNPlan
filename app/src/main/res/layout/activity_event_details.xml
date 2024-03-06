@@ -17,19 +17,19 @@
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
         android:layout_below="@id/event_name_text_view"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="-70dp"
+        android:text="Back" />
 
     <Button
         android:id="@+id/qr_button_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/button_back"
-        android:layout_marginEnd="35dp"
-        android:layout_marginTop="20dp"
-        android:text="View QR Code" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="15dp"
+        android:text="Generate QR" />
 
     <ImageView
         android:id="@+id/qr_code_image_view"

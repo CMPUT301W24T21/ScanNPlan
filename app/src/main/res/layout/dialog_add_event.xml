@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <EditText
@@ -18,17 +18,76 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/promoChecker"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/add_date_editText"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_date"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
+
+    <EditText
+        android:id="@+id/add_time_editText"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_time"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_date_editText" />
+
+    <EditText
+        android:id="@+id/add_location_editText"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_location"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
+    <EditText
+        android:id="@+id/add_details_editText"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/event_details"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
     <CheckBox
         android:id="@+id/promoChecker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="432dp"
         android:text="Promo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
@@ -36,12 +95,12 @@
         android:id="@+id/reuseChecker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="432dp"
         android:text="Re-use"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.588"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_event_editText"  />
+        app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
     <Button
         android:id="@+id/buttonPoster"
