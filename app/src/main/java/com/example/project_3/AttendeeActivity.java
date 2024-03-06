@@ -60,16 +60,14 @@ public class AttendeeActivity extends AppCompatActivity {
     AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //SEND INFO TO DIALOG FRAGMENT HERE
             Event selectedEvent = (Event) eventList.getItemAtPosition(position);
             Integer EventIndex = position;
 
-
+            findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
 
             AttendeeEventDetailsFragment fragment = new AttendeeEventDetailsFragment(selectedEvent);
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true)
-                    .add(R.id.attendee_fragment_container, fragment, null)
-                    .commit();
+            getSupportFragmentManager().beginTransaction()
+            .add(R.id.attendee_fragment_container, fragment, null).addToBackStack("test").commit();
         }
     };
 
