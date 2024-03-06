@@ -22,7 +22,7 @@
         tools:ignore="MissingConstraints"></com.google.android.material.textview.MaterialTextView>
 
     <GridView
-        android:id="@+id/simple_gridview"
+        android:id="@+id/grid_images_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="4"
@@ -36,7 +36,7 @@
         android:id="@+id/delete_image_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Delete iamge"
+        android:text="Delete Image"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
