@@ -1,6 +1,7 @@
 package com.example.project_3.event_stuff;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,11 @@ import com.example.project_3.R;
 import java.util.ArrayList;
 
 public class EventArrayAdapter extends ArrayAdapter<Event> {
+    private Context mContext;
+
     public EventArrayAdapter(Context context, ArrayList<Event> events){
         super(context, 0, events);
+        mContext = context;
     }
 
     @NonNull

@@ -20,7 +20,7 @@
 15-->[androidx.core:core:1.9.0] C:\Users\dpate\.gradle\caches\transforms-3\16088aea6844a21f0ae8707202a192eb\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
 16
 17    <application
-17-->C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-24:19
+17-->C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-25:19
 18        android:allowBackup="true"
 18-->C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:6:9-35
 19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"

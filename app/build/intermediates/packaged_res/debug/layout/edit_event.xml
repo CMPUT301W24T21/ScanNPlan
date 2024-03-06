@@ -48,99 +48,94 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
 
-
     <EditText
         android:id="@+id/enter_event"
         android:layout_width="371dp"
         android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:background="@color/white"
         android:gravity="center"
         android:hint="Enter Event:"
-        android:textColorHint="@android:color/darker_gray"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="90dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColorHint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
 
     <Button
         android:id="@+id/add_poster"
+        style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="44dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Add Poster"
-        style="@style/Widget.Material3.Button"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="180dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_event" />
 
     <Button
         android:id="@+id/add_link"
+        style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="44dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Add Link"
-        style="@style/Widget.Material3.Button"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="290dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_poster" />
 
     <Button
         android:id="@+id/create_message"
+        style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="44dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Create Message"
-        style="@style/Widget.Material3.Button"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="390dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_link" />
 
     <Button
         android:id="@+id/view_qrcode"
+        style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="56dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="View QR-code"
-        style="@style/Widget.Material3.Button"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="490dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_message" />
 
     <Button
         android:id="@+id/notify"
+        style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="48dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Notify"
-        style="@style/Widget.Material3.Button"
         android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="590dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
-
-
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_qrcode" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

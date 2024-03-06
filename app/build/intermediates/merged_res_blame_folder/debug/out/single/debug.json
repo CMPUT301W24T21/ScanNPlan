@@ -8,20 +8,20 @@
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\drawable\\ic_launcher_foreground.xml"
-    },
-    {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_new_event_details.xml.flat",
-        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\new_event_details.xml"
+        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\drawable\\ic_launcher_foreground.xml"
     },
     {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_admin_images.xml.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\admin_images.xml"
+    },
+    {
+        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_new_event_details.xml.flat",
+        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\new_event_details.xml"
     },
     {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\xml_data_extraction_rules.xml.flat",
@@ -76,6 +76,10 @@
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
+        "merged": "com.example.project_3.app-merged_res-31:/layout_activity_main.xml.flat",
+        "source": "com.example.project_3.app-main-33:/layout/activity_main.xml"
+    },
+    {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_admin_homepage.xml.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\admin_homepage.xml"
     },
@@ -88,10 +92,6 @@
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\event_page_list.xml"
     },
     {
-        "merged": "com.example.project_3.app-merged_res-31:/layout_admin_event_details.xml.flat",
-        "source": "com.example.project_3.app-main-33:/layout/admin_event_details.xml"
-    },
-    {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_profile_details.xml.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\profile_details.xml"
     },
@@ -100,16 +100,16 @@
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\attendees_list.xml"
     },
     {
-        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_edit_event.xml.flat",
-        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\edit_event.xml"
-    },
-    {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_registered_event_details.xml.flat",
         "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\registered_event_details.xml"
+    },
+    {
+        "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\layout_edit_event.xml.flat",
+        "source": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-main-33:\\layout\\edit_event.xml"
     },
     {
         "merged": "C:\\Users\\dpate\\.gradle\\daemon\\8.2\\com.example.project_3.app-merged_res-31:\\drawable_ic_launcher_background.xml.flat",

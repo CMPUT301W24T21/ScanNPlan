@@ -10,6 +10,7 @@
         android:id="@+id/event_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_above="@+id/button_add_event" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

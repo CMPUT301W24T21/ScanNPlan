@@ -35,6 +35,7 @@ id delete_photo_button
 id delete_poster_button
 id delete_profile_button
 id editTextEventText
+id edit_button
 id enter_event
 id event_date
 id event_details

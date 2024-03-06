@@ -1,7 +1,9 @@
 package com.example.project_3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements AddEventDialogLis
     private ArrayList<Event> dataList;
     private ListView eventList;
     private EventArrayAdapter eventAdapter;
-    private TextView textNoEvents; // Reference to the TextView
+    private TextView textEvents; // Reference to the TextView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements AddEventDialogLis
         });
 
         // Initialize the TextView
-        textNoEvents = findViewById(R.id.text_no_events);
+        textEvents = findViewById(R.id.text_no_events);
 
         // Check if dataList is empty, if yes, show the TextView
         checkEmptyDataList();
@@ -48,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements AddEventDialogLis
     // Method to check if dataList is empty and show/hide the TextView accordingly
     private void checkEmptyDataList() {
         if (dataList.isEmpty()) {
-            textNoEvents.setVisibility(View.VISIBLE);
+            textEvents.setVisibility(View.VISIBLE);
         } else {
-            textNoEvents.setVisibility(View.GONE);
+            textEvents.setVisibility(View.GONE);
         }
     }
 
@@ -72,4 +74,5 @@ public class MainActivity extends AppCompatActivity implements AddEventDialogLis
         eventAdapter.notifyDataSetChanged();
         checkEmptyDataList(); // Check again after deleting an event
     }
+
 }

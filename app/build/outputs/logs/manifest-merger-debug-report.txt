@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-26:12
+ADDED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:1-27:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\dpate\.gradle\caches\transforms-3\7bf998f9f4bdd84f156fbe08c4253964\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\dpate\.gradle\caches\transforms-3\3c6b14974eada3b737e4646addd01d24\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\dpate\.gradle\caches\transforms-3\8c60153bca6de4306b04ab8bc2348ea8\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -56,8 +56,8 @@ MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\dpate\.
 	xmlns:android
 		ADDED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-24:19
-INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-24:19
+ADDED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-25:19
+INJECTED from C:\Users\dpate\OneDrive\Documents\GitHub\ScanNPlan\app\src\main\AndroidManifest.xml:5:5-25:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\dpate\.gradle\caches\transforms-3\7bf998f9f4bdd84f156fbe08c4253964\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\dpate\.gradle\caches\transforms-3\7bf998f9f4bdd84f156fbe08c4253964\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\dpate\.gradle\caches\transforms-3\3c6b14974eada3b737e4646addd01d24\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
