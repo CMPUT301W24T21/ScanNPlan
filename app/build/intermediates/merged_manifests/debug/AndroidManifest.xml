@@ -48,6 +48,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.Project_3" >
         <activity
+            android:name="com.example.project_3.AdminActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.project_3.MainActivity"
             android:exported="true" >
             <intent-filter>
