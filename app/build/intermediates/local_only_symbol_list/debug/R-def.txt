@@ -11,6 +11,7 @@ id back_button
 id button2
 id button3
 id button4
+id cameraPreview
 id constraintLayout
 id contact_info_editText
 id delete_button_profiles_list
@@ -28,6 +29,7 @@ id event_time
 id geolocation_toggle
 id homepage_editText
 id images_topbar
+id include
 id listView
 id list_of_Images
 id list_profiles_text
@@ -35,6 +37,7 @@ id logout_button
 id manage_events
 id manage_images
 id manage_profiles
+id openCameraButton
 id profile_image
 id profile_name_editText
 id profiles_list_image
@@ -44,7 +47,6 @@ id register_button
 id save_button
 id simple_gridview
 id textView
-id textView2
 id upload_new_button
 layout activity_main
 layout admin_event_details
@@ -60,6 +62,7 @@ layout login_page
 layout profile_details
 layout profile_settings
 layout profiles_list_content
+layout scan_event
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
