@@ -53,6 +53,7 @@
         style="@style/MaterialAlertDialog.Material3.Body.Text"/>
 
     <ListView
+        android:id="@+id/list_profiles_admin"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/list_profiles_text"
