@@ -34,6 +34,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".QRScan" />
+
 
         <activity
             android:name=".AttendeeActivity"
