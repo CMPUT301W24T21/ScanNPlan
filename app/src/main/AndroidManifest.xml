@@ -34,7 +34,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Camera" />
 
         <activity
             android:name=".AttendeeActivity"
