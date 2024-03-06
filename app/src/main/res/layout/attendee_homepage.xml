@@ -7,14 +7,14 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView"
+        style="@style/ThemeOverlay.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Events"
         app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        style="@style/ThemeOverlay.Material3.Button.TonalButton"
+        app:layout_constraintTop_toBottomOf="@+id/include"
 
         />
 
@@ -30,10 +30,21 @@
         app:layout_constraintVertical_bias="1.0"
         />
 
-    <include layout="@layout/global_top_appbar"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/global_top_appbar" />
 
-
-
+    <Button
+        android:id="@+id/openCameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.125" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
