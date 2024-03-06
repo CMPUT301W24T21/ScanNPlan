@@ -24,6 +24,6 @@ public class BuildTest {
 
     @Test
     public void testStartup(){
-        onView(withId(R.id.main_activity_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.activity_main_layout)).check(matches(isDisplayed()));
     }
 }
