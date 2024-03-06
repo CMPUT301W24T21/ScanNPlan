@@ -3265,6 +3265,7 @@ id enterAlwaysCollapsed
 id event_date
 id event_details
 id event_location
+id event_name
 id event_poster
 id event_time
 id exitUntilCollapsed
@@ -3723,6 +3724,7 @@ layout admin_event_details
 layout admin_homepage
 layout admin_images
 layout admin_profiles
+layout attendee_event_list_content
 layout attendee_homepage
 layout attendee_new_event_details
 layout attendee_registered_event_details
