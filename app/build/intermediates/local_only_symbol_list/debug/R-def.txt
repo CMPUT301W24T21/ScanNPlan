@@ -1,10 +1,19 @@
 R_DEF: Internal format may change without notice
 local
+attr? fullscreenBackgroundColor
+attr? fullscreenTextColor
 color black
+color black_overlay
+color light_blue_600
+color light_blue_900
+color light_blue_A200
+color light_blue_A400
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 id Logout_button_admin
+id activity_main_layout
+id admin_fragment_container
 id appbar
 id appbar_title
 id back_button
@@ -29,7 +38,9 @@ id geolocation_toggle
 id homepage_editText
 id images_topbar
 id listView
+id list_events_text
 id list_of_Images
+id list_profiles_admin
 id list_profiles_text
 id logout_button
 id manage_events
@@ -48,6 +59,7 @@ id textView2
 id upload_new_button
 layout activity_main
 layout admin_event_details
+layout admin_events
 layout admin_homepage
 layout admin_images
 layout admin_profiles
@@ -64,8 +76,20 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
 string delete
+string dummy_button
+string dummy_content
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string hello_blank_fragment
+string project_id
 string username
 style Base.Theme.Project_3
+style ThemeOverlay.Project_3.FullscreenContainer
 style Theme.Project_3
+style Widget.Theme.Project_3.ButtonBar.Fullscreen
+styleable FullscreenAttrs fullscreenBackgroundColor fullscreenTextColor
 xml backup_rules
 xml data_extraction_rules

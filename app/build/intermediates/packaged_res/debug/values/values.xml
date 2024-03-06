@@ -11,7 +11,13 @@
     <string name="delete">Delete</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="gcm_defaultSenderId" translatable="false">1083337634259</string>
+    <string name="google_api_key" translatable="false">AIzaSyAKJcqppSZnwKfV9xQknY-SvmWWNd2ZCQc</string>
+    <string name="google_app_id" translatable="false">1:1083337634259:android:e44727471041a8d6ffff26</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAKJcqppSZnwKfV9xQknY-SvmWWNd2ZCQc</string>
+    <string name="google_storage_bucket" translatable="false">scannplan-b4d46.appspot.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="project_id" translatable="false">scannplan-b4d46</string>
     <string name="username">Username</string>
     <style name="Base.Theme.Project_3" parent="Theme.Material3.Dark">
         

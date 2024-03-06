@@ -1,11 +1,9 @@
 package com.example.project_3;
 
-import android.location.Location;
+import android.graphics.drawable.Icon;
 import android.media.Image;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Event {
     private String name;
@@ -54,7 +52,7 @@ public class Event {
         this.details = details;
     }
 
-    public Image getPoster() {
+    public Icon getPoster() {
         return poster;
     }
 

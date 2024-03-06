@@ -600,6 +600,8 @@ attr forceApplySystemWindowInsetTop
 attr forceDefaultNavigationOnClickListener
 attr foregroundInsidePadding
 attr framePosition
+attr fullscreenBackgroundColor
+attr fullscreenTextColor
 attr gapBetweenBars
 attr gestureInsetBottomIgnored
 attr goIcon
@@ -1355,6 +1357,7 @@ color background_floating_material_light
 color background_material_dark
 color background_material_light
 color black
+color black_overlay
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -1415,6 +1418,10 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color light_blue_600
+color light_blue_900
+color light_blue_A200
+color light_blue_A400
 color m3_appbar_overlay_color
 color m3_assist_chip_icon_tint_color
 color m3_assist_chip_stroke_color
@@ -3140,7 +3147,9 @@ id action_mode_close_button
 id action_text
 id actions
 id activity_chooser_view_content
+id activity_main_layout
 id add
+id admin_fragment_container
 id alertTitle
 id aligned
 id all
@@ -3331,8 +3340,10 @@ id line3
 id linear
 id listMode
 id listView
+id list_events_text
 id list_item
 id list_of_Images
+id list_profiles_admin
 id list_profiles_text
 id logout_button
 id m3_side_sheet
@@ -3721,6 +3732,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
 layout admin_event_details
+layout admin_events
 layout admin_homepage
 layout admin_images
 layout admin_profiles
@@ -3854,11 +3866,19 @@ string character_counter_overflowed_content_description
 string character_counter_pattern
 string clear_text_end_icon_content_description
 string delete
+string dummy_button
+string dummy_content
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
@@ -3967,6 +3987,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string project_id
 string search_menu_title
 string searchbar_scrolling_view_behavior
 string searchview_clear_text_content_description
@@ -4716,6 +4737,7 @@ style ThemeOverlay_MaterialComponents_TimePicker_Display_TextInputEditText
 style ThemeOverlay_MaterialComponents_Toolbar_Popup_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Primary
 style ThemeOverlay_MaterialComponents_Toolbar_Surface
+style ThemeOverlay_Project_3_FullscreenContainer
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar
@@ -5093,6 +5115,7 @@ style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
 style Widget_Support_CoordinatorLayout
+style Widget_Theme_Project_3_ButtonBar_Fullscreen
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -5152,6 +5175,7 @@ styleable FontFamilyFont android_font android_fontWeight android_fontStyle andro
 styleable ForegroundLinearLayout android_foreground android_foregroundGravity foregroundInsidePadding
 styleable Fragment android_name android_id android_tag
 styleable FragmentContainerView android_name android_tag
+styleable FullscreenAttrs fullscreenBackgroundColor fullscreenTextColor
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
 styleable ImageFilterView altSrc blendSrc brightness contrast crossfade imagePanX imagePanY imageRotate imageZoom overlay round roundPercent saturation warmth
