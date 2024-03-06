@@ -19,6 +19,7 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <ListView
+        android:id="@+id/list_events_admin"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
     </ListView>
