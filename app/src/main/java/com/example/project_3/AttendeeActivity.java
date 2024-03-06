@@ -3,24 +3,42 @@ package com.example.project_3;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AttendeeActivity extends AppCompatActivity {
-    ListView eventList;
-    EventArrayAdapter eventAdapter;
+    private Button openCameraButton;
+
+    private Intent QRIntent;
+
+    private ListView eventList;
+    private EventArrayAdapter eventAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
+        this.openCameraButton = findViewById(R.id.openCameraButton);
+        QRIntent = new Intent(this, QRScan.class);
+
+
+        openCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(QRIntent);
+            }
+        });
+        
+        
         String[] EventNames = {"concert1", "party2", "boardgames3"};
         String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
 
@@ -35,7 +53,6 @@ public class AttendeeActivity extends AppCompatActivity {
         eventList = findViewById(R.id.event_listView);
         eventList.setAdapter(eventAdapter);
         eventList.setOnItemClickListener(listSelector);
-
 
     }
 
