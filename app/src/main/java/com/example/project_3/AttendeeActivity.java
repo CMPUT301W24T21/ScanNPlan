@@ -1,15 +1,16 @@
 package com.example.project_3;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 
 public class AttendeeActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class AttendeeActivity extends AppCompatActivity {
 
         ArrayList<Event> dataList= new ArrayList<Event>();
         for (int i = 0; i < EventNames.length; i++) {
-            boolean details = dataList.add(new Event(EventNames[i], LocalDateTime.of(2003, 10, 28, 3, 23), EventLocation[i], "DETAILS"));
+            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
         }
 
 
@@ -62,7 +63,13 @@ public class AttendeeActivity extends AppCompatActivity {
             //SEND INFO TO DIALOG FRAGMENT HERE
             Event selectedEvent = (Event) eventList.getItemAtPosition(position);
             Integer EventIndex = position;
-            new EditCityFragment(selectedEvent).show(getSupportFragmentManager(), "Edit City");
+
+
+
+            AttendeeEventDetailsFragment fragment = new AttendeeEventDetailsFragment(selectedEvent);
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true)
+                    .add(R.id.attendee_fragment_container, fragment, null)
+                    .commit();
         }
     };
 
