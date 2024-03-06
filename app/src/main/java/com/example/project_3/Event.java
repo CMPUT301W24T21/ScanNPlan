@@ -1,22 +1,19 @@
 package com.example.project_3;
 
-import android.location.Location;
 import android.media.Image;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Event {
     private String name;
-    private LocalDateTime dateTime;
+    private String date;
+    private String time;
     private String location;
     private String details;
     private Image poster;
 
-    public Event(String name, LocalDateTime dateTime, String location, String details/*, Image poster*/) {
+    public Event(String name, String date, String time, String location, String details/*, Image poster*/) {
         this.name = name;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.details = details;
         //this.poster = poster;
@@ -30,12 +27,20 @@ public class Event {
         this.name = name;
     }
 
-    public LocalDateTime getDate() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDate(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getLocation() {
