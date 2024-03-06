@@ -13,10 +13,13 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 
 public class AdminActivity extends AppCompatActivity {
+    //buttons for the admin homepage
     private MaterialButton manage_profiles;
     private MaterialButton manage_images;
     private MaterialButton manage_events;
-
+    //onCreate function for the activity
+    //params: savedInstanceState: Bundle
+    //returns: void
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,9 @@ public class AdminActivity extends AppCompatActivity {
         //manage profiles button takes you to the browse profiles window
         manage_profiles.setOnClickListener(new View.OnClickListener() {
             @Override
+            //onClick method setting up a click listener for the manage profiles button
+            //param: a View
+            //returns: void
             public void onClick(View v) {
                 BrowseProfilesFragment fragment = new BrowseProfilesFragment();
                 //open the fragment and add it to the stack on the container
