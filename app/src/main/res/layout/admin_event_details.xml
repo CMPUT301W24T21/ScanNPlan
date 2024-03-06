@@ -30,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="" />
+        app:layout_constraintTop_toBottomOf="@+id/event_poster" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_date"
