@@ -8,7 +8,6 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity {
     private Intent AttendeeIntent;
     private Intent AdminIntent;
-    //Intent AdminIntent = new Intent(this, );
     private Intent OrganizerIntent;
 
     @Override
@@ -21,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         //This line starts the attendee activity
-        //startActivity(AttendeeIntent);
+        startActivity(AttendeeIntent);
     }
 }
