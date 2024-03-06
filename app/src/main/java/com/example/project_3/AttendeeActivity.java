@@ -2,6 +2,8 @@ package com.example.project_3;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
@@ -11,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class AttendeeActivity extends AppCompatActivity {
+    ListView eventList;
+    EventArrayAdapter eventAdapter;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +31,22 @@ public class AttendeeActivity extends AppCompatActivity {
         }
 
 
-        EventArrayAdapter eventAdapter = new EventArrayAdapter(this, dataList);
-        ListView eventList = findViewById(R.id.event_listView);
+        eventAdapter = new EventArrayAdapter(this, dataList);
+        eventList = findViewById(R.id.event_listView);
         eventList.setAdapter(eventAdapter);
+        eventList.setOnItemClickListener(listSelector);
 
 
     }
+
+    AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //SEND INFO TO DIALOG FRAGMENT HERE
+            Event selectedEvent = (Event) eventList.getItemAtPosition(position);
+            Integer EventIndex = position;
+            new EditCityFragment(selectedEvent).show(getSupportFragmentManager(), "Edit City");
+        }
+    };
 
 }

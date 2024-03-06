@@ -51,3 +51,4 @@
 /app/build/intermediates/symbol_list_with_package_name/
 /app/build/intermediates/validate_signing_config/
 /app/build/intermediates/variant_model/
+/local.properties

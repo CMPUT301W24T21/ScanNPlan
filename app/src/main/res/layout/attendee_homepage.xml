@@ -6,11 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textview.MaterialTextView
-<<<<<<< HEAD
         android:id="@+id/your_events_textview"
-=======
-        android:id="@+id/textView"
->>>>>>> 0f9169f9aad19d88860bbeb9488844c3be115a03
         style="@style/ThemeOverlay.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,13 +14,8 @@
         app:layout_constraintBottom_toTopOf="@+id/event_listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
         app:layout_constraintTop_toBottomOf="@+id/include" />
-=======
-        app:layout_constraintTop_toBottomOf="@+id/include"
 
-        />
->>>>>>> 0f9169f9aad19d88860bbeb9488844c3be115a03
 
     <ListView
         android:id="@+id/event_listView"
@@ -37,17 +28,10 @@
 
     <include
         android:id="@+id/include"
-<<<<<<< HEAD
         layout="@layout/global_top_appbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-=======
-        layout="@layout/global_top_appbar" />
->>>>>>> 0f9169f9aad19d88860bbeb9488844c3be115a03
-
     <Button
         android:id="@+id/openCameraButton"
         android:layout_width="wrap_content"
