@@ -1,18 +1,10 @@
 R_DEF: Internal format may change without notice
 local
-attr? fullscreenBackgroundColor
-attr? fullscreenTextColor
 color black
-color black_overlay
-color light_blue_600
-color light_blue_900
-color light_blue_A200
-color light_blue_A400
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 id Logout_button_admin
-id admin_fragment_container
 id appbar
 id appbar_title
 id back_button
@@ -30,6 +22,7 @@ id delete_profile_button
 id event_date
 id event_details
 id event_location
+id event_name
 id event_poster
 id event_time
 id geolocation_toggle
@@ -37,7 +30,6 @@ id homepage_editText
 id images_topbar
 id listView
 id list_of_Images
-id list_profiles_admin
 id list_profiles_text
 id logout_button
 id manage_events
@@ -59,26 +51,21 @@ layout admin_event_details
 layout admin_homepage
 layout admin_images
 layout admin_profiles
-layout event_page_list
+layout attendee_event_list_content
+layout attendee_homepage
+layout attendee_new_event_details
+layout attendee_registered_event_details
 layout global_top_appbar
 layout login_page
-layout new_event_details
 layout profile_details
 layout profile_settings
 layout profiles_list_content
-layout registered_event_details
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
 string delete
-string dummy_button
-string dummy_content
-string hello_blank_fragment
 string username
 style Base.Theme.Project_3
-style ThemeOverlay.Project_3.FullscreenContainer
 style Theme.Project_3
-style Widget.Theme.Project_3.ButtonBar.Fullscreen
-styleable FullscreenAttrs fullscreenBackgroundColor fullscreenTextColor
 xml backup_rules
 xml data_extraction_rules
