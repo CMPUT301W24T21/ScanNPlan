@@ -12,6 +12,7 @@ color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 id Logout_button_admin
+id admin_fragment_container
 id appbar
 id appbar_title
 id back_button

@@ -2,6 +2,7 @@ package com.example.project_3;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -22,9 +23,13 @@ public class AdminTest {
     public ActivityScenarioRule<AdminActivity> scenario = new ActivityScenarioRule<AdminActivity>(AdminActivity.class);
 
     @Test
-    public void testAdmin(){
+    public void testAdminSwapProfiles(){
         onView(withId(R.id.manage_profiles)).perform(click());
-        onView(withId(R.id.list_profiles_admin)).check(matches(isDisplayed()));
+        onView(withId(R.id.list_profiles_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.back_button)).perform(click());
+        onView(withId(R.id.list_profiles_text)).check(doesNotExist());
+
+
     }
 
 
