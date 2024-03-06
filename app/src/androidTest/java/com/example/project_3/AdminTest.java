@@ -24,6 +24,9 @@ public class AdminTest {
 
     @Test
     public void testAdminSwapProfiles(){
+        onView(withId(R.id.manage_profiles)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_images)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_events)).check(matches(isDisplayed()));
         onView(withId(R.id.manage_profiles)).perform(click());
         onView(withId(R.id.list_profiles_text)).check(matches(isDisplayed()));
         onView(withId(R.id.back_button)).perform(click());
