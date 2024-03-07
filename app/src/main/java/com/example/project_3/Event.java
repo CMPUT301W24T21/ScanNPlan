@@ -11,7 +11,7 @@ public class Event {
     private String location;
     private String details;
     private Image poster;
-    //needed to resubmit this as a commit because it was changed in a previous commit -Paul
+    //I needed to resubmit this as a commit because it was changed in a previous commit -Paul
 
     public Event(String name, LocalDateTime dateTime, String location, String details/*, Image poster*/) {
         this.name = name;
