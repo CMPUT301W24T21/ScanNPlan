@@ -8,5 +8,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         />
-<!--    this is the correct layout-->
+<!--    this is the correct layout pt2-->
 </LinearLayout>
