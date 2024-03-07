@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <include layout="@layout/global_top_appbar"/>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/list_events_text"
@@ -14,15 +16,17 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="List of Events"
-        android:textSize="20sp">
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
 
     </com.google.android.material.textview.MaterialTextView>
 
     <ListView
         android:id="@+id/list_events_admin"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/list_events_text">
     </ListView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
