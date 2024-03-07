@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +46,14 @@ public class BrowseProfilesFragment extends Fragment {
                 getParentFragmentManager().popBackStack();
                 getActivity().findViewById(R.id.admin_homepage_rest).setVisibility(View.VISIBLE);
 
+            }
+        });
+        listProfiles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProfileDetailsFragment fragment = new ProfileDetailsFragment();
+                //open the fragment and add it to the stack on the container
+                getChildFragmentManager().beginTransaction().replace(R.id.admin_fragment_container, fragment).addToBackStack(null).commit();
             }
         });
         return view;
