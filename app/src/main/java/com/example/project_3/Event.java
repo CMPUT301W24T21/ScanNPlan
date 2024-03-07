@@ -1,13 +1,5 @@
 package com.example.project_3;
 
-import android.media.Image;
-
-import com.google.type.DateTime;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class Event {
     private String name;
     private Boolean promo;
@@ -18,6 +10,12 @@ public class Event {
     private String location;
     private String details;
 
+
+
+    public Event(String name, String date) {
+        this.name = name;
+        this.date = date;
+    }
 
     public Event(String name, boolean promo, boolean reuse, String time, String date,
           String location, String details) {
@@ -38,6 +36,15 @@ public class Event {
             this.location = location;
             this.details = details;
         }
+
+
+
+
+
+
+
+
+
 
     public String getTime() {
         return this.time;
