@@ -9,6 +9,7 @@ public class Event {
     private String date;
     private String location;
     private String details;
+    //changes to fix previous commit -Paul
 
 
 
@@ -36,6 +37,15 @@ public class Event {
         this.location = location;
         this.details = details;
     }
+
+
+
+
+
+
+
+
+
 
 
 
