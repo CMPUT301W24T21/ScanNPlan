@@ -18,6 +18,7 @@ public class AdminEventDetailsFragment extends Fragment {
     private TextView time;
     private TextView location;
     private TextView details;
+    //resubmit
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //create the view and set the layout
