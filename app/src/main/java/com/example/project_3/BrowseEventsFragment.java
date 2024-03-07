@@ -39,6 +39,7 @@ public class BrowseEventsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
+                getActivity().findViewById(R.id.admin_homepage_rest).setVisibility(View.VISIBLE);
             }
         });
         return view;
