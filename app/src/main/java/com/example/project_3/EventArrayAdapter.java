@@ -13,8 +13,13 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class EventArrayAdapter extends ArrayAdapter {
-    public EventArrayAdapter(Context context, ArrayList<Event> Events) {
-        super(context,0, Events);
+    private ArrayList<Event> events;
+    private Context context;
+    public EventArrayAdapter(Context context, ArrayList<Event> events) {
+
+        super(context,0, events);
+        this.events = events;
+        this.context = context;
     }
 
     @NonNull
@@ -26,13 +31,13 @@ public class EventArrayAdapter extends ArrayAdapter {
         } else {
             view = convertView;
         }
-
-        Event event = (Event) getItem(position);
+        Event event = events.get(position);
+//        Event event = (Event) getItem(position);
         TextView eventName = view.findViewById(R.id.event_name);
-        TextView eventLocation = view.findViewById(R.id.event_location);
+//        TextView eventLocation = view.findViewById(R.id.event_location);
         assert event != null;
         eventName.setText(event.getName());
-        eventName.setText(event.getLocation());
+        eventLocation.setText(event.getLocation());
         return view;
 
     }

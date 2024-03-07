@@ -1,64 +1,91 @@
 package com.example.project_3;
 
-import android.location.Location;
 import android.media.Image;
+
+import com.google.type.DateTime;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+
 public class Event {
     private String name;
-    private LocalDateTime dateTime;
+    private Boolean promo;
+    private Boolean reuse;
+    private byte[] qrCode; // Add QR code byte array field
+    private String time;
+    private String date;
     private String location;
     private String details;
-    private Image poster;
 
-    public Event(String name, LocalDateTime dateTime, String location, String details/*, Image poster*/) {
+
+    Event(String name, boolean promo, boolean reuse, String time, String date,
+          String location, String details){
         this.name = name;
-        this.dateTime = dateTime;
+        this.promo = promo;
+        this.reuse = reuse;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.details = details;
-        //this.poster = poster;
+
+    public Event(String name, String date, String time, String location, String details) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
     }
 
+    public String getTime() {
+        return this.time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLocation() {return location;}
+
+    public void setLocation(String location) {this.location = location;}
+
+    public String getDetails() {return details;}
+
+    public void setDetails(String details) {this.details = details;}
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public LocalDateTime getDate() {
-        return dateTime;
+    public Boolean getPromo() {
+        return this.promo;
     }
 
-    public void setDate(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setPromo(Boolean promo) {
+        this.promo = promo;
     }
 
-    public String getLocation() {
-        return location;
+    public Boolean getReuse() {
+        return this.reuse;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setReuse(Boolean reuse) {
+        this.reuse = reuse;
     }
+    public byte[] getQrCode() {return this.qrCode;}
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public Image getPoster() {
-        return poster;
-    }
-
-    public void setPoster(Image poster) {
-        this.poster = poster;
-    }
+    public void setQrCode(byte[] qrCode) {this.qrCode = qrCode;}
 }

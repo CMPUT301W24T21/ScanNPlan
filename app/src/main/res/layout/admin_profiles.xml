@@ -1,63 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar_profiles"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.Material3.AppBarLayout">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/back_button_profiles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/ThemeOverlay.Material3.Button.TonalButton"
-                android:text="BACK"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.Material3.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="68dp"
-                android:text="Welcome Admin"
-                android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@id/back_button_profiles"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
+    <include layout="@layout/global_top_appbar"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/list_profiles_text"
-        android:layout_width="wrap_content"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:textAlignment="center"
         android:text="List of Profiles"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_profiles"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"/>
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
 
     <ListView
         android:id="@+id/list_profiles_admin"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/list_profiles_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        >
+
+
+    </ListView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
