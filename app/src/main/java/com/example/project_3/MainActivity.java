@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //This line starts the attendee activity
-        startActivity(AdminIntent);
+        startActivity(AttendeeIntent);
     }
 }
+

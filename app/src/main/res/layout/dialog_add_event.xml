@@ -31,7 +31,7 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_time_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_location_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,11 +61,12 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_details_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
+
     <EditText
         android:id="@+id/add_details_editText"
         style="@style/Widget.Material3.AppBarLayout"
@@ -75,19 +76,21 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@parent"
+        app:layout_constraintBottom_toTopOf="@+id/promoChecker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/add_time_editText"
+        app:layout_constraintVertical_bias="0.0" />
+
     <CheckBox
         android:id="@+id/promoChecker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="432dp"
+        android:layout_marginTop="224dp"
         android:text="Promo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
@@ -95,10 +98,10 @@
         android:id="@+id/reuseChecker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="432dp"
+        android:layout_marginTop="224dp"
         android:text="Re-use"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
