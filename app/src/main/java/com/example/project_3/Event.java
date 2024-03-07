@@ -8,7 +8,6 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-
 public class Event {
     private String name;
     private Boolean promo;
@@ -20,8 +19,8 @@ public class Event {
     private String details;
 
 
-    Event(String name, boolean promo, boolean reuse, String time, String date,
-          String location, String details){
+    public Event(String name, boolean promo, boolean reuse, String time, String date,
+          String location, String details) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
@@ -29,14 +28,16 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
-
-    public Event(String name, String date, String time, String location, String details) {
-        this.name = name;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.details = details;
     }
+
+    public Event(String name, String date, String time,
+                String location, String details) {
+            this.name = name;
+            this.date = date;
+            this.time = time;
+            this.location = location;
+            this.details = details;
+        }
 
     public String getTime() {
         return this.time;
@@ -63,7 +64,7 @@ public class Event {
     public void setDetails(String details) {this.details = details;}
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
