@@ -37,7 +37,7 @@ public class EventArrayAdapter extends ArrayAdapter {
 //        TextView eventLocation = view.findViewById(R.id.event_location);
         assert event != null;
         eventName.setText(event.getName());
-        eventLocation.setText(event.getLocation());
+//        eventLocation.setText(event.getLocation());
         return view;
 
     }
