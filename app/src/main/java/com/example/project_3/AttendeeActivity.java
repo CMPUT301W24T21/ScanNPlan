@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+
 public class AttendeeActivity extends AppCompatActivity {
     private Button openCameraButton;
 
