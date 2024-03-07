@@ -37,6 +37,8 @@
         <activity android:name=".QRScan" />
         <!-- Add EventDetailsActivity here -->
         <activity android:name=".EventDetailsActivity" />
+        <activity android:name=".OrganizerActivity"/>
+
 
         <activity
             android:name=".AttendeeActivity"
