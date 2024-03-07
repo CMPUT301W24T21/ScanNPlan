@@ -9,6 +9,7 @@ public class Event {
     private String date;
     private String location;
     private String details;
+    //changes to fix previous commit -Paul
 
 
 

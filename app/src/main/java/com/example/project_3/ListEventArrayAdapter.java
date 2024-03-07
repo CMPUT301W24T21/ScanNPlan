@@ -15,10 +15,15 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
-public class ListEventArrayAdapter extends ArrayAdapter<Event> {
+public class ListEventArrayAdapter extends ArrayAdapter{
 
-    public ListEventArrayAdapter(@NonNull Context context, ArrayList<Event> events){
+    private ArrayList<Event> events;
+    private Context context;
+    public ListEventArrayAdapter(Context context, ArrayList<Event> events) {
+
         super(context,0, events);
+        this.events = events;
+        this.context = context;
     }
 
     @NonNull
@@ -32,7 +37,7 @@ public class ListEventArrayAdapter extends ArrayAdapter<Event> {
             view = convertview;
         }
 
-        Event event = getItem(position);
+        Event event = events.get(position);
         ImageView image = view.findViewById(R.id.events_list_image);
         MaterialTextView eventName = view.findViewById(R.id.events_list_title);
         assert event != null;
