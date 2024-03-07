@@ -39,7 +39,11 @@ public class ListEventArrayAdapter extends ArrayAdapter{
 
         Event event = events.get(position);
         ImageView image = view.findViewById(R.id.events_list_image);
+        //image.setImageIcon(event.ge);
+        //don't have an image yet to use as placeholder
         MaterialTextView eventName = view.findViewById(R.id.events_list_title);
+        //sets our text to be of the event
+        eventName.setText(event.getName());
         assert event != null;
         //delete button still needs implementation
         MaterialButton back = view.findViewById(R.id.delete_button_events_list);
