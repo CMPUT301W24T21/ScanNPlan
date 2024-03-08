@@ -79,10 +79,9 @@ public class MainActivity extends AppCompatActivity {
         OrganizerIntent = new Intent(this, OrganizerActivity.class);
 
         //This line starts the attendee activity
-        startActivity(AdminIntent);
+//        startActivity(AdminIntent);
         startActivity(AttendeeIntent);
 //        startActivity(OrganizerIntent);
 
     }
 }
-
