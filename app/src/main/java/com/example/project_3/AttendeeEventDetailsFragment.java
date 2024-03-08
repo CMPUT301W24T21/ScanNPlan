@@ -15,10 +15,19 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 
+/**
+ *Fragment for displaying details of a specific event for attendees.
+ */
+
 public class AttendeeEventDetailsFragment extends Fragment {
     private TextView appBar;
     private ListView listEvents;
     private Event selectedEvent;
+
+    /**
+     *Constructs a new instance of the fragment with the specified event.
+     * @param selectedEvent The event to display details for.
+     */
 
     public AttendeeEventDetailsFragment(Event selectedEvent) {
         this.selectedEvent = selectedEvent;
@@ -35,6 +44,14 @@ public class AttendeeEventDetailsFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
+
+    /**
+     * Inflates the layout for the fragment and initializes the UI with the event details.
+     * @param inflater The layout inflater.
+     * @param container The parent view group.
+     * @param savedInstanceState The saved instance state bundle.
+     * @return The inflated view for the fragment.
+     */
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //create the view and set the layout
@@ -58,6 +75,9 @@ public class AttendeeEventDetailsFragment extends Fragment {
 
         MaterialButton back = view.findViewById(R.id.back_button);
         //if back is clicked pop the stack and go back to the activity
+        /**
+         * Handles the back button click event, popping the fragment from the stack sending you back.
+         */
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +99,12 @@ public class AttendeeEventDetailsFragment extends Fragment {
         });
         return view;
     }
+
+    /**
+     * used to initialize the page.
+     * @param view The inflated view for the fragment.
+     * @param savedInstanceState The saved instance state bundle.
+     */
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
