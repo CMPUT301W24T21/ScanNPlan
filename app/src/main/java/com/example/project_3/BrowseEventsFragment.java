@@ -71,13 +71,12 @@ public class BrowseEventsFragment extends Fragment {
                     eventNamesList.clear();
                     for (QueryDocumentSnapshot doc : value) {
                         String eventName = doc.getId();
-                        String date = doc.getString("date");
-                        String time = doc.getString("time");
-                        String location = doc.getString("location");
-                        String details = doc.getString("details");
-                        // Assuming you have a "date" field in your document
-                        Event event = new Event(eventName, date, time, location, details); // Use the appropriate constructor
-
+                        String date = doc.getString("Date");
+                        String time = doc.getString("Time");
+                        String location = doc.getString("Location");
+                        String details = doc.getString("Details");
+                        //creating an event object and adding it to the local list
+                        Event event = new Event(eventName, date, time, location, details);
                         eventNamesList.add(event);
                     }
                     eventNamesAdapter.notifyDataSetChanged();
@@ -88,7 +87,7 @@ public class BrowseEventsFragment extends Fragment {
         listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Event selected_event = (Event) eventNamesList.get(position);
+                Event selected_event = eventNamesList.get(position);
                 AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event);
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.admin_events_fragment_container, fragment).addToBackStack(null).commit();
