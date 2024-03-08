@@ -2,13 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AdminTest">
-        <State />
-      </entry>
-      <entry key="BuildTest">
+      <entry key="AttendeeTest">
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="testAdminSwapProfiles()">
         <State />
       </entry>
     </value>
