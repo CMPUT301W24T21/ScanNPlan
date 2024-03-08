@@ -31,7 +31,7 @@ public class AttendeeEditProfileFragment extends Fragment {
     private User user;
 
     /**
-     * Inflates the layout for the fragment and initializes UI elements.
+     * Inflates the layout for the fragment and initializes the UI elements.
      * Retrieves and displays the user's profile information from Firestore.
      * @param inflater The layout inflater.
      * @param container The parent view group.

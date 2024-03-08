@@ -44,6 +44,7 @@ public class AttendeeActivity extends AppCompatActivity {
         setContentView(R.layout.attendee_homepage);
         this.openCameraButton = findViewById(R.id.openCameraButton);
         QRIntent = new Intent(this, QRScan.class);
+        //sends to the QRscan class
 
         editProfileButton = findViewById(R.id.EditProfile);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +52,7 @@ public class AttendeeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 toggleRestOfPageVisibility();
                 replaceFragment(new AttendeeEditProfileFragment());
+                //turn the visibility of the page off and turns the other one on
             }
         });
 
@@ -63,7 +65,8 @@ public class AttendeeActivity extends AppCompatActivity {
                 //start the qrscanning page
             }
         });
-        
+
+        //test events
         
         String[] EventNames = {"concert1", "party2", "boardgames3"};
         String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
@@ -98,7 +101,7 @@ public class AttendeeActivity extends AppCompatActivity {
     }
 
     /**
-     * Replaces the current fragment with a new fragment for editing the attendee's profile.
+     *Replaces the current fragment with a new fragment for editing the current attendee's profile.
      * @param fragment The fragment to replace the current fragment with.
      */
 
