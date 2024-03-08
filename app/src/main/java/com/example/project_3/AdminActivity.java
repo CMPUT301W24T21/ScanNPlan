@@ -14,6 +14,11 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
 
+/**
+ * AdminActivity acts as the dashboard/ homepage for any admin tasks like browsing and managing,
+ * Images, profiles and events. each accessed by pressing their respective buttons. Also a logout
+ * to take you back to the main activity 'login'
+ */
 public class AdminActivity extends AppCompatActivity {
     //buttons for the admin homepage
     private MaterialButton manage_profiles;
@@ -23,6 +28,14 @@ public class AdminActivity extends AppCompatActivity {
     //onCreate function for the activity
     //params: savedInstanceState: Bundle
     //returns: void
+
+    /**
+     *  Intializes AdminActivity setting up the layout and button links for navigation
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,4 +94,3 @@ public class AdminActivity extends AppCompatActivity {
     }
 
 }
-

@@ -16,17 +16,35 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
+/**
+ * ArrayAdapter displays a list of event objects
+ * generates view items for each event in the list, the events have the names
+ * and their image along with a button to delete the event from the firebase
+ */
 public class ListEventArrayAdapter extends ArrayAdapter{
 
     private ArrayList<Event> events;
     private Context context;
+    /**
+     * The constructor for the adapter
+     *
+     * @param context
+     * @param events
+     */
     public ListEventArrayAdapter(Context context, ArrayList<Event> events) {
 
         super(context,0, events);
         this.events = events;
         this.context = context;
     }
-
+    /**
+     * provides a view for the adapterview
+     *
+     * @param position position in the list of the data
+     * @param convertview recycled view to populate
+     * @param parent the parent viewgroup used for inflation
+     * @return returns the view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertview, @NonNull ViewGroup parent){
