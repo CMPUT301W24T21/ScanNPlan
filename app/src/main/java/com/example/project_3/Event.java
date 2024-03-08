@@ -19,7 +19,6 @@ public class Event {
     private String details;
     private String image;
 
-
     public Event(String name, boolean promo, boolean reuse, String time, String date,
           String location, String details, String image) {
         this.name = name;
@@ -29,9 +28,6 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
-        this.image = image;
-    }
-    public Event(String image) {
         this.image = image;
     }
 
