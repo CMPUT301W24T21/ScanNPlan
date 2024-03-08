@@ -71,8 +71,12 @@ public class BrowseEventsFragment extends Fragment {
                     eventNamesList.clear();
                     for (QueryDocumentSnapshot doc : value) {
                         String eventName = doc.getId();
-                        String date = doc.getString("date"); // Assuming you have a "date" field in your document
-                        Event event = new Event(eventName, date); // Use the appropriate constructor
+                        String date = doc.getString("date");
+                        String time = doc.getString("time");
+                        String location = doc.getString("location");
+                        String details = doc.getString("details");
+                        // Assuming you have a "date" field in your document
+                        Event event = new Event(eventName, date, time, location, details); // Use the appropriate constructor
 
                         eventNamesList.add(event);
                     }
