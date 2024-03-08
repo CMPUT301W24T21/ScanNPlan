@@ -41,7 +41,6 @@
             </intent-filter>
         </activity>
 
-
         <activity android:name=".QRScan" />
         <!-- Add EventDetailsActivity here -->
         <activity android:name=".EventDetailsActivity" />
@@ -49,6 +48,8 @@
         <activity android:name=".OrganizerActivity"/>
         <!-- Add DownloadPoster here -->
         <activity android:name=".DownloadPoster"/>
+        <!-- Add EditEventDetails here -->
+        <activity android:name=".EditEventDetails"/>
 
         <activity
             android:name=".AttendeeActivity"

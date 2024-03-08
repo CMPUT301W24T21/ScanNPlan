@@ -122,8 +122,6 @@ public class OrganizerActivity extends AppCompatActivity {
         data.put("Details", event.getDetails());
         data.put("Image", event.getImage());
 
-        // Add the Image field
-
         // Store data in Firebase
         eventsRef.document(event.getName()).set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

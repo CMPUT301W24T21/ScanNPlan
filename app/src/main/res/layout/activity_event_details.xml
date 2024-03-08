@@ -2,7 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/event_activity_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="334dp"
+        android:layout_marginBottom="23dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/baseline_qr_code_24" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -14,13 +26,15 @@
 
     <TextView
         android:id="@+id/event_name_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="213dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
+        android:layout_marginStart="27dp"
         android:layout_marginTop="17dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="15dp"
+        android:layout_toStartOf="@+id/floatingEditButton"
         android:layout_toEndOf="@+id/button_back"
         android:text="Event Name"
         android:textSize="24sp" />
@@ -50,10 +64,10 @@
         android:id="@+id/qr_button_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/qr_promo_event"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="108dp"
         android:text="Generate QR" />
 
     <Button
@@ -68,12 +82,26 @@
 
     <ImageView
         android:id="@+id/qr_code_image_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/qr_button_event"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"/>
+        android:layout_width="168dp"
+        android:layout_height="163dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="42dp"
+        android:layout_toStartOf="@+id/qr_button_event"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="3dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/baseline_edit_24" />
 
 
 </RelativeLayout>
