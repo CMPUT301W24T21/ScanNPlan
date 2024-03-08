@@ -16,8 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 
 public class ProfileDetailsFragment extends Fragment {
-    private TextView appBar;
-    private ListView listEvents;
     private Profile profile;
 
     public ProfileDetailsFragment(Profile profile) {
