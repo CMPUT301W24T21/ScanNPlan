@@ -15,24 +15,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+/**
+ * This activity allows the user to select an image from the device's gallery and
+ * display it on the screen. The selected image URI can be returned to the previous activity.
+ */
 public class DownloadPoster extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1;
-
     private TextView textTargetUri;
     private ImageView targetImage;
 
+    /**
+     * Called when the activity is first created. This method initializes the activity's UI components,
+     * sets up click listeners for buttons, and defines their behavior when clicked.
+     *
+     * @param savedInstanceState A Bundle object containing the activity's previously saved state,
+     *                             or null if the activity is being started fresh.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download_poster_activity);
 
+        // Initializing UI components
         textTargetUri = findViewById(R.id.targeturi);
         targetImage = findViewById(R.id.targetimage);
         Button buttonLoad = findViewById(R.id.load_image);
         Button backButton = findViewById(R.id.back_button);
         Button buttonSave = findViewById(R.id.button_ok);
 
+        // On click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +52,7 @@ public class DownloadPoster extends AppCompatActivity {
             }
         });
 
+        // On click listener for the load button
         buttonLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +63,9 @@ public class DownloadPoster extends AppCompatActivity {
             }
         });
 
+        // On click listener for the save button
         buttonSave.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // Send back the selected image URI to the previous activity
@@ -67,6 +82,16 @@ public class DownloadPoster extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Called when a launched activity exits, giving the original requestCode, the resultCode
+     * is returned, and any additional data from it.
+     *
+     * @param requestCode The integer request code originally supplied to startActivityForResult(),
+     *                    allowing identification of who this result came from.
+     * @param resultCode  The integer result code returned by the child activity through its setResult().
+     * @param data        An Intent, which can return result data to the caller
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,6 +106,10 @@ public class DownloadPoster extends AppCompatActivity {
         }
     }
 
+    /**
+     * Load the selected image into the ImageView using the Glide library.
+     * @param imageUri The URI of the selected image.
+     */
     private void loadImage(Uri imageUri) {
         try {
             Glide.with(this)
