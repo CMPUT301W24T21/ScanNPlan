@@ -18,8 +18,8 @@ public class Event {
         this.date = date;
     }
 
-    public Event(String name, boolean promo, boolean reuse, String time, String date,
-                 String location, String details) {
+
+    public Event(String name, String date, String time, String location, String details, boolean promo, boolean reuse) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
