@@ -142,7 +142,7 @@ public class OrganizerActivity extends AppCompatActivity {
     }
 
     /**
-     * Add a new event to the list and Firebase database.
+     * Adding a new event to the list and Firebase database.
      *
      * @param event The event to add.
      */
