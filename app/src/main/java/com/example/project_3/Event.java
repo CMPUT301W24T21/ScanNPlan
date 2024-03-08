@@ -31,6 +31,10 @@ public class Event {
         this.image = image;
     }
 
+    public Event(String name, String date) {
+        this.name = name;
+        this.date = date;
+    }
     public Event(String name, String date, String time,
                 String location, String details) {
             this.name = name;
