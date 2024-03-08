@@ -5,8 +5,11 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,12 +97,15 @@ public class BrowseProfilesFragment extends Fragment {
         });
         listProfiles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProfileDetailsFragment fragment = new ProfileDetailsFragment();
-                //open the fragment and add it to the stack on the container
-                getChildFragmentManager().beginTransaction().replace(R.id.admin_fragment_container, fragment).addToBackStack(null).commit();
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Profile selected_profile = (Profile) profilesNames.get(position);
+                ProfileDetailsFragment fragment = new ProfileDetailsFragment(selected_profile);
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.admin_profiles_fragment_container, fragment).addToBackStack(null).commit();
+                view.findViewById(R.id.rest_profiles_list).setVisibility(View.INVISIBLE);
             }
-        });
+            });
+
         return view;
 
     }

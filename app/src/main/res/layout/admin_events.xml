@@ -6,27 +6,35 @@
     android:orientation="vertical"
     android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include layout="@layout/global_top_appbar"/>
-
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/list_events_text"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/admin_events_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="List of Events"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/appbar">
-
-    </com.google.android.material.textview.MaterialTextView>
-
-    <ListView
-        android:id="@+id/list_events_admin"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/REST_OF_PAGE_events_list"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/list_events_text">
-    </ListView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/global_top_appbar"/>
 
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/list_events_text"
+            style="@style/MaterialAlertDialog.Material3.Body.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="List of Events"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/appbar">
+        </com.google.android.material.textview.MaterialTextView>
+
+        <ListView
+            android:id="@+id/list_events_admin"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/list_events_text">
+        </ListView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

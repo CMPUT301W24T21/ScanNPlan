@@ -44,7 +44,7 @@ public class ListProfileArrayAdapter extends ArrayAdapter{
         username.setText(profile.getName());
         assert profile != null;
         //delete button still needs implementation
-        MaterialButton back = view.findViewById(R.id.delete_button_profiles_list);
+        //MaterialButton deletes = view.findViewById(R.id.delete_button_profiles_list);
         //image.setImageIcon(event.getPoster());
         return view;
     }

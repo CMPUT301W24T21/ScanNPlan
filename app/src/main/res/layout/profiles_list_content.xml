@@ -13,31 +13,37 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars">
     </ImageView>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profiles_list_username"
+        style="@style/MaterialAlertDialog.Material3.Body.Text"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:layout_marginLeft="52dp"
+        android:gravity="center"
         android:text="@string/username"
         android:textAlignment="center"
-        android:gravity="center"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
-        app:layout_constraintStart_toEndOf="@+id/profiles_list_image"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toEndOf="@id/profiles_list_image"
         app:layout_constraintTop_toTopOf="parent">
+
     </com.google.android.material.textview.MaterialTextView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/delete_button_profiles_list"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/delete"
-        app:layout_constraintLeft_toRightOf="@id/profiles_list_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="27dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Delete"
+        app:layout_constraintLeft_toRightOf="@id/profiles_list_username"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.google.android.material.button.MaterialButton>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
