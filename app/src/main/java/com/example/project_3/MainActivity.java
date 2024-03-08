@@ -33,16 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean doneAsync = false;
 
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
-/*
-        // create a new user and set its id to be the ANDROID_ID
-        //userId = Settings.Secure.ANDROID_ID;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         profileId = "Test1";
-        //user = new User();
-
-        // get the user's profile details from firestore
-        db =FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         profilesRef = db.collection("Profiles");
         profilesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -53,35 +48,25 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 if (querySnapshots != null) {
-
-                    for (QueryDocumentSnapshot doc: querySnapshots) {
+                    for (QueryDocumentSnapshot doc : querySnapshots) {
                         String profileDocId = doc.getId();
                         if (profileDocId.equals(profileId)) {
                             profileDocDetails = doc.getData();
-                            //Log.d("DEBUG", "FinalValue" + profileDocDetails);
                             user = new User(new Profile(null,
                                     (String) profileDocDetails.get("name"),
                                     (String) profileDocDetails.get("contact_info"),
                                     (String) profileDocDetails.get("social_link"), (String) profileDocDetails.get("profile_type")));
                             user.getUserProfile().setProfileID(doc.getId());
+                            //get the id and from here start the valid intent lol?
+                            //please work????
 
+                            // Start the AttendeeIntent here
+                            AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
+                            startActivity(AttendeeIntent);
                         }
-
                     }
                 }
             }
         });
-*/
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        AttendeeIntent = new Intent(this, AttendeeActivity.class);
-        AdminIntent = new Intent(this, AdminActivity.class);
-        OrganizerIntent = new Intent(this, OrganizerActivity.class);
-
-        //This line starts the attendee activity
-//        startActivity(AdminIntent);
-        startActivity(AttendeeIntent);
-//        startActivity(OrganizerIntent);
-
     }
 }
