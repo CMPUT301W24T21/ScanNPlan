@@ -83,7 +83,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                     //user = new User(name, contactInfo, socialLink);
                     String profileType = documentSnapshot.getString("profile_type");
                     user = new User(new Profile(name, contactInfo, socialLink, profileType));
->>
+
 
                     nameTextView.setText(name);
                     contactInfoTextView.setText(contactInfo);
