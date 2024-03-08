@@ -1,5 +1,13 @@
 package com.example.project_3;
 
+import android.media.Image;
+
+import com.google.type.DateTime;
+
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Event {
     private String name;
     private Boolean promo;
@@ -9,17 +17,10 @@ public class Event {
     private String date;
     private String location;
     private String details;
-    //changes to fix previous commit -Paul
+    private String image;
 
-
-
-    public Event(String name, String date) {
-        this.name = name;
-        this.date = date;
-    }
-
-
-    public Event(String name, String date, String time, String location, String details, boolean promo, boolean reuse) {
+    public Event(String name, String date, String time, String location,
+                 String details, boolean promo, boolean reuse, String image) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
@@ -27,34 +28,25 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
+        this.image = image;
     }
 
     public Event(String name, String date, String time,
-                 String location, String details) {
-        this.name = name;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.details = details;
+                String location, String details) {
+            this.name = name;
+            this.date = date;
+            this.time = time;
+            this.location = location;
+            this.details = details;
+        }
+
+    public String getImage() {
+        return image;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getTime() {
         return this.time;

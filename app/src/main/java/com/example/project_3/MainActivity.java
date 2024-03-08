@@ -74,15 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AttendeeIntent = new Intent(this, AttendeeActivity.class);
-        AdminIntent = new Intent(this, AdminActivity.class);
-//        OrganizerIntent = new Intent(this, OrganizerActivity.class);
+//        AttendeeIntent = new Intent(this, AttendeeActivity.class);
+//        AdminIntent = new Intent(this, AdminActivity.class);
+        OrganizerIntent = new Intent(this, OrganizerActivity.class);
 
         //This line starts the attendee activity
 //        startActivity(AttendeeIntent);
         startActivity(AttendeeIntent);
 //        startActivity(OrganizerIntent);
-
 
     }
 }
