@@ -17,8 +17,10 @@
         android:id="@+id/events_list_title"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:layout_marginLeft="52dp"
         android:text="Event Title"
         android:textAlignment="center"
+        android:textSize="15sp"
         android:gravity="center"
         style="@style/MaterialAlertDialog.Material3.Body.Text"
         app:layout_constraintStart_toEndOf="@+id/events_list_image"
@@ -27,13 +29,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_button_events_list"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/delete"
-        app:layout_constraintLeft_toRightOf="@id/events_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="27dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Delete"
+        app:layout_constraintLeft_toRightOf="@id/events_list_title"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.google.android.material.button.MaterialButton>
