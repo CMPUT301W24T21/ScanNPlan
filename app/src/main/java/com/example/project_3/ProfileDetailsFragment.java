@@ -12,9 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileDetailsFragment extends Fragment {
     private Profile profile;
+    private FirebaseFirestore db;
+    private CollectionReference profilesref;
 
     public ProfileDetailsFragment(Profile profile) {
         this.profile = profile;
@@ -45,9 +49,20 @@ public class ProfileDetailsFragment extends Fragment {
         TextView social_link = view.findViewById(R.id.homepage_editText);
         social_link.setText(profile.getSocial_link());
         TextView contact_info = view.findViewById(R.id.contact_info_editText);
-        contact_info.setText(profile.getSocial_link());
-
+        contact_info.setText(profile.getContact_info());
         MaterialButton back = view.findViewById(R.id.back_button);
+        MaterialButton deletes = view.findViewById(R.id.delete_profile_button);
+        db = FirebaseFirestore.getInstance();
+        profilesref = db.collection("Profiles");
+        //goes through the collection and identifies the document with a matching ID and deletes it
+        deletes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profilesref.document(profile.getProfileID()).delete();
+                getParentFragmentManager().popBackStack();
+                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+            }
+        });
         //if back is clicked pop the stack and go back to the activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         profileId = "Test1";
         db = FirebaseFirestore.getInstance();
         profilesRef = db.collection("Profiles");
@@ -71,4 +70,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-
