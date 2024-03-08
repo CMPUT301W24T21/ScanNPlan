@@ -15,6 +15,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+/**
+ * A fragment for editing the attendee's profile, displaying name, contact info, and social links.
+ */
 
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
@@ -23,6 +26,15 @@ public class AttendeeEditProfileFragment extends Fragment {
     private TextView socialLinkTextView;
 
     private User user;
+
+    /**
+     * Inflates the layout for the fragment and initializes UI elements.
+     * Retrieves and displays the user's profile information from Firestore.
+     * @param inflater The layout inflater.
+     * @param container The parent view group.
+     * @param savedInstanceState The saved instance state bundle.
+     * @return The inflated view for the fragment.
+     */
 
     @Nullable
     @Override
@@ -34,9 +46,6 @@ public class AttendeeEditProfileFragment extends Fragment {
         nameTextView = view.findViewById(R.id.profile_name_editText);
         socialLinkTextView= view.findViewById(R.id.homepage_editText);
         contactInfoTextView = view.findViewById(R.id.contact_info_editText);
-
-        // Assuming user's email is passed as an argument to the fragment
-        //String userEmail = getArguments().getString("email");
 
         db.collection("Profiles").document("Test's Profile").addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -50,8 +59,12 @@ public class AttendeeEditProfileFragment extends Fragment {
                     String name = documentSnapshot.getString("name");
                     String contactInfo = documentSnapshot.getString("contact_info");
                     String socialLink = documentSnapshot.getString("social_link");
+
+
+                    //user = new User(name, contactInfo, socialLink);
                     String profileType = documentSnapshot.getString("profile_type");
                     user = new User(new Profile(name, contactInfo, socialLink, profileType));
+>>
 
                     nameTextView.setText(name);
                     contactInfoTextView.setText(contactInfo);
