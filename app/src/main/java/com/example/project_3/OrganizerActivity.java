@@ -44,6 +44,14 @@ public class OrganizerActivity extends AppCompatActivity {
     private EventArrayAdapter eventArrayAdapter;
     private static final int ADD_EVENT_REQUEST = 1;
 
+    /**
+     * Called when the activity is first created. This method initializes the activity by setting its layout,
+     * initializing Firebase, setting up UI components, setting click listeners for buttons, and listening for
+     * changes in the Firebase database.
+     *
+     * @param savedInstanceState A Bundle object containing the activity's previously saved state,
+     *                             or null if the activity is being started fresh.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +181,11 @@ public class OrganizerActivity extends AppCompatActivity {
     private String imageUri;
 
     /**
-     * This method displays a dialog for adding a new event
+     * Displays a dialog for adding a new event. The dialog includes input fields for event details
+     * such as name, date, time, location, and details. Additionally, it provides checkboxes for marking
+     * the event as a promotional event or for indicating if the event can be reused. The dialog also
+     * allows the user to attach a poster image to the event. After filling in the details and confirming,
+     * the new event is added to the list.
      */
     private void showAddEventDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
