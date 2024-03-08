@@ -20,11 +20,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class OrganizerActivity extends AppCompatActivity {
     private ListView eventList;
     private ArrayList<Event> eventDataList;
     private EventArrayAdapter eventArrayAdapter;
+    private static final int ADD_EVENT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class OrganizerActivity extends AppCompatActivity {
         eventArrayAdapter = new EventArrayAdapter(this, eventDataList);
         eventList.setAdapter(eventArrayAdapter);
 
+        // This info is brought up to the Activity once you click on the event
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,6 +61,11 @@ public class OrganizerActivity extends AppCompatActivity {
                 if (selectedEvent != null) {
                     Intent intent = new Intent(OrganizerActivity.this, EventDetailsActivity.class);
                     intent.putExtra("eventName", selectedEvent.getName());
+                    intent.putExtra("eventLocation", selectedEvent.getLocation());
+                    intent.putExtra("eventDate", selectedEvent.getDate());
+                    intent.putExtra("eventTime", selectedEvent.getTime());
+                    intent.putExtra("imageUri", selectedEvent.getImage());
+
                     startActivity(intent);
                 }
             }
@@ -81,15 +90,17 @@ public class OrganizerActivity extends AppCompatActivity {
                 if (querySnapshots != null) {
                     eventDataList.clear();
                     for (QueryDocumentSnapshot doc : querySnapshots) {
-                        String event = doc.getId();
+                        String event = doc.getId();// for displaying event name in ListView
                         boolean promo = false;
                         boolean reuse = false;
                         String date = "No Date";
                         String time = "No Time";
-                        String location = "No Location";
+                        String location = doc.getString("Location");// for displaying location in ListView
                         String details = "No Details";
-                        eventDataList.add(new Event(event, promo, reuse,
-                                date, time, location, details));
+                        String imageUri = doc.getString("Image");// for displaying location in ListView
+
+                        eventDataList.add(new Event(event, date, time, location,
+                                details, promo, reuse, imageUri));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
@@ -103,12 +114,16 @@ public class OrganizerActivity extends AppCompatActivity {
 
         // Prepare data to be stored in Firebase
         HashMap<String, Object> data = new HashMap<>();
-        data.put("Promo:", event.getPromo());
-        data.put("Reuse:", event.getReuse());
-        data.put("Date:", event.getDate());
-        data.put("Time:", event.getTime());
+        data.put("Promo", event.getPromo());
+        data.put("Reuse", event.getReuse());
+        data.put("Date", event.getDate());
+        data.put("Time", event.getTime());
         data.put("Location", event.getLocation());
         data.put("Details", event.getDetails());
+        data.put("Image", event.getImage());
+
+        // Add the Image field
+
         // Store data in Firebase
         eventsRef.document(event.getName()).set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -124,7 +139,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    private String imageUri;
     private void showAddEventDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_add_event, null);
@@ -139,6 +154,7 @@ public class OrganizerActivity extends AppCompatActivity {
 
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
+
         promoCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 buttonPoster.setVisibility(View.VISIBLE);
@@ -149,9 +165,18 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // adding a download poster activity
+        buttonPoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrganizerActivity.this, DownloadPoster.class);
+                startActivityForResult(intent, ADD_EVENT_REQUEST);
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
-                .setTitle("Add Event")
+                .setTitle("Add an Event")
                 .setPositiveButton("OK", (dialog, which) -> {
                     String eventName = addEventEditText.getText().toString();
                     boolean promo_check = promoCheck.isChecked();
@@ -162,14 +187,25 @@ public class OrganizerActivity extends AppCompatActivity {
                     String eventDetails = addEventEditDetails.getText().toString();
 
                     if (!eventName.isEmpty()) {
-                        Event newEvent = new Event(eventName, promo_check, reuse_check,
-                                eventDate, eventTime, eventLocation, eventDetails);
+                        Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
+                                eventDetails, promo_check, reuse_check, "");
                         newEvent.setPromo(promo_check);
                         newEvent.setReuse(reuse_check);
+                        newEvent.setImage(imageUri);
                         addNewEvent(newEvent);
                     }
+                    eventArrayAdapter.notifyDataSetChanged();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_EVENT_REQUEST && resultCode == RESULT_OK) {
+            if (data != null) {
+                imageUri = data.getStringExtra("imageUri"); // Retrieve the image URI
+            }
+        }
     }
 }
