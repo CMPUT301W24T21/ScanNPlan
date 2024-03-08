@@ -19,8 +19,8 @@ public class Event {
     private String details;
     private String image;
 
-    public Event(String name, boolean promo, boolean reuse, String time, String date,
-          String location, String details, String image) {
+    public Event(String name, String date, String time, String location,
+                 String details, boolean promo, boolean reuse, String image) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;

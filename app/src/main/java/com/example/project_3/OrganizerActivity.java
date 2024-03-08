@@ -99,8 +99,8 @@ public class OrganizerActivity extends AppCompatActivity {
                         String details = "No Details";
                         String imageUri = doc.getString("Image");// for displaying location in ListView
 
-                        eventDataList.add(new Event(event, promo, reuse,
-                                date, time, location, details,imageUri));
+                        eventDataList.add(new Event(event, date, time, location,
+                                details, promo, reuse, imageUri));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
@@ -187,8 +187,8 @@ public class OrganizerActivity extends AppCompatActivity {
                     String eventDetails = addEventEditDetails.getText().toString();
 
                     if (!eventName.isEmpty()) {
-                        Event newEvent = new Event(eventName, promo_check, reuse_check,
-                                eventDate, eventTime, eventLocation, eventDetails, "");
+                        Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
+                                eventDetails, promo_check, reuse_check, "");
                         newEvent.setPromo(promo_check);
                         newEvent.setReuse(reuse_check);
                         newEvent.setImage(imageUri);
