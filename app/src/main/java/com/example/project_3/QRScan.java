@@ -12,9 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+/**
+ * Activity for scanning QR codes and barcodes using the ZXing library.
+ */
 public class QRScan extends AppCompatActivity implements View.OnClickListener {
     Button scanBtn;
     TextView messageText, messageFormat;
+
+    /**
+     * Initializes the activity, sets up the layout, and initializes UI elements.
+     * @param savedInstanceState The saved instance state bundle.
+     */
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +43,12 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+
+    /**
+     * Handles the click event for the scan button, initiating the scan process.
+     * @param v The view that was clicked (scan button).
+     */
+
     @Override
     public void onClick(View v) {
         // we need to create the object
@@ -42,6 +59,14 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         intentIntegrator.setOrientationLocked(true);
         intentIntegrator.initiateScan();
     }
+
+
+    /**
+     * Handles the result of the scan, displaying the scanned content and format.
+     * @param requestCode The request code for the scan activity.
+     * @param resultCode The result code of the scan activity.
+     * @param data The intent data containing the scan result.
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

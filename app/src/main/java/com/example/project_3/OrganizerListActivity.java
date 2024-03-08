@@ -5,5 +5,5 @@ import androidx.appcompat.app.AppCompatActivity;
 
 // for the list of attendees who have checked in
 // to be implemented later
-public class AttendeeListActivity extends AppCompatActivity {
+public class OrganizerListActivity extends AppCompatActivity {
 }
