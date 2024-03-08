@@ -53,4 +53,8 @@ public class Profile {
     public void addEvent(Event event) {
 
     }
+
+    public void setProfileID(String profileID) {
+        ProfileID = profileID;
+    }
 }
