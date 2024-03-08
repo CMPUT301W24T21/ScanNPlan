@@ -17,10 +17,11 @@ public class Event {
     private String date;
     private String location;
     private String details;
+    private String image;
 
 
     public Event(String name, boolean promo, boolean reuse, String time, String date,
-          String location, String details) {
+          String location, String details, String image) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
@@ -28,6 +29,10 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
+        this.image = image;
+    }
+    public Event(String image) {
+        this.image = image;
     }
 
     public Event(String name, String date, String time,
@@ -38,6 +43,14 @@ public class Event {
             this.location = location;
             this.details = details;
         }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getTime() {
         return this.time;

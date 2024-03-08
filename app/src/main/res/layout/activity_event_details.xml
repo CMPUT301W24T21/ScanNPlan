@@ -4,41 +4,66 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#26202C"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <TextView
         android:id="@+id/event_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="Event Name" />
+        android:layout_alignBottom="@+id/materialToolbar"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@+id/button_back"
+        android:text="Event Name"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/targetImage"
+        android:layout_width="288dp"
+        android:layout_height="356dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="220dp" />
 
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/event_name_text_view"
-        android:layout_marginTop="-70dp"
+        android:layout_alignBottom="@+id/materialToolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="7dp"
         android:text="Back" />
 
     <Button
         android:id="@+id/qr_button_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_back"
+        android:layout_above="@+id/qr_promo_event"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="26dp"
         android:text="Generate QR" />
 
     <Button
         android:id="@+id/qr_promo_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_back"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="126dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="22dp"
+        android:layout_marginBottom="19dp"
         android:text="Promo QR" />
 
     <ImageView
@@ -49,5 +74,6 @@
         android:layout_below="@id/qr_button_event"
         android:layout_marginTop="20dp"
         android:visibility="gone"/>
+
 
 </RelativeLayout>

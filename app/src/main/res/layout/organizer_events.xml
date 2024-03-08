@@ -10,7 +10,7 @@
     <ListView
         android:id="@+id/event_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="530dp"
         android:layout_above="@id/fab_add_event" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,5 +21,32 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#26202C"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:text="Back" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/materialToolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="14dp"
+        android:text="List of Events"
+        android:textSize="25dp" />
 
 </RelativeLayout>
