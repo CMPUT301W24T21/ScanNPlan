@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,9 +43,9 @@ public class ProfileDetailsFragment extends Fragment {
         TextView name = view.findViewById(R.id.profile_name_editText);
         name.setText(profile.getName());
         TextView social_link = view.findViewById(R.id.homepage_editText);
-        social_link.setText(profile.getSocialLink());
+        social_link.setText(profile.getSocial_link());
         TextView contact_info = view.findViewById(R.id.contact_info_editText);
-        contact_info.setText(profile.getContactInfo());
+        contact_info.setText(profile.getSocial_link());
 
         MaterialButton back = view.findViewById(R.id.back_button);
         //if back is clicked pop the stack and go back to the activity
