@@ -62,4 +62,7 @@ public class Profile {
     public void setProfileID(String profileID) {
         ProfileID = profileID;
     }
+    public String getProfileID(){
+        return this.ProfileID;
+    }
 }

@@ -38,6 +38,7 @@
         android:layout_marginLeft="44dp"
         android:layout_marginTop="27dp"
         android:focusable="false"
+        android:clickable="false"
         android:focusableInTouchMode="false"
         android:text="Delete"
         app:layout_constraintLeft_toRightOf="@id/profiles_list_username"

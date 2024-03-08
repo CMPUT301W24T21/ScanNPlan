@@ -88,8 +88,8 @@ public class OrganizerActivity extends AppCompatActivity {
                         String time = "No Time";
                         String location = "No Location";
                         String details = "No Details";
-                        eventDataList.add(new Event(event, promo, reuse,
-                                date, time, location, details));
+                        ventDataList.add(new Event(event, date, time, location,
+                                details, promo, reuse, imageUri));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }

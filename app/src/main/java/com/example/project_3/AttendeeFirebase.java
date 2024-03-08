@@ -40,7 +40,7 @@ public class AttendeeFirebase extends AppCompatActivity {
         eventNamesAdapter = new EventArrayAdapter(this, eventNamesList);
         eventListView.setAdapter(eventNamesAdapter);
 
-        user = new User(); // Assuming "John Doe" is the user's name
+        //user = new User(); // Assuming "John Doe" is the user's name
 
         eventsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -58,7 +58,7 @@ public class AttendeeFirebase extends AppCompatActivity {
                         Event event = new Event(eventName, date); // Use the appropriate constructor
 
                         // Add event to the user
-                        user.addEvent(event);
+                        //user.addEvent(event);
 
                         eventNamesList.add(event);
                     }
