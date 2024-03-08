@@ -63,8 +63,16 @@ public class AttendeeEventDetailsFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final boolean[] isProcessingClick = {true};
                 getParentFragmentManager().popBackStack();
                 getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isProcessingClick[0] = false;
+                    }
+                }, 500); // Adjust the delay time as needed
+
             }
 
 
