@@ -18,6 +18,11 @@ public class Profile {
         this.contact_info = contact_info;
         this.social_link = social_link;
     }
+    public Profile(String name, String contact_info, String social_link){
+        this.name = name;
+        this.contact_info = contact_info;
+        this.social_link = social_link;
+    }
 
     public Icon getProfile_picture() {
         return profile_picture;

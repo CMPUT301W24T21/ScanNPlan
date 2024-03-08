@@ -9,6 +9,7 @@ public class Event {
     private String date;
     private String location;
     private String details;
+    //changes to fix previous commit -Paul
 
 
 
@@ -16,6 +17,7 @@ public class Event {
         this.name = name;
         this.date = date;
     }
+
 
     public Event(String name, String date, String time, String location, String details, boolean promo, boolean reuse) {
         this.name = name;
@@ -28,13 +30,22 @@ public class Event {
     }
 
     public Event(String name, String date, String time,
-                String location, String details) {
-            this.name = name;
-            this.date = date;
-            this.time = time;
-            this.location = location;
-            this.details = details;
-        }
+                 String location, String details) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
