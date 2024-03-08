@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -80,12 +81,16 @@ public class BrowseEventsFragment extends Fragment {
                 }
             }
         });
-        /*listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Event selected_event = (Event) eventNamesList.get(position);
+                AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event);
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.admin_events_fragment_container, fragment).addToBackStack(null).commit();
+                view.findViewById(R.id.rest_events_list).setVisibility(View.INVISIBLE);
             }
-        });*/
+            });
 
 
         //if back is clicked pop the stack and go back to the activity
