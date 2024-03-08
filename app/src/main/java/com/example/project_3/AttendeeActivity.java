@@ -10,6 +10,9 @@ import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,8 @@ public class AttendeeActivity extends AppCompatActivity {
     private ListView eventList;
     private EventArrayAdapter eventAdapter;
 
+    private ExtendedFloatingActionButton editProfileButton;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,15 @@ public class AttendeeActivity extends AppCompatActivity {
         setContentView(R.layout.attendee_homepage);
         this.openCameraButton = findViewById(R.id.openCameraButton);
         QRIntent = new Intent(this, QRScan.class);
+
+        editProfileButton = findViewById(R.id.EditProfile);
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleRestOfPageVisibility();
+                replaceFragment(new AttendeeEditProfileFragment());
+            }
+        });
 
 
         openCameraButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +70,23 @@ public class AttendeeActivity extends AppCompatActivity {
         eventList.setAdapter(eventAdapter);
         eventList.setOnItemClickListener(listSelector);
 
+    }
+
+    private void toggleRestOfPageVisibility() {
+        View restOfPage = findViewById(R.id.REST_OF_PAGE);
+        if (restOfPage.getVisibility() == View.VISIBLE) {
+            restOfPage.setVisibility(View.INVISIBLE);
+        } else {
+            restOfPage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // Added replaceFragment method
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.attendee_fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
