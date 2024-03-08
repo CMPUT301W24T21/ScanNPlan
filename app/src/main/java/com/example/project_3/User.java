@@ -6,4 +6,8 @@ public class User {
     public User(Profile profile) {
         this.userProfile = profile;
     };
+
+    public Profile getUserProfile() {
+        return userProfile;
+    }
 }

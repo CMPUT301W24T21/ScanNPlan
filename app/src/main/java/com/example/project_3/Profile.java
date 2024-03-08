@@ -11,12 +11,14 @@ public class Profile {
     private String contact_info;
     private String social_link;
     private List<Event> events;
+    private String profileType;
 
-    public Profile(Icon image, String name, String contact_info, String social_link){
+    public Profile(Icon image, String name, String contact_info, String social_link, String profileType){
         this.profile_picture = image;
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;
+        this.profileType = profileType;
     }
     public Profile(String name, String contact_info, String social_link){
         this.name = name;
@@ -62,7 +64,20 @@ public class Profile {
     public void setProfileID(String profileID) {
         ProfileID = profileID;
     }
-    public String getProfileID(){
-        return this.ProfileID;
+
+    public String getProfileID() {
+        return ProfileID;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public String getProfileType() {
+        return profileType;
+    }
+
+    public void setProfileType(String profileType) {
+        this.profileType = profileType;
     }
 }

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.CAMERA" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -46,8 +45,10 @@
         <activity android:name=".QRScan" />
         <!-- Add EventDetailsActivity here -->
         <activity android:name=".EventDetailsActivity" />
+        <!-- Add OrganizerActivity here -->
         <activity android:name=".OrganizerActivity"/>
-
+        <!-- Add DownloadPoster here -->
+        <activity android:name=".DownloadPoster"/>
 
         <activity
             android:name=".AttendeeActivity"
