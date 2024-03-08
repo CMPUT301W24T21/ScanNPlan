@@ -20,10 +20,11 @@ public class Profile {
         this.social_link = social_link;
         this.profileType = profileType;
     }
-    public Profile(String name, String contact_info, String social_link){
+    public Profile(String name, String contact_info, String social_link, String profileType){
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;
+        this.profileType = profileType;
     }
 
     public Icon getProfile_picture() {

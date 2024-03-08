@@ -50,8 +50,8 @@ public class AttendeeEditProfileFragment extends Fragment {
                     String name = documentSnapshot.getString("name");
                     String contactInfo = documentSnapshot.getString("contact_info");
                     String socialLink = documentSnapshot.getString("social_link");
-
-                    user = new User(name, contactInfo, socialLink);
+                    String profileType = documentSnapshot.getString("profile_type");
+                    user = new User(new Profile(name, contactInfo, socialLink, profileType));
 
                     nameTextView.setText(name);
                     contactInfoTextView.setText(contactInfo);
