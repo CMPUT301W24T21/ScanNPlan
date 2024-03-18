@@ -21,6 +21,9 @@ public class Profile {
             byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
             this.profile_picture = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
         }
+        else{
+            this.profile_picture= null;
+        }
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;

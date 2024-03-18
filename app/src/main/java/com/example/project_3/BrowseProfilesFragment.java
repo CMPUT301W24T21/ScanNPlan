@@ -101,6 +101,9 @@ public class BrowseProfilesFragment extends Fragment {
                         String contact_info = doc.getString("contact_info");
                         String profileType = doc.getString("profile_type");
                         String profile_picture = doc.getString("profile_picture");
+                        if (profile_picture == null) {
+                            profile_picture = "";
+                        }
                         Profile profile;
                         profile = new Profile(profile_picture, name, contact_info, social_link, profileType);
                         profile.setProfileID(doc.getId());// Use the appropriate constructor
