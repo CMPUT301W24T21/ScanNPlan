@@ -1,6 +1,7 @@
 package com.example.project_3;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class AttendeeEditProfileFragment extends Fragment {
     private TextView appBarView;
 
     private User user;
+    private String profileID;
 
     /**
      * Inflates the layout for the fragment and initializes the UI elements.
@@ -50,6 +52,9 @@ public class AttendeeEditProfileFragment extends Fragment {
         nameTextView = view.findViewById(R.id.profile_name_editText);
         socialLinkTextView= view.findViewById(R.id.homepage_editText);
         contactInfoTextView = view.findViewById(R.id.contact_info_editText);
+
+        profileID = Settings.Secure.getString(this.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+
 
 
         // Assuming user's email is passed as an argument to the fragment
@@ -74,7 +79,7 @@ public class AttendeeEditProfileFragment extends Fragment {
         });
 
 
-        db.collection("Profiles").document("Test's Profile").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection("Profiles").document(profileID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
