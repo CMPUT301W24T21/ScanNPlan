@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,13 +20,6 @@
         android:layout_marginBottom="531dp"
         android:text="@string/hello" />
 
-    <Button
-        android:id="@+id/load_image"
-        android:layout_width="249dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="579dp"
-        android:text="Load Image" />
 
     <Button
         android:id="@+id/button_ok"
@@ -50,7 +44,18 @@
         android:layout_height="356dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="74dp"
-        android:layout_marginBottom="136dp" />
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="130dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_Load_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="175dp"
+        android:layout_marginBottom="585dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/baseline_download_24" />
 
 </RelativeLayout>
