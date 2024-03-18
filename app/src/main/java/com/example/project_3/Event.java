@@ -1,13 +1,5 @@
 package com.example.project_3;
 
-import android.media.Image;
-
-import com.google.type.DateTime;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class Event {
     private String name;
     private Boolean promo;

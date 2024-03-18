@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/dialog_add_event_id">
 
     <EditText
         android:id="@+id/add_event_editText"
@@ -82,6 +83,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_time_editText"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="77dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="OK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_details_editText" />
 
     <CheckBox
         android:id="@+id/promoChecker"

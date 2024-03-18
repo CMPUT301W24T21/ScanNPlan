@@ -152,6 +152,7 @@ public class OrganizerActivity extends AppCompatActivity {
 
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
+        Button customOkButton = view.findViewById(R.id.ok_button);
 
         promoCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -163,6 +164,7 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // Setting click listener for the poster button to start download poster activity
         // adding a download poster activity
         buttonPoster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,28 +177,39 @@ public class OrganizerActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
                 .setTitle("Add an Event")
-                .setPositiveButton("OK", (dialog, which) -> {
-                    String eventName = addEventEditText.getText().toString();
-                    boolean promo_check = promoCheck.isChecked();
-                    boolean reuse_check = reuseCheck.isChecked();
-                    String eventDate = addEventEditDate.getText().toString();
-                    String eventTime = addEventEditTime.getText().toString();
-                    String eventLocation = addEventEditLocation.getText().toString();
-                    String eventDetails = addEventEditDetails.getText().toString();
+                .setNegativeButton("Cancel", null); // Set any text for now
 
-                    if (!eventName.isEmpty()) {
-                        Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
-                                eventDetails, promo_check, reuse_check, "");
-                        newEvent.setPromo(promo_check);
-                        newEvent.setReuse(reuse_check);
-                        newEvent.setImage(imageUri);
-                        addNewEvent(newEvent);
-                    }
-                    eventArrayAdapter.notifyDataSetChanged();
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+        AlertDialog alertDialog = builder.create();
+
+        customOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String eventName = addEventEditText.getText().toString();
+                boolean promo_check = promoCheck.isChecked();
+                boolean reuse_check = reuseCheck.isChecked();
+                String eventDate = addEventEditDate.getText().toString();
+                String eventTime = addEventEditTime.getText().toString();
+                String eventLocation = addEventEditLocation.getText().toString();
+                String eventDetails = addEventEditDetails.getText().toString();
+
+                if (!eventName.isEmpty()) {
+                    Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
+                            eventDetails, promo_check, reuse_check, "");
+                    newEvent.setPromo(promo_check);
+                    newEvent.setReuse(reuse_check);
+                    newEvent.setImage(imageUri);
+                    addNewEvent(newEvent);
+                }
+                eventArrayAdapter.notifyDataSetChanged();
+
+                // Dismiss the dialog after handling the OK button click
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -32,41 +32,49 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, Object> profileDocDetails;
     private boolean doneAsync = false;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        profileId = "Test1";
-        db = FirebaseFirestore.getInstance();
-        profilesRef = db.collection("Profiles");
-        profilesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot querySnapshots,
-                                @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.e("Firestore", error.toString());
-                    return;
-                }
-                if (querySnapshots != null) {
-                    for (QueryDocumentSnapshot doc : querySnapshots) {
-                        String profileDocId = doc.getId();
-                        if (profileDocId.equals(profileId)) {
-                            profileDocDetails = doc.getData();
-                            user = new User(new Profile(null,
-                                    (String) profileDocDetails.get("name"),
-                                    (String) profileDocDetails.get("contact_info"),
-                                    (String) profileDocDetails.get("social_link"), (String) profileDocDetails.get("profile_type")));
-                            user.getUserProfile().setProfileID(doc.getId());
-                            //get the id and from here start the valid intent lol?
-                            //please work????
 
-                            // Start the AttendeeIntent here
-                            AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
-                            startActivity(AttendeeIntent);
-                        }
-                    }
-                }
-            }
-        });
+//        AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
+//        startActivity(AttendeeIntent);
+
+//        OrganizerIntent
+
+        OrganizerIntent = new Intent(MainActivity.this, OrganizerActivity.class);
+        startActivity(OrganizerIntent);
+
+//        profileId = "Test1";
+//        db = FirebaseFirestore.getInstance();
+//        profilesRef = db.collection("Profiles");
+//        profilesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot querySnapshots,
+//                                @Nullable FirebaseFirestoreException error) {
+//                if (error != null) {
+//                    Log.e("Firestore", error.toString());
+//                    return;
+//                }
+//                if (querySnapshots != null) {
+//                    for (QueryDocumentSnapshot doc : querySnapshots) {
+//                        String profileDocId = doc.getId();
+//                        if (profileDocId.equals(profileId)) {
+//                            profileDocDetails = doc.getData();
+//                            user = new User(new Profile(null,
+//                                    (String) profileDocDetails.get("name"),
+//                                    (String) profileDocDetails.get("contact_info"),
+//                                    (String) profileDocDetails.get("social_link"), (String) profileDocDetails.get("profile_type")));
+//                            user.getUserProfile().setProfileID(doc.getId());
+//                            //get the id and from here start the valid intent lol?
+//                            //please work????
+//
+//                            // Start the AttendeeIntent here
+//                            AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
+//                            startActivity(AttendeeIntent);
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 }
