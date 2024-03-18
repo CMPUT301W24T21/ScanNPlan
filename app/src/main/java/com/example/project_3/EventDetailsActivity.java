@@ -27,6 +27,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+/**
+ * Activity displaying details of an event.
+ */
 public class EventDetailsActivity extends AppCompatActivity {
 
     private String eventName;
@@ -50,7 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventTime = getIntent().getStringExtra("eventTime");
         imageUri = getIntent().getStringExtra("imageUri");
 
-
+        // Creating a string containing all event details for QR code
         // for QR code purposes
         all = eventName + "_" + eventLocation + "_" + eventDate + "_" + eventTime;
 
@@ -76,7 +79,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         // hide the promo qr button
         qrPromoButton.setVisibility(View.GONE);
 
-        // Load image URL from Firebase Firestore
         // Load image URL from Firebase Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)
@@ -114,10 +116,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                         }
                     }
                 });
+        // Define the floating action button for editing event details
         FloatingActionButton fabAddEvent = findViewById(R.id.floatingEditButton);
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Start the EditEventDetails activity
                 Intent intent = new Intent(EventDetailsActivity.this, EditEventDetails.class);
                 startActivity(intent); // start the EditEventDetails activity
             }
@@ -140,41 +144,67 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Generates and displays a QR code based on the event details.
+     */
     private void generateAndDisplayQRCode() {
+        // Creating a QRCodeWriter instance
         QRCodeWriter writer = new QRCodeWriter();
         try {
+            // Encoding the event details into a BitMatrix
             BitMatrix bitMatrix = writer.encode(all, BarcodeFormat.QR_CODE, 512, 512);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
+            // Creating a bitmap to store the QR code image
             Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            // Iterating over each pixel in the BitMatrix and set corresponding pixel in the bitmap
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
+                    // Set pixel color to black if the corresponding BitMatrix element is true, otherwise set it to white
                     bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
                 }
             }
+            // Finding the ImageView to display the QR code
             ImageView qrCodeImageView = findViewById(R.id.qr_code_image_view);
+            // Setting the bitmap as the image source for the ImageView
             qrCodeImageView.setImageBitmap(bmp);
+            // Making the ImageView visible
             qrCodeImageView.setVisibility(View.VISIBLE);
         } catch (WriterException e) {
+            // Handling exception if QR code generation fails
             e.printStackTrace();
         }
     }
+
+    /**
+     * Generates and displays a promotional QR code based on the event details.
+     */
     private void generateAndDisplayQRPromoCode() {
+        // Creating a QRCodeWriter instance
         QRCodeWriter writer = new QRCodeWriter();
         try {
+            // Encoding the event details with "_promo" suffix into a BitMatrix
             BitMatrix bitMatrix = writer.encode(all+"_promo", BarcodeFormat.QR_CODE, 512, 512);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
+            // Creating a bitmap to store the QR code image
             Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            // Iterating over each pixel in the BitMatrix and set corresponding pixel in the bitmap
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
+                    // Setting pixel color to black if the corresponding BitMatrix element is true
+                    // otherwise set it to white
                     bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
                 }
             }
+            // Finding the ImageView to display the QR code
             ImageView qrCodeImageView = findViewById(R.id.qr_code_image_view);
+            // Setting the bitmap as the image source for the ImageView
             qrCodeImageView.setImageBitmap(bmp);
+            // Making the ImageView visible
             qrCodeImageView.setVisibility(View.VISIBLE);
         } catch (WriterException e) {
+            // Handling exception if QR code generation fails
             e.printStackTrace();
         }
     }

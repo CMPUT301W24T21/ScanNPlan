@@ -31,7 +31,7 @@ public class AttendeeEditProfileFragment extends Fragment {
     private User user;
 
     /**
-     * Inflates the layout for the fragment and initializes UI elements.
+     * Inflates the layout for the fragment and initializes the UI elements.
      * Retrieves and displays the user's profile information from Firestore.
      * @param inflater The layout inflater.
      * @param container The parent view group.
@@ -58,8 +58,16 @@ public class AttendeeEditProfileFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final boolean[] isProcessingClick = {true};
                 getParentFragmentManager().popBackStack();
                 getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isProcessingClick[0] = false;
+                    }
+                }, 500); // Adjust the delay time as needed
+
             }
 
 

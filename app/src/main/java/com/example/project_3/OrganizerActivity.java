@@ -31,6 +31,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This is the organizer activity for organizing the events.
+ */
+
 public class OrganizerActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
@@ -40,23 +44,35 @@ public class OrganizerActivity extends AppCompatActivity {
     private EventArrayAdapter eventArrayAdapter;
     private static final int ADD_EVENT_REQUEST = 1;
 
+    /**
+     * Called when the activity is first created. This method initializes the activity by setting its layout,
+     * initializing Firebase, setting up UI components, setting click listeners for buttons, and listening for
+     * changes in the Firebase database.
+     *
+     * @param savedInstanceState A Bundle object containing the activity's previously saved state,
+     *                             or null if the activity is being started fresh.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.organizer_events);
 
+        // Initializing Firebase
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
 
+        // Initializing the UI components
         eventDataList = new ArrayList<>();
         eventList = findViewById(R.id.event_list);
         eventArrayAdapter = new EventArrayAdapter(this, eventDataList);
         eventList.setAdapter(eventArrayAdapter);
 
+        // Displaying the event details when clicked
         // This info is brought up to the Activity once you click on the event
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Opening event details activity
                 Event selectedEvent = (Event) eventArrayAdapter.getItem(position);
                 if (selectedEvent != null) {
                     Intent intent = new Intent(OrganizerActivity.this, EventDetailsActivity.class);
@@ -71,6 +87,20 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // Getting the button for navigating back to the main activity
+        Button back = findViewById(R.id.button);
+
+        // Setting on click listener for the back button
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Creating an intent to navigate back to the main activity
+                Intent intent = new Intent(OrganizerActivity.this, MainActivity.class);
+                startActivity(intent); // Starting the main activity
+            }
+        });
+
+        // This button is to add a new event
         FloatingActionButton fabAddEvent = findViewById(R.id.fab_add_event);
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +109,7 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // Listening for changes in the Firebase database
         eventsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshots,
@@ -88,8 +119,10 @@ public class OrganizerActivity extends AppCompatActivity {
                     return;
                 }
                 if (querySnapshots != null) {
+                    // Clearing the list and filling it with retrieved data
                     eventDataList.clear();
                     for (QueryDocumentSnapshot doc : querySnapshots) {
+                        // Retrieving the event data from Firestore and adding it to the list
                         String event = doc.getId();// for displaying event name in ListView
                         boolean promo = false;
                         boolean reuse = false;
@@ -108,7 +141,13 @@ public class OrganizerActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Adding a new event to the list and Firebase database.
+     *
+     * @param event The event to add.
+     */
     private void addNewEvent(Event event) {
+        // Adding the event to the list
         eventDataList.add(event);
         eventArrayAdapter.notifyDataSetChanged();
 
@@ -137,11 +176,22 @@ public class OrganizerActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    // URI for the event image
     private String imageUri;
+
+    /**
+     * Displays a dialog for adding a new event. The dialog includes input fields for event details
+     * such as name, date, time, location, and details. Additionally, it provides checkboxes for marking
+     * the event as a promotional event or for indicating if the event can be reused. The dialog also
+     * allows the user to attach a poster image to the event. After filling in the details and confirming,
+     * the new event is added to the list.
+     */
     private void showAddEventDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_add_event, null);
 
+        // Initializing views from the dialog layout
         final EditText addEventEditText = view.findViewById(R.id.add_event_editText);
         final CheckBox promoCheck = view.findViewById(R.id.promoChecker);
         final CheckBox reuseCheck = view.findViewById(R.id.reuseChecker);
@@ -153,6 +203,7 @@ public class OrganizerActivity extends AppCompatActivity {
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
 
+        // Setting visibility of poster and link buttons based on promo checkbox state
         promoCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 buttonPoster.setVisibility(View.VISIBLE);
@@ -163,6 +214,7 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // Setting click listener for the poster button to start download poster activity
         // adding a download poster activity
         buttonPoster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,10 +224,12 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
 
+        // Building and displaying the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
                 .setTitle("Add an Event")
                 .setPositiveButton("OK", (dialog, which) -> {
+                    // Retrieving the input values
                     String eventName = addEventEditText.getText().toString();
                     boolean promo_check = promoCheck.isChecked();
                     boolean reuse_check = reuseCheck.isChecked();
@@ -184,6 +238,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     String eventLocation = addEventEditLocation.getText().toString();
                     String eventDetails = addEventEditDetails.getText().toString();
 
+                    // Creating a new event object and adding it if event name is not empty
                     if (!eventName.isEmpty()) {
                         Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
                                 eventDetails, promo_check, reuse_check, "");
@@ -192,16 +247,26 @@ public class OrganizerActivity extends AppCompatActivity {
                         newEvent.setImage(imageUri);
                         addNewEvent(newEvent);
                     }
+                    // Refreshing event list
                     eventArrayAdapter.notifyDataSetChanged();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
+    /**
+     * Method to handle the result of the activity started for result.
+     *
+     * @param requestCode The request code passed to startActivityForResult().
+     * @param resultCode  The result code returned by the child activity.
+     * @param data        An Intent, which can return result data to the caller.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_EVENT_REQUEST && resultCode == RESULT_OK) {
             if (data != null) {
+                // Retrieving the image URI from the result data
                 imageUri = data.getStringExtra("imageUri"); // Retrieve the image URI
             }
         }
