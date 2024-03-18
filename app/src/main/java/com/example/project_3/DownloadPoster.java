@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * This activity allows the user to select an image from the device's gallery and
@@ -40,9 +41,9 @@ public class DownloadPoster extends AppCompatActivity {
         // Initializing UI components
         textTargetUri = findViewById(R.id.targeturi);
         targetImage = findViewById(R.id.targetimage);
-        Button buttonLoad = findViewById(R.id.load_image);
         Button backButton = findViewById(R.id.back_button);
         Button buttonSave = findViewById(R.id.button_ok);
+        FloatingActionButton floatingLoadButton = findViewById(R.id.floating_Load_Button);
 
         // On click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +53,8 @@ public class DownloadPoster extends AppCompatActivity {
             }
         });
 
-        // On click listener for the load button
-        buttonLoad.setOnClickListener(new View.OnClickListener() {
+        // On click listener for the floating load button
+        floatingLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open gallery to select an image
