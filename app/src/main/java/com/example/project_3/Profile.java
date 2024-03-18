@@ -1,20 +1,26 @@
 package com.example.project_3;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
+import android.util.Base64;
 
 import java.util.List;
 
 public class Profile {
     private String ProfileID;
-    private Icon profile_picture;
+    private Bitmap profile_picture;
     private String name;
     private String contact_info;
     private String social_link;
     private List<Event> events;
     private String profileType;
 
-    public Profile(Icon image, String name, String contact_info, String social_link, String profileType){
-        this.profile_picture = image;
+    public Profile(String image, String name, String contact_info, String social_link, String profileType){
+        if (!image.isEmpty()) {
+            byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
+            this.profile_picture = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        }
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;
@@ -27,11 +33,11 @@ public class Profile {
         this.profileType = profileType;
     }
 
-    public Icon getProfile_picture() {
+    public Bitmap getProfile_picture() {
         return profile_picture;
     }
 
-    public void setProfile_picture(Icon profile_picture) {
+    public void setProfile_picture(Bitmap profile_picture) {
         this.profile_picture = profile_picture;
     }
 
