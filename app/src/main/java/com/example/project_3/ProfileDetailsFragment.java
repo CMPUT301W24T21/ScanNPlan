@@ -85,7 +85,7 @@ public class ProfileDetailsFragment extends Fragment {
             pfp.setImageBitmap(profile.getProfile_picture());
         }
         else{
-            pfp.setImageBitmap(null);
+            pfp.setImageDrawable(null);
         }
 
         //goes through the collection and identifies the document with a matching ID and deletes it
