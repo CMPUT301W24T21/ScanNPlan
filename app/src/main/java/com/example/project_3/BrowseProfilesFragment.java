@@ -100,7 +100,9 @@ public class BrowseProfilesFragment extends Fragment {
                         String social_link = doc.getString("social_link"); // Assuming you have a "date" field in your document
                         String contact_info = doc.getString("contact_info");
                         String profileType = doc.getString("profile_type");
-                        Profile profile = new Profile(name, contact_info, social_link, profileType);
+                        String profile_picture = doc.getString("profile_picture");
+                        Profile profile;
+                        profile = new Profile(profile_picture, name, contact_info, social_link, profileType);
                         profile.setProfileID(doc.getId());// Use the appropriate constructor
                         profilesNames.add(profile);
                     }
@@ -128,7 +130,7 @@ public class BrowseProfilesFragment extends Fragment {
                 fragmentTransaction.replace(R.id.admin_profiles_fragment_container, fragment).addToBackStack(null).commit();
                 view.findViewById(R.id.rest_profiles_list).setVisibility(View.INVISIBLE);
             }
-            });
+        });
 
         return view;
 

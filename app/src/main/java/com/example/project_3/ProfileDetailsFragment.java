@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,14 @@ public class ProfileDetailsFragment extends Fragment {
         MaterialButton deletes = view.findViewById(R.id.delete_profile_button);
         db = FirebaseFirestore.getInstance();
         profilesref = db.collection("Profiles");
+        ImageView pfp = view.findViewById(R.id.profile_image);
+        if (profile.getProfile_picture() != null){
+            pfp.setImageBitmap(profile.getProfile_picture());
+        }
+        else{
+            pfp.setImageBitmap(null);
+        }
+
         //goes through the collection and identifies the document with a matching ID and deletes it
         deletes.setOnClickListener(new View.OnClickListener() {
             @Override
