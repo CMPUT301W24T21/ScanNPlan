@@ -2,18 +2,13 @@ package com.example.project_3;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,17 +27,28 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, Object> profileDocDetails;
     private boolean doneAsync = false;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.account_selector);
+        Button Attendee_button = findViewById(R.id.Attendee_button);
+        Button Organizer_button = findViewById(R.id.Organizer_button);
+        Button Admin_button = findViewById(R.id.Admin_button);
 
-//        AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
-//        startActivity(AttendeeIntent);
+        Attendee_button.setOnClickListener(V -> {
+            AttendeeIntent = new Intent(this, AttendeeActivity.class);
+            startActivity(AttendeeIntent);
+        });
+        Organizer_button.setOnClickListener(V -> {
+            OrganizerIntent = new Intent(this, OrganizerActivity.class);
+            startActivity(OrganizerIntent);
+        });
+        Admin_button.setOnClickListener(V -> {
+            AdminIntent = new Intent(this, AdminActivity.class);
+            startActivity(AdminIntent);
+        });
 
-//        OrganizerIntent
 
-        OrganizerIntent = new Intent(MainActivity.this, OrganizerActivity.class);
-        startActivity(OrganizerIntent);
 
 //        profileId = "Test1";
 //        db = FirebaseFirestore.getInstance();

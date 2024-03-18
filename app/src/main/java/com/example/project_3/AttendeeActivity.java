@@ -16,6 +16,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the main activity for attendees, displaying a list of events
+ * and allowing them to open the camera for scanning QR codes and edit their profile.
+ */
 
 public class AttendeeActivity extends AppCompatActivity {
     private Button openCameraButton;
@@ -27,6 +31,11 @@ public class AttendeeActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton editProfileButton;
 
+    /**
+     * Initializes the activity, sets up the layout, and initializes UI elements.
+     * @param savedInstanceState The saved instance state bundle.
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class AttendeeActivity extends AppCompatActivity {
         setContentView(R.layout.attendee_homepage);
         this.openCameraButton = findViewById(R.id.openCameraButton);
         QRIntent = new Intent(this, QRScan.class);
+        //sends to the QRscan class
 
         editProfileButton = findViewById(R.id.EditProfile);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +52,7 @@ public class AttendeeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 toggleRestOfPageVisibility();
                 replaceFragment(new AttendeeEditProfileFragment());
+                //turn the visibility of the page off and turns the other one on
             }
         });
 
@@ -51,9 +62,11 @@ public class AttendeeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(QRIntent);
+                //start the qrscanning page
             }
         });
-        
+
+        //test events
         
         String[] EventNames = {"concert1", "party2", "boardgames3"};
         String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
@@ -72,6 +85,12 @@ public class AttendeeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Toggles the visibility of the rest of the page when editing the profile.
+     */
+
+
+
     private void toggleRestOfPageVisibility() {
         View restOfPage = findViewById(R.id.REST_OF_PAGE);
         if (restOfPage.getVisibility() == View.VISIBLE) {
@@ -81,6 +100,11 @@ public class AttendeeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *Replaces the current fragment with a new fragment for editing the current attendee's profile.
+     * @param fragment The fragment to replace the current fragment with.
+     */
+
     // Added replaceFragment method
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
@@ -88,6 +112,10 @@ public class AttendeeActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
     }
+
+    /**
+     * Handles the click event for items in the event list.
+     */
 
     AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
         @Override

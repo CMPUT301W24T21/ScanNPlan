@@ -24,7 +24,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-
+/**
+ * fragment is meant to display a list of events, Admin is able to browse through the list and interact with each event
+ * The events can be obtained from Firebase, each of the events basic details name, dae, time and location are shwon
+ * Admins can select an event to view or edit its details
+ */
 public class BrowseEventsFragment extends Fragment {
 
     private TextView appBar;
@@ -34,15 +38,37 @@ public class BrowseEventsFragment extends Fragment {
     private EditText addEventEditText;
     private ArrayList<Event> eventNamesList;
     private ListEventArrayAdapter eventNamesAdapter;
-
+    /**
+     * The default constructor for the class, initializes a new instance
+     */
     public BrowseEventsFragment() {
     }
 
+    /**
+     * initial creation of the fragment
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * creates the view to see the list of all the events available, Admins are able to interact with the
+     * events in the list, either deleting them or editing their details
+     * once again appbar is intialized here as well, the onclick listeners are set up for the back and
+     * delete buttons
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     *                  any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     *                  UI should be attached to.  The fragment should not add the view itself,
+     *                  but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     * @return returns view for the fragments UI
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //create the view and set the layout
@@ -71,13 +97,12 @@ public class BrowseEventsFragment extends Fragment {
                     eventNamesList.clear();
                     for (QueryDocumentSnapshot doc : value) {
                         String eventName = doc.getId();
-                        String date = doc.getString("date");
-                        String time = doc.getString("time");
-                        String location = doc.getString("location");
-                        String details = doc.getString("details");
-                        // Assuming you have a "date" field in your document
-                        Event event = new Event(eventName, date, time, location, details); // Use the appropriate constructor
-
+                        String date = doc.getString("Date");
+                        String time = doc.getString("Time");
+                        String location = doc.getString("Location");
+                        String details = doc.getString("Details");
+                        //creating an event object and adding it to the local list
+                        Event event = new Event(eventName, date, time, location, details);
                         eventNamesList.add(event);
                     }
                     eventNamesAdapter.notifyDataSetChanged();
@@ -88,7 +113,7 @@ public class BrowseEventsFragment extends Fragment {
         listEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Event selected_event = (Event) eventNamesList.get(position);
+                Event selected_event = eventNamesList.get(position);
                 AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event);
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.admin_events_fragment_container, fragment).addToBackStack(null).commit();
