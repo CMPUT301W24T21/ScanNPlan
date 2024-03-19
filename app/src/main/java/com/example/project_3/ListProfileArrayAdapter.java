@@ -1,7 +1,9 @@
 package com.example.project_3;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,13 @@ public class ListProfileArrayAdapter extends ArrayAdapter{
         ImageView image = view.findViewById(R.id.profiles_list_image);
         MaterialTextView username = view.findViewById(R.id.profiles_list_username);
         username.setText(profile.getName());
+        if (profile.getProfile_picture()!= null) {
+            image.setImageBitmap(profile.getProfile_picture());
+        }
+        else{
+            image.setImageDrawable(null);
+        }
+
         assert profile != null;
         //delete button still needs implementation
         //MaterialButton deletes = view.findViewById(R.id.delete_button_profiles_list);
