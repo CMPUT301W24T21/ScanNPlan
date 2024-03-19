@@ -48,20 +48,6 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
 
-    <EditText
-        android:id="@+id/enter_event"
-        android:layout_width="371dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:hint="Enter Event:"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar" />
-
     <Button
         android:id="@+id/add_poster"
         style="@style/Widget.Material3.Button"
@@ -75,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_event" />
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
 
     <Button
         android:id="@+id/add_link"
@@ -117,6 +103,7 @@
         android:gravity="center"
         android:text="View QR-code"
         android:textColor="@android:color/black"
+        android:onClick="onViewQRCodeClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
