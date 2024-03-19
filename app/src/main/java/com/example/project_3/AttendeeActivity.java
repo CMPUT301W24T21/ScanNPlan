@@ -92,6 +92,7 @@ public class AttendeeActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("events")
+                //.whereEqualTo("ProfileId", "ProfileEvent ID") // just a template to compare
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
