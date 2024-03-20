@@ -10,6 +10,11 @@
           <theme>@style/Theme.Project_3</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/admin_images.xml">
+        <config>
+          <theme>@style/Theme.Project_3</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/admin_profile_details.xml">
         <config>
           <theme>@style/Theme.Project_3</theme>
@@ -58,8 +63,7 @@
   <component name="ChangeListManager">
     <list default="true" id="41383684-3998-423a-9202-20d092bbbdec" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/admin_events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/admin_events.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/event_list_content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/event_list_content.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/admin_images.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/admin_images.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
