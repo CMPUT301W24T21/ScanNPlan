@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="List of Profiles"
+            android:background="#141414"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@+id/appbar"
             >
@@ -35,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             app:layout_constraintTop_toBottomOf="@id/list_profiles_text"
+            android:divider="#141414"
+            android:dividerHeight="20sp"
             >
 
 

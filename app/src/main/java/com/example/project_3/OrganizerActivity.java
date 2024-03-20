@@ -67,6 +67,7 @@ public class OrganizerActivity extends AppCompatActivity {
         eventArrayAdapter = new EventArrayAdapter(this, eventDataList);
         eventList.setAdapter(eventArrayAdapter);
 
+
         // Displaying the event details when clicked
         // This info is brought up to the Activity once you click on the event
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -253,7 +254,6 @@ public class OrganizerActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
     /**
      * Method to handle the result of the activity started for result.
      *
@@ -272,3 +272,4 @@ public class OrganizerActivity extends AppCompatActivity {
         }
     }
 }
+

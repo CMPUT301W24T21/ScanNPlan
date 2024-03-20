@@ -23,6 +23,7 @@
             style="@style/MaterialAlertDialog.Material3.Body.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#141414"
             android:textAlignment="center"
             android:text="List of Events"
             android:textSize="20sp"
@@ -33,7 +34,9 @@
             android:id="@+id/list_events_admin"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/list_events_text">
+            app:layout_constraintTop_toBottomOf="@id/list_events_text"
+            android:divider="#141414"
+            android:dividerHeight="20sp">
         </ListView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
