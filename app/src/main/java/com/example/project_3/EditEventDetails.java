@@ -21,9 +21,9 @@ public class EditEventDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_event_details);
+        setContentView(R.layout.edit_event);
         // Getting reference to the back button
-        Button backButton = findViewById(R.id.button_backs);
+        Button backButton = findViewById(R.id.back_button);
         // Setting click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

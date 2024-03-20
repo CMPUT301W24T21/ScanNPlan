@@ -1,12 +1,8 @@
 package com.example.project_3;
 
-import android.media.Image;
-
-import com.google.type.DateTime;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 /**
  * Represents an event with various details.
@@ -21,6 +17,7 @@ public class Event {
     private String location;
     private String details;
     private String image;
+    private Bitmap poster_picture;
 
     /**
      * Constructs an event with specified details.
@@ -43,7 +40,14 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
-        this.image = image;
+
+        if (image != null && !image.isEmpty()) {
+            byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
+            this.poster_picture = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        }
+        else{
+            this.poster_picture = null;
+        }
     }
 
     /**
@@ -67,13 +71,13 @@ public class Event {
      * @param details  Details of the event.
      */
     public Event(String name, String date, String time,
-                String location, String details) {
-            this.name = name;
-            this.date = date;
-            this.time = time;
-            this.location = location;
-            this.details = details;
-        }
+                 String location, String details) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
+    }
 
     /**
      * Retrieves the image associated with the event.
