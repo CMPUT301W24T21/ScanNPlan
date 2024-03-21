@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -42,8 +42,7 @@
         <activity android:name=".EventDetailsActivity" />
         <!-- Add OrganizerActivity here -->
         <activity android:name=".OrganizerActivity"/>
-        <!-- Add DownloadPoster here -->
-        <activity android:name=".DownloadPoster"/>
+
         <!-- Add EditEventDetails here -->
         <activity android:name=".EditEventDetails"/>
 
