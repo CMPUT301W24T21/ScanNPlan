@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         AttendeeIntent = new Intent(this, AttendeeActivity.class);
         OrganizerIntent = new Intent(this, OrganizerActivity.class);
         AdminIntent = new Intent(this, AdminActivity.class);
-
+//
 //        setContentView(R.layout.account_selector);
 //        Button Attendee_button = findViewById(R.id.Attendee_button);
 //        Button Organizer_button = findViewById(R.id.Organizer_button);

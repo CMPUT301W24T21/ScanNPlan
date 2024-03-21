@@ -11,7 +11,8 @@ public class Event {
     private String name;
     private Boolean promo;
     private Boolean reuse;
-    private byte[] qrCode; // Add QR code byte array field
+    private String qrCode;
+    private String qrPromoCode;
     private String time;
     private String date;
     private String location;
@@ -30,9 +31,11 @@ public class Event {
      * @param promo    Whether the event is promotional.
      * @param reuse    Whether the event can be reused.
      * @param image    The image associated with the event.
+     * @param qrCode    The QR code associated with the event.
+     * @param qrPromoCode    The Promo QR Code associated with the event.
      */
     public Event(String name, String date, String time, String location,
-                 String details, boolean promo, boolean reuse, String image) {
+                 String details, boolean promo, boolean reuse, String image, String qrCode, String qrPromoCode) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
@@ -40,14 +43,10 @@ public class Event {
         this.time = time;
         this.location = location;
         this.details = details;
+        this.image = image;
+        this.qrCode = qrCode;
+        this.qrPromoCode = qrPromoCode;
 
-        if (image != null && !image.isEmpty()) {
-            byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
-            this.poster_picture = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-        }
-        else{
-            this.poster_picture = null;
-        }
     }
 
     /**
@@ -224,12 +223,25 @@ public class Event {
      *
      * @return The QR code associated with the event.
      */
-    public byte[] getQrCode() {return this.qrCode;}
-
+    public String getQrCode() {return this.qrCode;}
     /**
      * Sets the QR code associated with the event.
      *
      * @param qrCode The QR code to be associated with the event.
      */
-    public void setQrCode(byte[] qrCode) {this.qrCode = qrCode;}
+    public void setQrCode(String qrCode) {this.qrCode = qrCode;}
+    /**
+     * Retrieves the QR code associated with the event.
+     *
+     * @return The QR code associated with the event.
+     */
+
+    public String getQrPromoCode() {return this.qrPromoCode;}
+
+    /**
+     * Sets the PROMO QR code associated with the event.
+     *
+     * @param qrPromoCode The PROMO QR code to be associated with the event.
+     */
+    public void setQrPromoCode(String qrPromoCode) {this.qrPromoCode = qrPromoCode;}
 }
