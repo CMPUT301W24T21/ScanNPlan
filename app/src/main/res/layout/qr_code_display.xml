@@ -34,7 +34,7 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="15dp"
-        android:layout_toEndOf="@+id/button_back"
+        android:layout_toEndOf="@+id/back_button"
         android:layout_centerHorizontal="true"
         android:text="QR Code"
         android:textSize="24sp" />
