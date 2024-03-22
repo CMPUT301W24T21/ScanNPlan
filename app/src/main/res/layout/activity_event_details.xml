@@ -26,16 +26,17 @@
 
     <TextView
         android:id="@+id/event_name_text_view"
-        android:layout_width="213dp"
+        android:layout_width="199dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentTop="true"
         android:layout_marginStart="27dp"
         android:layout_marginTop="17dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="38dp"
         android:layout_marginBottom="15dp"
         android:layout_toStartOf="@+id/floatingEditButton"
         android:layout_toEndOf="@+id/button_back"
+        android:gravity="center_vertical|center_horizontal"
         android:text="Event Name"
         android:textSize="24sp" />
 
@@ -61,46 +62,14 @@
         android:text="Back" />
 
     <Button
-        android:id="@+id/qr_button_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="108dp"
-        android:text="Generate QR" />
-
-    <Button
-        android:id="@+id/qr_promo_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="19dp"
-        android:text="Promo QR" />
-
-    <Button
         android:id="@+id/attendees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="270dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="28dp"
         android:text="Attendees" />
-
-    <ImageView
-        android:id="@+id/qr_code_image_view"
-        android:layout_width="168dp"
-        android:layout_height="163dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="42dp"
-        android:layout_toStartOf="@+id/qr_button_event"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingEditButton"
