@@ -42,6 +42,8 @@
         <activity android:name=".EventDetailsActivity" />
         <!-- Add OrganizerActivity here -->
         <activity android:name=".OrganizerActivity"/>
+        <activity android:name="QRCodeDisplayActivity" />
+        <activity android:name="OrganizerListActivity" />
 
         <!-- Add EditEventDetails here -->
         <activity android:name=".EditEventDetails"/>

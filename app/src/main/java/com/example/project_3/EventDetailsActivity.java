@@ -780,6 +780,7 @@ package com.example.project_3;
 
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -799,6 +800,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.BarcodeFormat;
@@ -841,12 +843,42 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventTextView.setText(eventName);
 
         Button backButton = findViewById(R.id.button_back);
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        FloatingActionButton editButton = findViewById(R.id.floatingEditButton);
+
+        Button attendeesButton = findViewById(R.id.attendees);
+
+
+        attendeesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to AttendeesActivity
+                Intent intent = new Intent(EventDetailsActivity.this, OrganizerListActivity.class);
+
+                // Start the AttendeesActivity
+                startActivity(intent);
+            }
+        });
+
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to EditEventActivity
+                Intent intent = new Intent(EventDetailsActivity.this, EditEventDetails.class);
+
+                // Start the EditEventActivity
+                startActivity(intent);
+            }
+        });
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)
