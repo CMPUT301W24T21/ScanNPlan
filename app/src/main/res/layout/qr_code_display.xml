@@ -1,73 +1,73 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/event_activity_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="334dp"
-        android:layout_marginBottom="23dp"
-        android:clickable="true"
-        app:srcCompat="@drawable/baseline_qr_code_24" />
+    tools:context=".MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+        android:id="@+id/appbar"
+        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#26202C"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/event_name_text_view"
-        android:layout_width="213dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/materialToolbar"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toEndOf="@+id/back_button"
-        android:layout_centerHorizontal="true"
-        android:text="QR Code"
-        android:textSize="24sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back_qr_button"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Share" />
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="148dp"
+                android:text="QR Code"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.954"
+                app:layout_constraintStart_toEndOf="@+id/back_qr_button"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <ImageView
-        android:id="@+id/targetImage"
-        android:layout_width="288dp"
-        android:layout_height="356dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="59dp"
-        android:layout_marginBottom="220dp" />
+        android:id="@+id/qr_code_image"
+        android:layout_width="254dp"
+        android:layout_height="362dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintVertical_bias="0.393"
+        app:srcCompat="@drawable/baseline_image_24" />
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/materialToolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="7dp"
-        android:text="Back" />
-
-    <Button
-        android:id="@+id/share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="155dp"
-        android:layout_marginBottom="88dp"
-        android:text="Share" />
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

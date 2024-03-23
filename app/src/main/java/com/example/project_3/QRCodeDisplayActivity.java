@@ -1,9 +1,13 @@
 package com.example.project_3;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,23 +21,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
+
 public class QRCodeDisplayActivity extends AppCompatActivity {
-
-    // Declare ImageView for QR code
-    private ImageView qrCodeImageView;
-
-
+    private String eventName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code_display);
 
-        // Initialize ImageView
-        qrCodeImageView = findViewById(R.id.targetImage);
-
+        eventName = getIntent().getStringExtra("eventName");
 
         // Getting reference to the back button
-        Button backButton = findViewById(R.id.back_button);
+        Button backButton = findViewById(R.id.back_qr_button);
 
         // Setting click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -45,31 +45,60 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
         });
 
 
+        Button shareButton = findViewById(R.id.share_button);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Retrieve the QR code bitmap from the ImageView
+                ImageView qrCodeImageView = findViewById(R.id.qr_code_image);
+                qrCodeImageView.setDrawingCacheEnabled(true);
+                Bitmap qrCodeBitmap = Bitmap.createBitmap(qrCodeImageView.getDrawingCache());
+                qrCodeImageView.setDrawingCacheEnabled(false);
 
-        // Retrieve QR code string from Firestore
+                // Create an intent with ACTION_SEND
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("image/*");
+
+                // Add the QR code bitmap as an extra to the intent
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), qrCodeBitmap, "QR Code", null);
+                Uri qrCodeUri = Uri.parse(path);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
+
+                // Start the activity chooser
+                startActivity(Intent.createChooser(shareIntent, "Share QR Code"));
+            }
+        });
+
+
+
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Events").document("YOUR_EVENT_NAME").get()
+        db.collection("Events").document(eventName)
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                String qrCodeString = document.getString("QR Code");
-                                if (qrCodeString != null && !qrCodeString.isEmpty()) {
-                                    // Decode Base64 string to Bitmap
-                                    Bitmap qrCodeBitmap = decodeBase64(qrCodeString);
-                                    if (qrCodeBitmap != null) {
-                                        // Display QR code image
-                                        qrCodeImageView.setImageBitmap(qrCodeBitmap);
+                            if (document != null && document.exists()) {
+                                String base64Image = document.getString("QR Code");
+                                if (base64Image != null && !base64Image.isEmpty()) {
+                                    // Decode base64 string to bitmap
+                                    byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                                    if (decodedByte != null) {
+                                        // Set bitmap to ImageView
+                                        ImageView eventPosterImageView = findViewById(R.id.qr_code_image);
+                                        eventPosterImageView.setImageBitmap(decodedByte);
                                     } else {
-                                        // Handle decoding failure
-                                        Toast.makeText(QRCodeDisplayActivity.this, "Failed to decode QR code.", Toast.LENGTH_SHORT).show();
+                                        Log.e("Image Decoding", "Failed to decode base64 string into bitmap.");
                                     }
                                 } else {
-                                    // Handle missing or empty QR code string
-                                    Toast.makeText(QRCodeDisplayActivity.this, "QR code string is empty or missing.", Toast.LENGTH_SHORT).show();
                                 }
+
                             } else {
                                 // Handle document not found
                                 Toast.makeText(QRCodeDisplayActivity.this, "Event details not found.", Toast.LENGTH_SHORT).show();
@@ -79,17 +108,7 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
                             Toast.makeText(QRCodeDisplayActivity.this, "Failed to retrieve event details.", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
-    }
 
-    // Method to decode Base64 string to Bitmap
-    private Bitmap decodeBase64(String base64String) {
-        try {
-            byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+                });
     }
 }
