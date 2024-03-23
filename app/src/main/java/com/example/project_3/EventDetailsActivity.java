@@ -816,6 +816,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     private String eventDate;
     private String eventTime;
     private String eventLocation;
+    private String qrCode;
+    private String qrPromoCode;
     private String all;
     private Boolean promoChecker;
 
@@ -828,7 +830,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDate = getIntent().getStringExtra("eventDate");
         eventTime = getIntent().getStringExtra("eventTime");
-
+        qrCode = getIntent().getStringExtra("QRCode");
+        qrPromoCode = getIntent().getStringExtra("QRPromoCode");
 
         if (eventName == null || eventLocation == null || eventDate == null || eventTime == null) {
             // Handle missing event details
@@ -837,48 +840,33 @@ public class EventDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        all = eventName + "_" + eventLocation + "_" + eventDate + "_" + eventTime;
-
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
         Button backButton = findViewById(R.id.button_back);
+        FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
 
+        // Set an OnClickListener for the FloatingActionButton
+        editEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the EditEventDetails activity
+                Intent intent = new Intent(EventDetailsActivity.this, EditEventDetails.class);
+                intent.putExtra("eventName", eventName); // Pass event details if needed
+                intent.putExtra("eventLocation", eventLocation);
+                intent.putExtra("eventDate", eventDate);
+                intent.putExtra("eventTime", eventTime);
+                intent.putExtra("QRCode", qrCode);
+                intent.putExtra("QRPromoCode", qrPromoCode);
+                startActivity(intent);
+            }
+        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        FloatingActionButton editButton = findViewById(R.id.floatingEditButton);
-
-        Button attendeesButton = findViewById(R.id.attendees);
-
-
-        attendeesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an Intent to navigate to AttendeesActivity
-                Intent intent = new Intent(EventDetailsActivity.this, OrganizerListActivity.class);
-
-                // Start the AttendeesActivity
-                startActivity(intent);
-            }
-        });
-
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an Intent to navigate to EditEventActivity
-                Intent intent = new Intent(EventDetailsActivity.this, EditEventDetails.class);
-
-                // Start the EditEventActivity
-                startActivity(intent);
-            }
-        });
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)

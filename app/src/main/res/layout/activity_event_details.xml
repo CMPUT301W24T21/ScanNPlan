@@ -5,17 +5,6 @@
     android:id="@+id/event_activity_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="334dp"
-        android:layout_marginBottom="23dp"
-        android:clickable="true"
-        app:srcCompat="@drawable/baseline_qr_code_24" />
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
@@ -30,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="17dp"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="47dp"
         android:layout_marginBottom="15dp"
         android:layout_toStartOf="@+id/floatingEditButton"
         android:layout_toEndOf="@+id/button_back"
@@ -67,12 +56,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginBottom="119dp"
         android:text="Attendees" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingEditButton"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -80,6 +70,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="3dp"
         android:clickable="true"
+        android:contentDescription="Edit"
         app:srcCompat="@drawable/baseline_edit_24" />
 
 
