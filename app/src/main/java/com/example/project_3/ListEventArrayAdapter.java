@@ -65,7 +65,7 @@ public class ListEventArrayAdapter extends ArrayAdapter{
         eventName.setText(event.getName());
         assert event != null;
         //delete button still needs implementation
-        MaterialButton back = view.findViewById(R.id.delete_button_events_list);
+//        MaterialButton back = view.findViewById(R.id.delete_button_events_list);
         //image.setImageIcon(event.getPoster());
         return view;
     }
