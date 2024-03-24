@@ -30,6 +30,12 @@ import androidx.core.content.PackageManagerCompat;
  * Activity for editing event details.
  */
 public class EditEventDetails extends AppCompatActivity {
+    private String eventName;
+    private String eventLocation;
+    private String eventDate;
+    private String eventTime;
+    private String qrCode;
+    private String qrPromoCode;
 
     /**
      * Called when the activity is starting.
@@ -42,9 +48,18 @@ public class EditEventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
+
+        eventName = getIntent().getStringExtra("eventName");
+        eventLocation = getIntent().getStringExtra("eventLocation");
+        eventDate = getIntent().getStringExtra("eventDate");
+        eventTime = getIntent().getStringExtra("eventTime");
+        qrCode = getIntent().getStringExtra("QRCode");
+        qrPromoCode = getIntent().getStringExtra("QRPromoCode");
+
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
         Button createMessageButton = findViewById(R.id.create_message);
+        Button qrViewButton = findViewById(R.id.view_qrcode);
 
         // https://www.youtube.com/watch?v=vyt20Gg2Ckg
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -68,9 +83,22 @@ public class EditEventDetails extends AppCompatActivity {
         createMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finishing the activity when the back button is clicked
-//                makeNotification();
                 showCreateMessageDialog();
+            }
+        });
+        qrViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the QRCodeDisplayActivity
+                Intent intent = new Intent(EditEventDetails.this, QRCodeDisplayActivity.class);
+                intent.putExtra("eventName", eventName); // Pass event details if needed
+                intent.putExtra("eventLocation", eventLocation);
+                intent.putExtra("eventDate", eventDate);
+                intent.putExtra("eventTime", eventTime);
+                intent.putExtra("QRCode", qrCode);
+                intent.putExtra("QRPromoCode", qrPromoCode);
+                // Pass any necessary data to QRCodeDisplayActivity if needed
+                startActivity(intent);
             }
         });
     }
