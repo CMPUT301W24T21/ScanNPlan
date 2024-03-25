@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation ("com.google.android.gms:play-services-location:18.0.0")
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
 
 
 }
