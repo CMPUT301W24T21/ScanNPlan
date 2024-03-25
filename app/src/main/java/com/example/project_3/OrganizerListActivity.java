@@ -15,6 +15,7 @@ public class OrganizerListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendees_list);
+
         // Find the back button
         Button backButton = findViewById(R.id.back_button);
         Button test_map = findViewById(R.id.attendee1);
