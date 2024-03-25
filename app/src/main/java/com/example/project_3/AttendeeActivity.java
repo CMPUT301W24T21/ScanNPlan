@@ -25,10 +25,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * This class represents the main activity for attendees, displaying a list of events
@@ -39,8 +38,9 @@ public class AttendeeActivity extends AppCompatActivity {
     private Button openCameraButton;
 
     private Intent QRIntent;
+    ArrayList<Event> eventArray;
 
-    private ListView eventList;
+    private ListView eventListView;
     private EventArrayAdapter eventAdapter;
 
     private ExtendedFloatingActionButton editProfileButton;
@@ -57,9 +57,15 @@ public class AttendeeActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
+        eventListView = findViewById(R.id.event_listView);
+        eventArray = new ArrayList<Event>();
+        eventAdapter = new EventArrayAdapter(this,  eventArray);
+        eventListView.setAdapter(eventAdapter);
+        eventListView.setOnItemClickListener(listSelector);
+
+
         this.openCameraButton = findViewById(R.id.openCameraButton);
         QRIntent = new Intent(this, QRScan.class);
         //sends to the QRscan class
@@ -84,6 +90,7 @@ public class AttendeeActivity extends AppCompatActivity {
             }
         });
 
+
         db = FirebaseFirestore.getInstance();
         //get profile details
         profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -106,6 +113,7 @@ public class AttendeeActivity extends AppCompatActivity {
                     Log.d("DEBUG", name+contactInfo+socialLink+profileType);
                     ArrayList<DocumentReference> eventRefs = (ArrayList<DocumentReference>) documentSnapshot.getData().get("events");
                     profile = new Profile(name, contactInfo, socialLink, profileType, eventRefs);
+
                     for (int i = 0; i < eventRefs.size(); i++) {
                         DocumentReference event = eventRefs.get(i);
                         event.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -114,7 +122,21 @@ public class AttendeeActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
+                                        Map<String, Object> eventDetails = document.getData();
                                         Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
+
+                                        eventArray.add(new Event(document.getId().toString(),
+                                                (String) eventDetails.get("Date"),
+                                                (String) eventDetails.get("Time"),
+                                                (String) eventDetails.get("Location"),
+                                                (String) eventDetails.get("Details"),
+                                                (boolean) eventDetails.get("Promo"),
+                                                (boolean) eventDetails.get("Reuse"),
+                                                (String) eventDetails.get("Image"),
+                                                null,
+                                                null));
+                                        eventAdapter.notifyDataSetChanged();
+
                                     } else {
                                         Log.d("DEBUG", "No such document");
                                     }
@@ -123,6 +145,7 @@ public class AttendeeActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
                     }
 
 
@@ -131,54 +154,54 @@ public class AttendeeActivity extends AppCompatActivity {
             }
         });
 
-        //test events
-        
-//        String[] EventNames = {"concert1", "party2", "boardgames3"};
-//        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
+//        //test events
+//
+////        String[] EventNames = {"concert1", "party2", "boardgames3"};
+////        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
+////
+////
+//        ArrayList<Event> dataList= new ArrayList<Event>();
+////        for (int i = 0; i < EventNames.length; i++) {
+////            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
+////        }
+////
+////
+////        eventAdapter = new EventArrayAdapter(this, dataList);
+////        eventList = findViewById(R.id.event_listView);
+////        eventList.setAdapter(eventAdapter);
+////        eventList.setOnItemClickListener(listSelector);
 //
 //
-        ArrayList<Event> dataList= new ArrayList<Event>();
-//        for (int i = 0; i < EventNames.length; i++) {
-//            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
-//        }
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("events")
+//                //.whereEqualTo("ProfileId", "ProfileEvent ID") // just a template to compare
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                String eventName = document.getString("eventName");
+//                                String eventDate = document.getString("eventDate");
+//                                String eventTime = document.getString("eventTime");
+//                                String eventLocation = document.getString("eventLocation");
+//                                String eventDetails = document.getString("eventDetails");
+//
+//                                Event event = new Event(eventName, eventDate, eventTime, eventLocation, eventDetails);
+//                                dataList.add(event); // Add the event to the dataList
+//                            }
+//                            eventAdapter = new EventArrayAdapter(AttendeeActivity.this, dataList); // Create a new adapter with the updated dataList
+//                            eventListView = findViewById(R.id.event_listView);
+//                            eventListView.setAdapter(eventAdapter);
+//                            eventListView.setOnItemClickListener(listSelector);
+//                            eventAdapter.notifyDataSetChanged(); // Notify the adapter that the data set has changed
+//                        } else {
+//                            //Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
 //
 //
-//        eventAdapter = new EventArrayAdapter(this, dataList);
-//        eventList = findViewById(R.id.event_listView);
-//        eventList.setAdapter(eventAdapter);
-//        eventList.setOnItemClickListener(listSelector);
-
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("events")
-                //.whereEqualTo("ProfileId", "ProfileEvent ID") // just a template to compare
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String eventName = document.getString("eventName");
-                                String eventDate = document.getString("eventDate");
-                                String eventTime = document.getString("eventTime");
-                                String eventLocation = document.getString("eventLocation");
-                                String eventDetails = document.getString("eventDetails");
-
-                                Event event = new Event(eventName, eventDate, eventTime, eventLocation, eventDetails);
-                                dataList.add(event); // Add the event to the dataList
-                            }
-                            eventAdapter = new EventArrayAdapter(AttendeeActivity.this, dataList); // Create a new adapter with the updated dataList
-                            eventList = findViewById(R.id.event_listView);
-                            eventList.setAdapter(eventAdapter);
-                            eventList.setOnItemClickListener(listSelector);
-                            eventAdapter.notifyDataSetChanged(); // Notify the adapter that the data set has changed
-                        } else {
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-
     }
 
     /**
@@ -216,7 +239,7 @@ public class AttendeeActivity extends AppCompatActivity {
     AdapterView.OnItemClickListener listSelector  = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Event selectedEvent = (Event) eventList.getItemAtPosition(position);
+            Event selectedEvent = (Event) eventListView.getItemAtPosition(position);
             Integer EventIndex = position;
 
             findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
