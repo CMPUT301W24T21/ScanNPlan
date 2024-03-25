@@ -3,12 +3,15 @@ package com.example.project_3;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -19,8 +22,13 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class represents the main activity for attendees, displaying a list of events
@@ -36,6 +44,10 @@ public class AttendeeActivity extends AppCompatActivity {
     private EventArrayAdapter eventAdapter;
 
     private ExtendedFloatingActionButton editProfileButton;
+    private Profile profile;
+    private FirebaseFirestore db;
+    private String profileID;
+
 
     /**
      * Initializes the activity, sets up the layout, and initializes UI elements.
@@ -69,6 +81,53 @@ public class AttendeeActivity extends AppCompatActivity {
 
                 startActivity(QRIntent);
                 //start the qrscanning page
+            }
+        });
+
+        db = FirebaseFirestore.getInstance();
+        //get profile details
+        profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        db.collection("Profiles").document(profileID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    final int firestore = Log.e("Firestore", error.toString());
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    String name = documentSnapshot.getString("name");
+                    String contactInfo = documentSnapshot.getString("contact_info");
+                    String socialLink = documentSnapshot.getString("social_link");
+
+                    //user = new User(name, contactInfo, socialLink);
+                    String profileType = documentSnapshot.getString("profile_type");
+                    Log.d("DEBUG", name+contactInfo+socialLink+profileType);
+                    ArrayList<DocumentReference> eventRefs = (ArrayList<DocumentReference>) documentSnapshot.getData().get("events");
+                    profile = new Profile(name, contactInfo, socialLink, profileType, eventRefs);
+                    for (int i = 0; i < eventRefs.size(); i++) {
+                        DocumentReference event = eventRefs.get(i);
+                        event.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
+                                    } else {
+                                        Log.d("DEBUG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("DEBUG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+                    }
+
+
+
+                }
             }
         });
 

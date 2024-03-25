@@ -13,7 +13,7 @@ public class OrganizerListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_attendee_list);
+        setContentView(R.layout.attendees_list);
 
         // Find the back button
         Button backButton = findViewById(R.id.back_button);
