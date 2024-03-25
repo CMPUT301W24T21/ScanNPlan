@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+
 
 /**
  *Fragment for displaying details of a specific event for attendees.
  */
 
-public class AttendeeEventDetailsFragment extends Fragment {
+public class AttendeeEventDetailsFragment extends androidx.fragment.app.Fragment {
     private TextView appBar;
     private ListView listEvents;
     private Event selectedEvent;
