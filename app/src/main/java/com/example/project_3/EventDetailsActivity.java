@@ -798,6 +798,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -845,7 +846,14 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.button_back);
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
-
+        Button attendees = findViewById(R.id.attendees);
+        attendees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), OrganizerListActivity.class);
+                startActivity(intent);
+            }
+        });
         // Set an OnClickListener for the FloatingActionButton
         editEventButton.setOnClickListener(new View.OnClickListener() {
             @Override

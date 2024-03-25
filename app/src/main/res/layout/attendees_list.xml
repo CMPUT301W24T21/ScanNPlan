@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/organizer_events_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rest_attendees_list">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/appbar"
         style="@style/Widget.Material3.AppBarLayout"
@@ -180,6 +187,9 @@
         android:text="QR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attendees_background" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
