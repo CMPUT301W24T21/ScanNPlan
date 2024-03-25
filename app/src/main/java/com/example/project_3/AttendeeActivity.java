@@ -8,11 +8,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -68,20 +74,51 @@ public class AttendeeActivity extends AppCompatActivity {
 
         //test events
         
-        String[] EventNames = {"concert1", "party2", "boardgames3"};
-        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
-
-
+//        String[] EventNames = {"concert1", "party2", "boardgames3"};
+//        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
+//
+//
         ArrayList<Event> dataList= new ArrayList<Event>();
-        for (int i = 0; i < EventNames.length; i++) {
-            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
-        }
+//        for (int i = 0; i < EventNames.length; i++) {
+//            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
+//        }
+//
+//
+//        eventAdapter = new EventArrayAdapter(this, dataList);
+//        eventList = findViewById(R.id.event_listView);
+//        eventList.setAdapter(eventAdapter);
+//        eventList.setOnItemClickListener(listSelector);
 
 
-        eventAdapter = new EventArrayAdapter(this, dataList);
-        eventList = findViewById(R.id.event_listView);
-        eventList.setAdapter(eventAdapter);
-        eventList.setOnItemClickListener(listSelector);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events")
+                //.whereEqualTo("ProfileId", "ProfileEvent ID") // just a template to compare
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String eventName = document.getString("eventName");
+                                String eventDate = document.getString("eventDate");
+                                String eventTime = document.getString("eventTime");
+                                String eventLocation = document.getString("eventLocation");
+                                String eventDetails = document.getString("eventDetails");
+
+                                Event event = new Event(eventName, eventDate, eventTime, eventLocation, eventDetails);
+                                dataList.add(event); // Add the event to the dataList
+                            }
+                            eventAdapter = new EventArrayAdapter(AttendeeActivity.this, dataList); // Create a new adapter with the updated dataList
+                            eventList = findViewById(R.id.event_listView);
+                            eventList.setAdapter(eventAdapter);
+                            eventList.setOnItemClickListener(listSelector);
+                            eventAdapter.notifyDataSetChanged(); // Notify the adapter that the data set has changed
+                        } else {
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
 
     }
 

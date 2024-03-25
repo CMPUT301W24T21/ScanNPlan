@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -78,30 +80,31 @@ public class AttendeeEditProfileFragment extends Fragment {
 
         });
 
-
-        db.collection("Profiles").document(profileID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        MaterialButton saveButton = view.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    final int firestore = Log.e("Firestore", error.toString());
-                    return;
-                }
+            public void onClick(View v) {
+                // Update profile information in Firestore
+                String newName = nameTextView.getText().toString();
+                String newContactInfo = contactInfoTextView.getText().toString();
+                String newSocialLink = socialLinkTextView.getText().toString();
 
-                if (documentSnapshot != null && documentSnapshot.exists()) {
-                    String name = documentSnapshot.getString("name");
-                    String contactInfo = documentSnapshot.getString("contact_info");
-                    String socialLink = documentSnapshot.getString("social_link");
-
-
-                    //user = new User(name, contactInfo, socialLink);
-                    String profileType = documentSnapshot.getString("profile_type");
-                    user = new User(new Profile(name, contactInfo, socialLink, profileType));
-
-
-                    nameTextView.setText(name);
-                    contactInfoTextView.setText(contactInfo);
-                    socialLinkTextView.setText(socialLink);
-                }
+                db.collection("Profiles").document(profileID)
+                        .update("name", newName,
+                                "contact_info", newContactInfo,
+                                "social_link", newSocialLink)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Firestore", "Profile updated successfully");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("Firestore", "Error updating profile", e);
+                            }
+                        });
             }
         });
 
