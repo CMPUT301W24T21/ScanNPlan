@@ -17,9 +17,12 @@
         android:layout_height="wrap_content"
         android:text="List of Images"
         android:textAlignment="center"
+        android:background="#141414"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/images_topbar"
-        tools:ignore="MissingConstraints"></com.google.android.material.textview.MaterialTextView>
+        tools:ignore="MissingConstraints">
+
+    </com.google.android.material.textview.MaterialTextView>
 
     <GridView
         android:id="@+id/grid_images_admin"

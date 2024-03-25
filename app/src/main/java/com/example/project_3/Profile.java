@@ -17,12 +17,12 @@ public class Profile {
     private String profileType;
 
     public Profile(String image, String name, String contact_info, String social_link, String profileType){
-        if (!image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
             byte[] decodedBytes = Base64.decode(image, Base64.DEFAULT);
             this.profile_picture = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
         }
         else{
-            this.profile_picture= null;
+            this.profile_picture = null;
         }
         this.name = name;
         this.contact_info = contact_info;

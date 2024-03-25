@@ -1,12 +1,8 @@
 package com.example.project_3;
 
-import android.media.Image;
-
-import com.google.type.DateTime;
-
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 /**
  * Represents an event with various details.
@@ -15,12 +11,14 @@ public class Event {
     private String name;
     private Boolean promo;
     private Boolean reuse;
-    private byte[] qrCode; // Add QR code byte array field
+    private String qrCode;
+    private String qrPromoCode;
     private String time;
     private String date;
     private String location;
     private String details;
     private String image;
+    private Bitmap poster_picture;
 
     /**
      * Constructs an event with specified details.
@@ -33,9 +31,11 @@ public class Event {
      * @param promo    Whether the event is promotional.
      * @param reuse    Whether the event can be reused.
      * @param image    The image associated with the event.
+     * @param qrCode    The QR code associated with the event.
+     * @param qrPromoCode    The Promo QR Code associated with the event.
      */
     public Event(String name, String date, String time, String location,
-                 String details, boolean promo, boolean reuse, String image) {
+                 String details, boolean promo, boolean reuse, String image, String qrCode, String qrPromoCode) {
         this.name = name;
         this.promo = promo;
         this.reuse = reuse;
@@ -44,6 +44,9 @@ public class Event {
         this.location = location;
         this.details = details;
         this.image = image;
+        this.qrCode = qrCode;
+        this.qrPromoCode = qrPromoCode;
+
     }
 
     /**
@@ -67,13 +70,13 @@ public class Event {
      * @param details  Details of the event.
      */
     public Event(String name, String date, String time,
-                String location, String details) {
-            this.name = name;
-            this.date = date;
-            this.time = time;
-            this.location = location;
-            this.details = details;
-        }
+                 String location, String details) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
+    }
 
     /**
      * Retrieves the image associated with the event.
@@ -220,12 +223,25 @@ public class Event {
      *
      * @return The QR code associated with the event.
      */
-    public byte[] getQrCode() {return this.qrCode;}
-
+    public String getQrCode() {return this.qrCode;}
     /**
      * Sets the QR code associated with the event.
      *
      * @param qrCode The QR code to be associated with the event.
      */
-    public void setQrCode(byte[] qrCode) {this.qrCode = qrCode;}
+    public void setQrCode(String qrCode) {this.qrCode = qrCode;}
+    /**
+     * Retrieves the QR code associated with the event.
+     *
+     * @return The QR code associated with the event.
+     */
+
+    public String getQrPromoCode() {return this.qrPromoCode;}
+
+    /**
+     * Sets the PROMO QR code associated with the event.
+     *
+     * @param qrPromoCode The PROMO QR code to be associated with the event.
+     */
+    public void setQrPromoCode(String qrPromoCode) {this.qrPromoCode = qrPromoCode;}
 }

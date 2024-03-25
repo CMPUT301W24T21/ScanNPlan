@@ -14,7 +14,7 @@
         android:theme="?attr/actionBarTheme" />
 
     <TextView
-        android:id="@+id/event_name_text_view"
+        android:id="@+id/title"
         android:layout_width="199dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
@@ -23,14 +23,13 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="47dp"
         android:layout_marginBottom="15dp"
-        android:layout_toStartOf="@+id/floatingEditButton"
-        android:layout_toEndOf="@+id/button_back"
+        android:layout_toEndOf="@+id/back_qr_button"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Event Name"
+        android:text="QR Code"
         android:textSize="24sp" />
 
     <ImageView
-        android:id="@+id/targetImage"
+        android:id="@+id/qr_code_image"
         android:layout_width="288dp"
         android:layout_height="356dp"
         android:layout_alignParentEnd="true"
@@ -39,7 +38,7 @@
         android:layout_marginBottom="220dp" />
 
     <Button
-        android:id="@+id/button_back"
+        android:id="@+id/back_qr_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
@@ -51,27 +50,15 @@
         android:text="Back" />
 
     <Button
-        android:id="@+id/attendees"
+        android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="146dp"
         android:layout_marginBottom="119dp"
-        android:text="Attendees" />
+        android:text="Share" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingEditButton"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="3dp"
-        android:clickable="true"
-        android:contentDescription="Edit"
-        app:srcCompat="@drawable/baseline_edit_24" />
 
 
 </RelativeLayout>
