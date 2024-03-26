@@ -112,9 +112,12 @@ public class AttendeeActivity extends AppCompatActivity {
                     String profileType = documentSnapshot.getString("profile_type");
                     Log.d("DEBUG", name+contactInfo+socialLink+profileType);
                     ArrayList<DocumentReference> eventRefs = (ArrayList<DocumentReference>) documentSnapshot.getData().get("events");
+                    if (eventRefs == null) {
+                        eventRefs = new ArrayList<DocumentReference>();
+                    }
                     profile = new Profile(name, contactInfo, socialLink, profileType, eventRefs);
 
-                    for (int i = 0; i < eventRefs.size(); i++) {
+                    for (int i = 0; i < (eventRefs.size()); i++) {
                         DocumentReference event = eventRefs.get(i);
                         event.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -123,7 +126,7 @@ public class AttendeeActivity extends AppCompatActivity {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         Map<String, Object> eventDetails = document.getData();
-                                        Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
+                                        //Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
 
                                         eventArray.add(new Event(document.getId().toString(),
                                                 (String) eventDetails.get("Date"),
