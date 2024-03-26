@@ -17,12 +17,14 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         profileData.put("contact_info", user.getUserProfile().getContact_info());
                         profileData.put("social_link", user.getUserProfile().getSocial_link());
                         profileData.put("profile_type", user.getUserProfile().getProfileType());
+                        profileData.put("events", new ArrayList<DocumentReference>());
                         profilesRef.document(profileId).set(profileData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
