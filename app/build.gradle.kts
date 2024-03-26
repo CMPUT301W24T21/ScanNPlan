@@ -52,6 +52,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation ("com.google.android.gms:play-services-location:18.0.0")
     implementation("org.osmdroid:osmdroid-android:6.1.14")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
 
 
 }

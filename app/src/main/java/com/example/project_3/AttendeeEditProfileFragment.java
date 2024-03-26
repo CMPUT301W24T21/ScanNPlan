@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,15 +35,17 @@ public class AttendeeEditProfileFragment extends Fragment {
     private User user;
     private String profileID;
 
+
+
     /**
      * Inflates the layout for the fragment and initializes the UI elements.
      * Retrieves and displays the user's profile information from Firestore.
-     * @param inflater The layout inflater.
-     * @param container The parent view group.
+     *
+     * @param inflater           The layout inflater.
+     * @param container          The parent view group.
      * @param savedInstanceState The saved instance state bundle.
      * @return The inflated view for the fragment.
      */
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,15 +55,12 @@ public class AttendeeEditProfileFragment extends Fragment {
         appBarView = view.findViewById(R.id.appbar_title);
         appBarView.setText("Profile Settings");
         nameTextView = view.findViewById(R.id.profile_name_editText);
-        socialLinkTextView= view.findViewById(R.id.homepage_editText);
+        socialLinkTextView = view.findViewById(R.id.homepage_editText);
         contactInfoTextView = view.findViewById(R.id.contact_info_editText);
 
         profileID = Settings.Secure.getString(this.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+        profileID = "Test2";
 
-
-
-        // Assuming user's email is passed as an argument to the fragment
-        //String userEmail = getArguments().getString("email");
         MaterialButton back = view.findViewById(R.id.back_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,17 +74,14 @@ public class AttendeeEditProfileFragment extends Fragment {
                         isProcessingClick[0] = false;
                     }
                 }, 500); // Adjust the delay time as needed
-
             }
-
-
         });
 
+        // Save button click listener to update profile information in Firestore
         MaterialButton saveButton = view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Update profile information in Firestore
                 String newName = nameTextView.getText().toString();
                 String newContactInfo = contactInfoTextView.getText().toString();
                 String newSocialLink = socialLinkTextView.getText().toString();
@@ -97,14 +94,37 @@ public class AttendeeEditProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("Firestore", "Profile updated successfully");
+                                Toast.makeText(getActivity(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w("Firestore", "Error updating profile", e);
+                                Toast.makeText(getActivity(), "Profile did not update", Toast.LENGTH_SHORT).show();
                             }
                         });
+            }
+        });
+
+        // Fetch profile information from Firestore and set the EditText fields
+        db.collection("Profiles").document(profileID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    String profileName = documentSnapshot.getString("name");
+                    String contactInfo = documentSnapshot.getString("contact_info");
+                    String socialLink = documentSnapshot.getString("social_link");
+
+                    nameTextView.setText(profileName);
+                    contactInfoTextView.setText(contactInfo);
+                    socialLinkTextView.setText(socialLink);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Firestore", "Error fetching profile data", e);
             }
         });
 
