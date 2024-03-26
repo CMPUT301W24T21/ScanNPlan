@@ -847,6 +847,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.button_back);
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
         Button attendees = findViewById(R.id.attendees);
+        Button checkIns = findViewById(R.id.check_ins);
+
         attendees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -854,6 +856,17 @@ public class EventDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        // Set click listener for the "checked in" button
+        checkIns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the AttendeesCheckedInActivity when the button is clicked
+                startActivity(new Intent(EventDetailsActivity.this, AttendeesCheckedInActivity.class));
+            }
+        });
+
         // Set an OnClickListener for the FloatingActionButton
         editEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
