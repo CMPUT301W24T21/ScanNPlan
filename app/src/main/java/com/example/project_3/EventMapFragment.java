@@ -23,13 +23,17 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,8 +53,8 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 public class EventMapFragment extends Fragment  {
     private MapView map;
     private FirebaseFirestore db;
-    private CollectionReference profilesRef;
-    private GeoPoint location;
+    private CollectionReference eventsRef;
+
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     @Nullable
@@ -59,6 +63,8 @@ public class EventMapFragment extends Fragment  {
         View view = inflater.inflate(R.layout.map_fragment, container, false);
         Context ctx = getContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        db = FirebaseFirestore.getInstance();
+        eventsRef = db.collection("Events");
         map = view.findViewById(R.id.map);
         TextView appbar = view.findViewById(R.id.appbar_title);
         Button back = view.findViewById(R.id.back_button);
@@ -76,8 +82,37 @@ public class EventMapFragment extends Fragment  {
         IMapController mapController = map.getController();
         org.osmdroid.util.GeoPoint start = new org.osmdroid.util.GeoPoint(47.5952, -122.3316);
         mapController.setCenter(start);
-        mapController.setZoom(17);
+        eventsRef.document("Aiden's Party").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        List<DocumentReference> checkedIn = (List<DocumentReference>) document.get("checked_in");
+                        for (DocumentReference doc: checkedIn){
+                            doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnap) {
+                                    if (documentSnap.exists()) {
+                                        GeoPoint point = documentSnap.getGeoPoint("location");
+                                        Marker marker = new Marker(map);
+                                        org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
+                                        marker.setPosition(osm_point);
+                                        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                        map.getOverlays().add(marker);
+                                    } else {
+                                        System.out.println("No such document!");
+                                    }
+                                }
 
+                        });
+                    }
+                }
+                        }
+        }});
+
+        map.invalidate();
+        mapController.setZoom(17);
         return view;
     }
 
