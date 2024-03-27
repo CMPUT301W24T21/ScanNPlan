@@ -80,7 +80,7 @@ public class EventMapFragment extends Fragment  {
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
         requestPermissionsIfNecessary(permissions);
         IMapController mapController = map.getController();
-        org.osmdroid.util.GeoPoint start = new org.osmdroid.util.GeoPoint(47.5952, -122.3316);
+        org.osmdroid.util.GeoPoint start = new org.osmdroid.util.GeoPoint(53.5232, -113.5263);
         mapController.setCenter(start);
         eventsRef.document("Aiden's Party").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
