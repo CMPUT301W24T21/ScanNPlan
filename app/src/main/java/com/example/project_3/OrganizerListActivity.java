@@ -18,6 +18,7 @@ public class OrganizerListActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         eventName = extras.getString("event_name");
         setContentView(R.layout.attendees_list);
+
         // Find the back button
         Button backButton = findViewById(R.id.back_button);
         Button test_map = findViewById(R.id.map_button);
