@@ -39,15 +39,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/edit_button"
-                style="@style/Widget.Material3.Button"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingEditButton"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="3dp"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/appbar_title" />
+                app:layout_constraintTop_toTopOf="@id/appbar_title"
+
+                android:contentDescription="Edit"
+                app:srcCompat="@drawable/baseline_edit_24" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/appbar_title"
@@ -63,21 +70,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
-
-    <EditText
-        android:id="@+id/attendees_registered"
-        android:layout_width="105dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="20dp"
-        android:background="#CCFFCC"
-        android:gravity="center"
-        android:text="No. Registered"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toStartOf="@+id/attendees_inside"
-        app:layout_constraintHorizontal_bias="0.457"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar" />
-
     <EditText
         android:id="@+id/attendees_inside"
         android:layout_width="105dp"
@@ -86,24 +78,10 @@
         android:layout_marginTop="20dp"
         android:background="#CCFFCC"
         android:gravity="center"
-        android:text="No. of Attendees currently inside"
+        android:text="Real Time Attendance: "
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar" />
-
-    <EditText
-        android:id="@+id/virtual_attendees"
-        android:layout_width="105dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="20dp"
-        android:background="#CCFFCC"
-        android:gravity="center"
-        android:text="No. Virtual attendees"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar" />
-
 
     <EditText
         android:id="@+id/list_of_attendees"
@@ -118,32 +96,6 @@
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/attendees_inside" />
-
-    <TextView
-        android:id="@+id/event_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Event Name"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/list_of_attendees" />
-
-    <EditText
-        android:id="@+id/attendees_background"
-        android:layout_width="371dp"
-        android:layout_height="306dp"
-        android:layout_marginTop="4dp"
-        android:background="#FFFFCC"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_of_attendees" />
 
     <Button
         android:id="@+id/attendee1"
@@ -179,17 +131,16 @@
         app:layout_constraintTop_toBottomOf="@+id/attendee2" />
 
     <Button
-        android:id="@+id/qrcode"
-        android:layout_width="149dp"
-        android:layout_height="94dp"
+        android:id="@+id/map_button"
+        android:layout_width="129dp"
+        android:layout_height="74dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="20dp"
-        android:text="QR"
+        android:text="Map"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/attendees_background" />
+        app:layout_constraintTop_toBottomOf="@+id/attendee3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

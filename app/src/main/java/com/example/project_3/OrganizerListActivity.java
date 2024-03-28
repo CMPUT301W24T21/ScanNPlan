@@ -18,7 +18,7 @@ public class OrganizerListActivity extends AppCompatActivity {
 
         // Find the back button
         Button backButton = findViewById(R.id.back_button);
-        Button test_map = findViewById(R.id.attendee1);
+        Button test_map = findViewById(R.id.map_button);
         test_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,6 +29,7 @@ public class OrganizerListActivity extends AppCompatActivity {
                 findViewById(R.id.rest_attendees_list).setVisibility(View.INVISIBLE);
             }
         });
+
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
