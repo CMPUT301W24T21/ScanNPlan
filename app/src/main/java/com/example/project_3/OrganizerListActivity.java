@@ -20,7 +20,7 @@ public class OrganizerListActivity extends AppCompatActivity {
         setContentView(R.layout.attendees_list);
         // Find the back button
         Button backButton = findViewById(R.id.back_button);
-        Button test_map = findViewById(R.id.attendee1);
+        Button test_map = findViewById(R.id.map_button);
         test_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
