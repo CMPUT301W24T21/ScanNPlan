@@ -54,8 +54,12 @@ public class EventMapFragment extends Fragment  {
     private MapView map;
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
+    private String event;
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    public EventMapFragment(String event){
+        this.event = event;
+    }
 
     @Nullable
     @Override
@@ -80,9 +84,7 @@ public class EventMapFragment extends Fragment  {
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
         requestPermissionsIfNecessary(permissions);
         IMapController mapController = map.getController();
-        org.osmdroid.util.GeoPoint start = new org.osmdroid.util.GeoPoint(53.5232, -113.5263);
-        mapController.setCenter(start);
-        eventsRef.document("Aiden's Party").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        eventsRef.document(event).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -94,13 +96,20 @@ public class EventMapFragment extends Fragment  {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnap) {
                                     if (documentSnap.exists()) {
-                                        GeoPoint point = documentSnap.getGeoPoint("location");
-                                        Marker marker = new Marker(map);
-                                        org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
-                                        marker.setPosition(osm_point);
-                                        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                        map.getOverlays().add(marker);
-                                    } else {
+                                        GeoPoint point;
+                                        if (documentSnap.getGeoPoint("location") != null){
+                                            point = documentSnap.getGeoPoint("location");
+                                            Marker marker = new Marker(map);
+                                            org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
+                                            marker.setPosition(osm_point);
+                                            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                            map.getOverlays().add(marker);
+                                            mapController.setCenter(osm_point);
+                                        }
+
+                                        }
+
+                                     else {
                                         System.out.println("No such document!");
                                     }
                                 }
@@ -112,7 +121,7 @@ public class EventMapFragment extends Fragment  {
         }});
 
         map.invalidate();
-        mapController.setZoom(17);
+        mapController.setZoom(14);
         return view;
     }
 
