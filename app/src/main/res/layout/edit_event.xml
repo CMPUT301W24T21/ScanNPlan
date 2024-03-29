@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -43,6 +43,8 @@
                 app:layout_constraintHorizontal_bias="0.221"
                 app:layout_constraintStart_toEndOf="@+id/back_button"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -52,22 +54,32 @@
         style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="44dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="560dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Add Poster"
         android:textColor="@android:color/black"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar" />
+
 
     <Button
         android:id="@+id/add_link"
         style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="44dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="470dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Add Link"
@@ -77,12 +89,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_poster" />
 
+
     <Button
         android:id="@+id/create_message"
         style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="44dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="285dp"
         android:background="@color/white"
         android:gravity="center"
         android:text="Create Message"
@@ -97,7 +114,11 @@
         style="@style/Widget.Material3.Button"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="379dp"
         android:background="@color/white"
         android:gravity="center"
         android:onClick="onViewQRCodeClicked"
@@ -109,4 +130,4 @@
         app:layout_constraintTop_toBottomOf="@+id/create_message" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -1,30 +1,42 @@
 package com.example.project_3;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.app.AlertDialog;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import org.json.JSONObject;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Activity for editing event details.
@@ -36,6 +48,15 @@ public class EditEventDetails extends AppCompatActivity {
     private String eventTime;
     private String qrCode;
     private String qrPromoCode;
+    private String imageUri;
+    private String imageUry;
+    private String link;
+    private String info;
+
+    private static final int ADD_EVENT_REQUEST = 1;
+    private static final String TAG = "EditEventDetails";
+
+=======
 
     /**
      * Called when the activity is starting.
@@ -49,17 +70,25 @@ public class EditEventDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
 
+
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDate = getIntent().getStringExtra("eventDate");
         eventTime = getIntent().getStringExtra("eventTime");
         qrCode = getIntent().getStringExtra("QRCode");
         qrPromoCode = getIntent().getStringExtra("QRPromoCode");
+        imageUri = getIntent().getStringExtra("imageUri");
+        link = getIntent().getStringExtra("link");
+
 
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
         Button createMessageButton = findViewById(R.id.create_message);
+
+        Button addPosterButton = findViewById(R.id.add_poster);
+        Button addLink = findViewById(R.id.add_link);
         Button qrViewButton = findViewById(R.id.view_qrcode);
+
 
         // https://www.youtube.com/watch?v=vyt20Gg2Ckg
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -86,6 +115,34 @@ public class EditEventDetails extends AppCompatActivity {
                 showCreateMessageDialog();
             }
         });
+
+
+        addPosterButton.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, ADD_EVENT_REQUEST);
+        });
+        addLink.setOnClickListener(v -> {
+            showAddLinkDialog();
+        });
+
+    }
+    public void showAddLinkDialog(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_add_link, null);
+        final EditText addLinkEditText = view.findViewById(R.id.add_link_editText);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view)
+                .setTitle("Add a Link for the Event")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    String eventLinc = addLinkEditText.getText().toString();
+                    info = eventLinc;
+                    updateLinkInDatabase(info);
+
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
         qrViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +158,7 @@ public class EditEventDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
     private void showCreateMessageDialog() {
         // Create AlertDialog Builder
@@ -144,10 +202,8 @@ public class EditEventDetails extends AppCompatActivity {
                 String title = titleEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
 
-                // Check if title or description are not empty
                 if (!title.isEmpty() || !description.isEmpty()) {
-                    // Create notification with title and description
-                    makeNotification(title, description);
+                    sendNotification(title , description);
                 } else {
                     // Display a toast or alert indicating that title and description are required
                     Toast.makeText(EditEventDetails.this, "Title and description are required", Toast.LENGTH_SHORT).show();
@@ -176,41 +232,138 @@ public class EditEventDetails extends AppCompatActivity {
         // Show the dialog
         dialog.show();
     }
+    void sendNotification(String title , String message){
+        try{
+            JSONObject jsonObject  = new JSONObject();
 
-    public void makeNotification(String title, String description) {
-        String channelId = "CHANNEL_ID_NOTIFICATION";
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(getApplicationContext(), channelId);
-        builder.setSmallIcon(R.drawable.baseline_notifications_active_24)
-                .setContentTitle(title)
-                .setContentText(description)
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("data", "Some Value to be passed here");
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title", title);
+            notificationObj.put("body",message);
 
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(getApplicationContext(),
-                        0, intent, PendingIntent.FLAG_MUTABLE);
-        builder.setContentIntent(pendingIntent);
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("userId", title);
 
-        NotificationManager notificationManager =
-                (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            jsonObject.put("notification",notificationObj);
+            jsonObject.put("data",dataObj);
+            jsonObject.put("to","ffUl6SLvR-SZ71ssMGHAqt:APA91bELrVu0t7bq8d9ewVxoBm-P07D2rdERgB_6fOt63KMUO8Md-hPTwVg1dDGgEUmAMjvws7Lwr1WoA2F0oit3HB7c1sDpHpHsQA-Vv6hRgs1VODaYXD1LoN6mw451SlL0dqtVH2MI");
 
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel =
-                    notificationManager.getNotificationChannel(channelId);
-            if(notificationChannel == null) {
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                notificationChannel = new NotificationChannel(channelId, "Some Description", importance);
-                notificationChannel.setLightColor(Color.GREEN);
-                notificationChannel.enableVibration(true);
-                notificationManager.createNotificationChannel(notificationChannel);
+            callApi(jsonObject);
+
+        }catch (Exception e){
+
+        }
+    }
+    void callApi(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer ") // you need to paste in the API KEY HERE. I removed it for safety purposes 
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            }
+        });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_EVENT_REQUEST && resultCode == RESULT_OK) {
+            if (data != null) {
+                // Get the URI of the selected image
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null) {
+                    try {
+                        // Decode the selected image to obtain its dimensions
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inJustDecodeBounds = true;
+                        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri), null, options);
+
+                        // Calculate the desired width and height for the resized image
+                        int desiredWidth = 250; // Adjust the width as needed
+                        int desiredHeight = 250; // Adjust the height as needed
+
+                        // Calculate the scale factor to maintain aspect ratio
+                        int scaleFactor = Math.min(options.outWidth / desiredWidth, options.outHeight / desiredHeight);
+
+                        // Set the options to decode the image with the calculated scale factor
+                        options.inJustDecodeBounds = false;
+                        options.inSampleSize = scaleFactor;
+
+                        // Decode the image with the specified options
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri), null, options);
+
+                        // Convert the resized image to base64 string
+                        if (bitmap != null) {
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                            byte[] byteArray = byteArrayOutputStream.toByteArray();
+                            imageUry = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        }
+                        updateImageInDatabase(selectedImageUri);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+                }
             }
         }
+    }
 
-        notificationManager.notify(0,builder.build());
+    // Method to update the imageUry field in the database
+    private void updateImageInDatabase(Uri selectedImageUri) {
+        // Get the Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // Get the reference to the specific event document
+        DocumentReference eventRef = db.collection("Events").document(eventName);
+
+        // Create a map to update the image field
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Image", imageUry);
+
+        // Update the document in the database
+        eventRef.update(updates)
+                .addOnSuccessListener(aVoid -> {
+                    // Handle successful update
+                    sendNotification(eventName , "Poster: Updated");
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure
+                    Toast.makeText(EditEventDetails.this, "Failed to update image", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error updating image", e);
+                });
+    }
+    private void updateLinkInDatabase(String link) {
+        // Get the Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get the reference to the specific event document
+        DocumentReference eventRef = db.collection("Events").document(eventName);
+
+        // Create a map to update the image field
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Link", link);
+
+        // Update the document in the database
+        eventRef.update(updates)
+                .addOnSuccessListener(aVoid -> {
+                    // Handle successful update
+                    sendNotification(eventName , "Link: Updated");
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure
+                    Toast.makeText(EditEventDetails.this, "Failed to update image", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error updating image", e);
+                });
     }
 }

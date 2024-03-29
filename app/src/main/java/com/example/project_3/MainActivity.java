@@ -1,17 +1,27 @@
 package com.example.project_3;
 
+import android.app.NotificationManager;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,9 +50,18 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference profilesRef;
     private Map<String, Object> profileDocDetails;
 
+    private CollectionReference tokenRef;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.account_selector);
+
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         AttendeeIntent = new Intent(this, AttendeeActivity.class);
         OrganizerIntent = new Intent(this, OrganizerActivity.class);
@@ -64,6 +84,86 @@ public class MainActivity extends AppCompatActivity {
             AdminIntent = new Intent(this, AdminActivity.class);
             startActivity(AdminIntent);
         });
+
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
+        getFcmToken();
+
+    }
+    void getFcmToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
+            if(task.isSuccessful()){
+                String token = task.getResult();
+                Log.i("My token", token);
+                saveTokenToFirestore(token);
+            }
+        });
+    }
+
+    void saveTokenToFirestore(String token) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference tokenRef = db.collection("Tokens");
+
+        // Check if document exists and retrieve its data
+        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    // Document exists, retrieve token list and update
+                    List<String> tokensList = (List<String>) document.get("TokenList");
+                    if (tokensList != null && !tokensList.isEmpty()) {
+                        // Add the new token to the end of the list
+                        tokensList.add(token);
+                    } else {
+                        // Token list is empty, create a new list with the token
+                        tokensList = new ArrayList<>();
+                        tokensList.add(token);
+                    }
+                    // Update Firestore with the modified token list
+                    updateTokenListInFirestore(tokenRef, tokensList);
+                } else {
+                    // Document doesn't exist, create a new one with the token
+                    List<String> tokensList = new ArrayList<>();
+                    tokensList.add(token);
+                    // Update Firestore with the new token list
+                    updateTokenListInFirestore(tokenRef, tokensList);
+                }
+            } else {
+                Log.e("Firestore", "Error getting document", task.getException());
+            }
+        });
+    }
+
+    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
+        // Create a HashMap to store the token list
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("TokenList", tokensList);
+
+        // Update Firestore with the token list
+        tokenRef.document("tokenz").set(data)
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
+                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
+    }
+
+    // Method to check if the app has notification permission
+    private boolean hasNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            return notificationManager != null && notificationManager.getNotificationChannel(String.valueOf(NotificationManager.IMPORTANCE_DEFAULT)) != null;
+        }
+        return true; // On versions lower than Oreo, no permission is required.
+    }
+    // Method to request notification permission
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Request permission for notification
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                    NOTIFICATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // No permission required for pre-Oreo devices
+            Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
+        }
+    }
 
 
 //
