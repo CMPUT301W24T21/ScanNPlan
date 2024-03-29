@@ -5,61 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/attendee_list_layout">
-
-    <TextView
-        android:id="@+id/textView"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/organizer_events_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:gravity="end"
-        android:layout_marginBottom="14dp"
-        android:text="Attendees Checked In"
-        android:textSize="25dp" />
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#26202C"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Attendees Checked In"/>
-
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:text="Back" />
-
-    <Button
-        android:id="@+id/map_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Map" />
-
-    <TextView
-        android:id="@+id/attendance_count_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:text="Real time attendance: 0" />
-
-    <ListView
-        android:id="@+id/attendees_list_view"
+        android:layout_height="match_parent" />
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textView"
-        android:layout_above="@id/attendance_count_text"
-        android:padding="8dp" />
+        android:id="@+id/rest_attendee_list_layout">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
+            android:layout_marginBottom="14dp"
+            android:text="Attendees Checked In"
+            android:textSize="25dp" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#26202C"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="Attendees Checked In"/>
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Map" />
+
+        <TextView
+            android:id="@+id/attendance_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Real time attendance: 0" />
+
+        <ListView
+            android:id="@+id/attendees_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textView"
+            android:layout_above="@id/attendance_count_text"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

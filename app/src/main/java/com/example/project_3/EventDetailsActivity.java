@@ -867,7 +867,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the AttendeesCheckedInActivity when the button is clicked
-                Intent intent = new Intent(EventDetailsActivity.this, AttendeesCheckedInActivity.class);
+                Intent intent = new Intent(v.getContext(), AttendeesCheckedInActivity.class);
                 intent.putExtra("event_name", eventName); // Add event name as an extra
                 startActivity(intent);
             }

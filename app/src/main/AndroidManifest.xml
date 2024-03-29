@@ -50,6 +50,7 @@
         <activity android:name=".OrganizerActivity" /> <!-- Add OrganizerActivity here -->
         <activity android:name=".EditEventDetails" /><!-- Add EditEventDetails here -->
         <activity android:name=".OrganizerListActivity" />
+        <activity android:name=".AttendeesCheckedInActivity"/>
         <activity
             android:name=".AttendeeActivity"
             android:exported="true" />
