@@ -12,4 +12,5 @@
     <string name="event_location">Location:</string>
     <string name="event_details">Details/Notes:</string>
     <string name="hello">Hello World</string>
+    <string name="link_text">Link:</string>
 </resources>
