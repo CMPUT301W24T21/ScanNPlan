@@ -239,7 +239,7 @@ public class EditEventDetails extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht")
+                .header("Authorization","Bearer ") // you need to paste in the API KEY HERE. I removed it for safety purposes 
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
