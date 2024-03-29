@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"  />
 
     <uses-feature android:name="android.hardware.CAMERA" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -29,6 +34,7 @@
         <activity
             android:name=".AdminActivity"
             android:exported="false" />
+        <activity android:name=".QRCodeDisplayActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -42,6 +48,7 @@
         <activity android:name=".QRScan" /> <!-- Add QRScan here -->
         <activity android:name=".EventDetailsActivity" /> <!-- Add EventDetailsActivity here -->
         <activity android:name=".OrganizerActivity" /> <!-- Add OrganizerActivity here -->
+
 <!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
 
         <activity
@@ -52,6 +59,9 @@
                 android:value="" />
         </activity>
 
+
+        <activity android:name=".EditEventDetails" /><!-- Add EditEventDetails here -->
+        <activity android:name=".OrganizerListActivity" />
         <activity
             android:name=".AttendeeActivity"
             android:exported="true" />

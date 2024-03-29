@@ -56,6 +56,7 @@ public class EditEventDetails extends AppCompatActivity {
     private static final int ADD_EVENT_REQUEST = 1;
     private static final String TAG = "EditEventDetails";
 
+=======
 
     /**
      * Called when the activity is starting.
@@ -79,11 +80,15 @@ public class EditEventDetails extends AppCompatActivity {
         imageUri = getIntent().getStringExtra("imageUri");
         link = getIntent().getStringExtra("link");
 
+
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
         Button createMessageButton = findViewById(R.id.create_message);
+
         Button addPosterButton = findViewById(R.id.add_poster);
         Button addLink = findViewById(R.id.add_link);
+        Button qrViewButton = findViewById(R.id.view_qrcode);
+
 
         // https://www.youtube.com/watch?v=vyt20Gg2Ckg
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -111,6 +116,7 @@ public class EditEventDetails extends AppCompatActivity {
             }
         });
 
+
         addPosterButton.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -137,6 +143,22 @@ public class EditEventDetails extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+        qrViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the QRCodeDisplayActivity
+                Intent intent = new Intent(EditEventDetails.this, QRCodeDisplayActivity.class);
+                intent.putExtra("eventName", eventName); // Pass event details if needed
+                intent.putExtra("eventLocation", eventLocation);
+                intent.putExtra("eventDate", eventDate);
+                intent.putExtra("eventTime", eventTime);
+                intent.putExtra("QRCode", qrCode);
+                intent.putExtra("QRPromoCode", qrPromoCode);
+                // Pass any necessary data to QRCodeDisplayActivity if needed
+                startActivity(intent);
+            }
+        });
+
     }
     private void showCreateMessageDialog() {
         // Create AlertDialog Builder

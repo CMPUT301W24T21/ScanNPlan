@@ -5,6 +5,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
 import android.util.Base64;
 
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profile {
@@ -30,6 +33,12 @@ public class Profile {
         this.profileType = profileType;
     }
     public Profile(String name, String contact_info, String social_link, String profileType){
+        this.name = name;
+        this.contact_info = contact_info;
+        this.social_link = social_link;
+        this.profileType = profileType;
+    }
+    public Profile(String name, String contact_info, String social_link, String profileType, ArrayList<DocumentReference> EventRefs){
         this.name = name;
         this.contact_info = contact_info;
         this.social_link = social_link;
