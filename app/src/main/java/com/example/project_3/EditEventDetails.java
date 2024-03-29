@@ -56,7 +56,7 @@ public class EditEventDetails extends AppCompatActivity {
     private static final int ADD_EVENT_REQUEST = 1;
     private static final String TAG = "EditEventDetails";
 
-=======
+
 
     /**
      * Called when the activity is starting.
@@ -125,6 +125,21 @@ public class EditEventDetails extends AppCompatActivity {
         addLink.setOnClickListener(v -> {
             showAddLinkDialog();
         });
+        qrViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the QRCodeDisplayActivity
+                Intent intent = new Intent(EditEventDetails.this, QRCodeDisplayActivity.class);
+                intent.putExtra("eventName", eventName); // Pass event details if needed
+                intent.putExtra("eventLocation", eventLocation);
+                intent.putExtra("eventDate", eventDate);
+                intent.putExtra("eventTime", eventTime);
+                intent.putExtra("QRCode", qrCode);
+                intent.putExtra("QRPromoCode", qrPromoCode);
+                // Pass any necessary data to QRCodeDisplayActivity if needed
+                startActivity(intent);
+            }
+        });
 
     }
     public void showAddLinkDialog(){
@@ -143,21 +158,7 @@ public class EditEventDetails extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
-        qrViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to the QRCodeDisplayActivity
-                Intent intent = new Intent(EditEventDetails.this, QRCodeDisplayActivity.class);
-                intent.putExtra("eventName", eventName); // Pass event details if needed
-                intent.putExtra("eventLocation", eventLocation);
-                intent.putExtra("eventDate", eventDate);
-                intent.putExtra("eventTime", eventTime);
-                intent.putExtra("QRCode", qrCode);
-                intent.putExtra("QRPromoCode", qrPromoCode);
-                // Pass any necessary data to QRCodeDisplayActivity if needed
-                startActivity(intent);
-            }
-        });
+
 
     }
     private void showCreateMessageDialog() {
@@ -261,7 +262,7 @@ public class EditEventDetails extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("Authorization","Bearer ") // you need to paste in the API KEY HERE. I removed it for safety purposes 
+                .header("Authorization","Bearer ") // you need to paste in the API KEY HERE. I removed it for safety purposes
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

@@ -133,9 +133,9 @@ public class AttendeeActivity extends AppCompatActivity {
                                                 (String) eventDetails.get("Time"),
                                                 (String) eventDetails.get("Location"),
                                                 (String) eventDetails.get("Details"),
-                                                (boolean) eventDetails.get("Promo"),
                                                 (boolean) eventDetails.get("Reuse"),
                                                 (String) eventDetails.get("Image"),
+                                                null,
                                                 null,
                                                 null));
                                         eventAdapter.notifyDataSetChanged();

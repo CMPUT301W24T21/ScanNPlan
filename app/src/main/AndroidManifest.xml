@@ -60,7 +60,7 @@
         </activity>
 
 
-        <activity android:name=".EditEventDetails" /><!-- Add EditEventDetails here -->
+<!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
         <activity android:name=".OrganizerListActivity" />
         <activity android:name=".AttendeesCheckedInActivity"/>
         <activity
