@@ -32,6 +32,7 @@ public class OrganizerListActivity extends AppCompatActivity {
                 findViewById(R.id.rest_attendees_list).setVisibility(View.INVISIBLE);
             }
         });
+
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

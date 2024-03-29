@@ -1,5 +1,7 @@
 package com.example.project_3;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,6 +73,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.button_back);
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
         Button attendees = findViewById(R.id.attendees);
+        Button checkIns = findViewById(R.id.check_ins);
+        
+
         attendees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +84,20 @@ public class EventDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        // Set click listener for the "checked in" button
+        checkIns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the AttendeesCheckedInActivity when the button is clicked
+                Intent intent = new Intent(v.getContext(), AttendeesCheckedInActivity.class);
+                intent.putExtra("event_name", eventName); // Add event name as an extra
+                startActivity(intent);
+            }
+        });
+
+
         // Set an OnClickListener for the FloatingActionButton
         editEventButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -76,7 +76,7 @@ public class EventMapFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_attendees_list).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.rest_attendee_list_layout).setVisibility(View.VISIBLE);
             }
         });
         map = (MapView) view.findViewById(R.id.map);
