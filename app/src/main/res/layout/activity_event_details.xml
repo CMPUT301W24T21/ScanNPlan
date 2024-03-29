@@ -60,6 +60,26 @@
         android:layout_marginBottom="119dp"
         android:text="Attendees" />
 
+    <Button
+        android:id="@+id/check_ins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="286dp"
+        android:layout_marginBottom="119dp"
+        android:text="Check Ins" />
+
+    <Button
+        android:id="@+id/sign_ups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="119dp"
+        android:text="Sign Ups" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingEditButton"
 
