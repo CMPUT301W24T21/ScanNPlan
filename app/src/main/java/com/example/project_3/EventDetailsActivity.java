@@ -76,6 +76,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
+
+        Button map = findViewById(R.id.map_button);
+        Button checkIns = findViewById(R.id.check_ins);
+
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
 
         Button attendees = findViewById(R.id.attendees);
@@ -91,14 +95,18 @@ public class EventDetailsActivity extends AppCompatActivity {
         signUps.setTextColor(getResources().getColor(R.color.white));
         
 
-        attendees.setOnClickListener(new View.OnClickListener() {
+
+        map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), OrganizerListActivity.class);
-                intent.putExtra("event_name", eventName);
-                startActivity(intent);
+                EventMapFragment map = new EventMapFragment(eventName);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
+                        .commit();
+                findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
+                }
             }
-        });
+        );
 
 
         // Set click listener for the "checked in" button
