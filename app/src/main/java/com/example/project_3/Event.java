@@ -18,7 +18,7 @@ public class Event {
     private String location;
     private String details;
     private String image;
-    private Bitmap poster_picture;
+    private String link;
 
     /**
      * Constructs an event with specified details.
@@ -28,16 +28,15 @@ public class Event {
      * @param time     The time of the event.
      * @param location The location of the event.
      * @param details  Details of the event.
-     * @param promo    Whether the event is promotional.
      * @param reuse    Whether the event can be reused.
      * @param image    The image associated with the event.
      * @param qrCode    The QR code associated with the event.
      * @param qrPromoCode    The Promo QR Code associated with the event.
      */
     public Event(String name, String date, String time, String location,
-                 String details, boolean promo, boolean reuse, String image, String qrCode, String qrPromoCode) {
+                 String details, boolean reuse, String image, String qrCode,
+                 String qrPromoCode, String link) {
         this.name = name;
-        this.promo = promo;
         this.reuse = reuse;
         this.date = date;
         this.time = time;
@@ -46,7 +45,15 @@ public class Event {
         this.image = image;
         this.qrCode = qrCode;
         this.qrPromoCode = qrPromoCode;
+        this.link = link;
+    }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     /**
@@ -182,23 +189,6 @@ public class Event {
         this.name = name;
     }
 
-    /**
-     * Retrieves whether the event is promotional.
-     *
-     * @return True if the event is promotional, false otherwise.
-     */
-    public Boolean getPromo() {
-        return this.promo;
-    }
-
-    /**
-     * Sets whether the event is promotional.
-     *
-     * @param promo Whether the event is promotional.
-     */
-    public void setPromo(Boolean promo) {
-        this.promo = promo;
-    }
 
     /**
      * Retrieves whether the event can be reused.

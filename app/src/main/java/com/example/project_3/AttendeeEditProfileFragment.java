@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -147,6 +148,33 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+        MaterialButton deletePhotoButton = view.findViewById(R.id.delete_photo_button);
+        deletePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // removes the profile image into another random string that will be changed to be
+                //deterministically changed
+                db.collection("Profiles").document(profileID)
+                        .update("profile_image", FieldValue.delete())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Firestore", "Profile image deleted successfully");
+                                //  clear the ImageView
+                                profile_image.setImageDrawable(null);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("Firestore", "Error deleting profile image", e);
+                                Toast.makeText(getActivity(), "Failed to delete profile image", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+
         return view;
     }
 
@@ -182,4 +210,6 @@ public class AttendeeEditProfileFragment extends Fragment {
             return null;
         }
     }
+
+
 }

@@ -48,12 +48,33 @@
         <activity android:name=".QRScan" /> <!-- Add QRScan here -->
         <activity android:name=".EventDetailsActivity" /> <!-- Add EventDetailsActivity here -->
         <activity android:name=".OrganizerActivity" /> <!-- Add OrganizerActivity here -->
-        <activity android:name=".EditEventDetails" /><!-- Add EditEventDetails here -->
+
+<!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
+
+        <activity
+            android:name=".EditEventDetails"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+
+<!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
         <activity android:name=".OrganizerListActivity" />
         <activity android:name=".AttendeesCheckedInActivity"/>
         <activity
             android:name=".AttendeeActivity"
             android:exported="true" />
+
+        <service
+            android:name=".FCMNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

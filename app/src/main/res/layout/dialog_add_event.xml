@@ -16,7 +16,6 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/promoChecker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,54 +75,44 @@
         android:inputType="text"
         android:padding="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/promoChecker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_time_editText"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <CheckBox
-        android:id="@+id/promoChecker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
-        android:text="Promo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
 
     <CheckBox
         android:id="@+id/reuseChecker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="164dp"
         android:text="Re-use"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toEndOf="@+id/buttonPoster"
         app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
     <Button
         android:id="@+id/buttonPoster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
         android:text="Poster"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/promoChecker"
-        app:layout_constraintTop_toBottomOf="@+id/reuseChecker" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_location_editText"
+        app:layout_constraintVertical_bias="0.037" />
 
     <Button
         android:id="@+id/buttonLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="36dp"
         android:text="Link"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/reuseChecker"
-        app:layout_constraintTop_toBottomOf="@+id/reuseChecker" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/reuseChecker"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonPoster"
+        app:layout_constraintTop_toBottomOf="@+id/add_location_editText"
+        app:layout_constraintVertical_bias="0.037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
