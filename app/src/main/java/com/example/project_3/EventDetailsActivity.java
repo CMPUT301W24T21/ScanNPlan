@@ -3,6 +3,7 @@ package com.example.project_3;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -70,10 +71,24 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
-        Button backButton = findViewById(R.id.button_back);
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
+
+
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
+        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+
         Button attendees = findViewById(R.id.attendees);
+        attendees.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        attendees.setTextColor(getResources().getColor(R.color.white));
+
         Button checkIns = findViewById(R.id.check_ins);
+        checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        checkIns.setTextColor(getResources().getColor(R.color.white));
+
+        Button signUps = findViewById(R.id.sign_ups);
+        signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        signUps.setTextColor(getResources().getColor(R.color.white));
         
 
         attendees.setOnClickListener(new View.OnClickListener() {

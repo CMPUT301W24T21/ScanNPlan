@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shape drawable for the background -->
+    <item android:drawable="@drawable/rounded_button" />
+
+    <!-- Vector drawable on top of the background -->
+    <item android:drawable="@drawable/baseline_qr_code_24"
+        android:gravity="center" />
+</layer-list>
