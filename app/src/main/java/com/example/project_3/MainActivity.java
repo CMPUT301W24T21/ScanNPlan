@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference profilesRef;
     private Map<String, Object> profileDocDetails;
-
+    private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
     private CollectionReference tokenRef;
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.account_selector);
+
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.account_selector);
-
-
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -84,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
             AdminIntent = new Intent(this, AdminActivity.class);
             startActivity(AdminIntent);
         });
-    }
-}
-
         FirebaseMessaging.getInstance().subscribeToTopic("all");
         getFcmToken();
 
@@ -100,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     void saveTokenToFirestore(String token) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference tokenRef = db.collection("Tokens");
@@ -134,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
         // Create a HashMap to store the token list
         HashMap<String, Object> data = new HashMap<>();
@@ -145,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
                 .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
     }
-
-    // Method to check if the app has notification permission
     private boolean hasNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -154,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true; // On versions lower than Oreo, no permission is required.
     }
-    // Method to request notification permission
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Request permission for notification
@@ -166,6 +158,88 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
     }
+
+}
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("all");
+//        getFcmToken();
+
+//    }void getFcmToken(){
+////        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
+////            if(task.isSuccessful()){
+////                String token = task.getResult();
+////                Log.i("My token", token);
+////                saveTokenToFirestore(token);
+////            }
+////        });
+////    }
+////
+//    void saveTokenToFirestore(String token) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference tokenRef = db.collection("Tokens");
+//
+//        // Check if document exists and retrieve its data
+//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    // Document exists, retrieve token list and update
+//                    List<String> tokensList = (List<String>) document.get("TokenList");
+//                    if (tokensList != null && !tokensList.isEmpty()) {
+//                        // Add the new token to the end of the list
+//                        tokensList.add(token);
+//                    } else {
+//                        // Token list is empty, create a new list with the token
+//                        tokensList = new ArrayList<>();
+//                        tokensList.add(token);
+//                    }
+//                    // Update Firestore with the modified token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                } else {
+//                    // Document doesn't exist, create a new one with the token
+//                    List<String> tokensList = new ArrayList<>();
+//                    tokensList.add(token);
+//                    // Update Firestore with the new token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                }
+//            } else {
+//                Log.e("Firestore", "Error getting document", task.getException());
+//            }
+//        });
+//    }
+////
+//    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
+//        // Create a HashMap to store the token list
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("TokenList", tokensList);
+//
+//        // Update Firestore with the token list
+//        tokenRef.document("tokenz").set(data)
+//                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
+//                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
+//    }
+////
+////    // Method to check if the app has notification permission
+//    private boolean hasNotificationPermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            return notificationManager != null && notificationManager.getNotificationChannel(String.valueOf(NotificationManager.IMPORTANCE_DEFAULT)) != null;
+//        }
+//        return true; // On versions lower than Oreo, no permission is required.
+//    }
+////    // Method to request notification permission
+//    private void requestNotificationPermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            // Request permission for notification
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+//                    NOTIFICATION_PERMISSION_REQUEST_CODE);
+//        } else {
+//            // No permission required for pre-Oreo devices
+//            Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
+//        }
+//    }
+//
 
 
 //
@@ -250,6 +324,9 @@ public class MainActivity extends AppCompatActivity {
 //    }
 //}
 //
+
+
+
 //import android.app.NotificationManager;
 //import android.content.Context;
 //import android.content.Intent;
