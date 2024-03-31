@@ -50,17 +50,6 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         // Find views
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
-        Button map = findViewById(R.id.map_button);
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventMapFragment map = new EventMapFragment(eventName);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
-                        .commit();
-                findViewById(R.id.rest_attendee_list_layout).setVisibility(View.INVISIBLE);
-            }
-        });
 
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {

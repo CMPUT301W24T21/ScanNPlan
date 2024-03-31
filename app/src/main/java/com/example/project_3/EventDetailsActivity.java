@@ -848,18 +848,21 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.button_back);
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
-        Button attendees = findViewById(R.id.attendees);
+        Button map = findViewById(R.id.map_button);
         Button checkIns = findViewById(R.id.check_ins);
-        
 
-        attendees.setOnClickListener(new View.OnClickListener() {
+
+        map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), OrganizerListActivity.class);
-                intent.putExtra("event_name", eventName);
-                startActivity(intent);
+                EventMapFragment map = new EventMapFragment(eventName);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
+                        .commit();
+                findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
+                }
             }
-        });
+        );
 
 
         // Set click listener for the "checked in" button
