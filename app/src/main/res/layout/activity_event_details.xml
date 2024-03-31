@@ -86,6 +86,16 @@
             android:layout_marginEnd="26dp"
             android:layout_marginBottom="119dp"
             android:text="Sign Ups" />
+        <TextView
+            android:id="@+id/date_event"
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="287dp"
+            android:layout_marginBottom="180dp"
+            android:hint="Date:"
+            android:textSize="30dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingEditButton"
