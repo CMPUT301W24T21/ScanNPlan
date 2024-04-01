@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,10 +108,30 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                         details.setText(selectedEvent.getDetails());
 
                     } else {
-                        Log.d("DEBUG", "No such document");
+                        Toast.makeText(getActivity(), "This Promo QR code is either invalid or expired.", Toast.LENGTH_SHORT).show();
+                        final boolean[] isProcessingClick = {true};
+                        getParentFragmentManager().popBackStack();
+                        getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isProcessingClick[0] = false;
+                            }
+                        }, 500); // Adjust the delay time as needed
+
                     }
                 } else {
-                    Log.d("DEBUG", "get failed with ", task.getException());
+                    Toast.makeText(getActivity(), "Failed to retrieve Event Details.", Toast.LENGTH_SHORT).show();
+                    final boolean[] isProcessingClick = {true};
+                    getParentFragmentManager().popBackStack();
+                    getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isProcessingClick[0] = false;
+                        }
+                    }, 500); // Adjust the delay time as needed
+
                 }
 
             }
