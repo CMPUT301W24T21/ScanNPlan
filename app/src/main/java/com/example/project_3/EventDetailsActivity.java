@@ -71,7 +71,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
-        Button backButton = findViewById(R.id.back_button);
+        Button backButton = findViewById(R.id.button_back);
         backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
 
 
@@ -82,13 +82,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
 
-        Button attendees = findViewById(R.id.attendees);
-        attendees.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        attendees.setTextColor(getResources().getColor(R.color.white));
-
-        Button checkIns = findViewById(R.id.check_ins);
         checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         checkIns.setTextColor(getResources().getColor(R.color.white));
+        map.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        map.setTextColor(getResources().getColor(R.color.white));
 
         Button signUps = findViewById(R.id.sign_ups);
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
