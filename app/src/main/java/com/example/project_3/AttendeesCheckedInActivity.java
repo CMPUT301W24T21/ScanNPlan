@@ -34,6 +34,7 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     private ListView attendeesListView;
     private String eventName;
     private static final String TAG = "AttendeesCheckedInActivity";
+    private TextView attendanceCountTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         // Find views
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
+        attendanceCountTextView = findViewById(R.id.attendance_count_text);
         Button map = findViewById(R.id.map_button);
         map.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +94,13 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 List<DocumentReference> checkedIn = (List<DocumentReference>) document.get("checked_in");
-                                List<String> attendeeNames = new ArrayList<>();
+                                int realTimeAttendance = checkedIn != null ? checkedIn.size() : 0;
+
+                                // Update real-time attendance count
+                                updateRealTimeAttendance(realTimeAttendance);
+
                                 if (checkedIn != null) {
+                                    List<String> attendeeNames = new ArrayList<>();
                                     for (DocumentReference doc : checkedIn) {
                                         // Fetch the attendee document from Firestore
                                         doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -107,6 +114,9 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                                                         if (attendeeName != null) {
                                                             attendeeNames.add(attendeeName);
                                                             displayAttendees(attendeeNames);
+
+                                                            // Update real-time attendance count after all attendee names are fetched
+                                                            updateRealTimeAttendance(attendeeNames.size());
                                                         }
                                                     } else {
                                                         Log.d(TAG, "Attendee document not found");
@@ -128,9 +138,14 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                 });
     }
 
+
     private void displayAttendees(List<String> attendees) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
         attendeesListView.setAdapter(adapter);
+    }
+
+    private void updateRealTimeAttendance(int count) {
+        attendanceCountTextView.setText("Real time attendance: " + count);
     }
 }
 

@@ -59,7 +59,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
-            android:text="Real time attendance: 0" />
+            android:text="@string/real_time_attendance_placeholder" />
 
         <ListView
             android:id="@+id/attendees_list_view"
