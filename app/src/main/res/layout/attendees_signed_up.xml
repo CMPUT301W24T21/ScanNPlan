@@ -21,7 +21,7 @@
             android:layout_marginEnd="16dp"
             android:gravity="end"
             android:layout_marginBottom="14dp"
-            android:text="Attendees Checked In"
+            android:text="Attendees Signed Up"
             android:textSize="25dp" />
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -31,7 +31,7 @@
             android:background="#26202C"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="Attendees Checked In"/>
+            app:title="Attendees Signed Up"/>
 
         <Button
             android:id="@+id/back_button"
@@ -41,16 +41,6 @@
             android:layout_marginTop="8dp"
             android:text="Back" />
 
-        <Button
-            android:id="@+id/map_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Map" />
-
         <TextView
             android:id="@+id/attendance_count_text"
             android:layout_width="wrap_content"
@@ -59,7 +49,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
-            android:text="@string/real_time_attendance_placeholder" />
+            android:text="Real time attendance: 0" />
 
         <ListView
             android:id="@+id/attendees_list_view"
