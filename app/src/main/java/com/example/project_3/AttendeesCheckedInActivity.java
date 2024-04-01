@@ -51,6 +51,7 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         // Find views
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
+
         attendanceCountTextView = findViewById(R.id.attendance_count_text);
         Button map = findViewById(R.id.map_button);
         map.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +64,7 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                 findViewById(R.id.rest_attendee_list_layout).setVisibility(View.INVISIBLE);
             }
         });
+
 
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {

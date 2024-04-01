@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.app.AlertDialog;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +71,6 @@ public class EditEventDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
 
-
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDate = getIntent().getStringExtra("eventDate");
@@ -80,14 +80,14 @@ public class EditEventDetails extends AppCompatActivity {
         imageUri = getIntent().getStringExtra("imageUri");
         link = getIntent().getStringExtra("link");
 
-
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
-        Button createMessageButton = findViewById(R.id.create_message);
+        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
 
-        Button addPosterButton = findViewById(R.id.add_poster);
-        Button addLink = findViewById(R.id.add_link);
-        Button qrViewButton = findViewById(R.id.view_qrcode);
+        ImageButton createMessageButton = findViewById(R.id.create_message);
+        ImageButton addPosterButton = findViewById(R.id.add_poster);
+        ImageButton addLink = findViewById(R.id.add_link);
+        ImageButton qrViewButton = findViewById(R.id.view_qrcode);
 
 
         // https://www.youtube.com/watch?v=vyt20Gg2Ckg
@@ -246,6 +246,9 @@ public class EditEventDetails extends AppCompatActivity {
 
             jsonObject.put("notification",notificationObj);
             jsonObject.put("data",dataObj);
+//            jsonObject.put("to","dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9");
+
+//            dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9
             jsonObject.put("to","ffUl6SLvR-SZ71ssMGHAqt:APA91bELrVu0t7bq8d9ewVxoBm-P07D2rdERgB_6fOt63KMUO8Md-hPTwVg1dDGgEUmAMjvws7Lwr1WoA2F0oit3HB7c1sDpHpHsQA-Vv6hRgs1VODaYXD1LoN6mw451SlL0dqtVH2MI");
 
             callApi(jsonObject);
@@ -262,7 +265,7 @@ public class EditEventDetails extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("Authorization","Bearer ") // you need to paste in the API KEY HERE. I removed it for safety purposes
+                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht") // you need to paste in the API KEY HERE. I removed it for safety purposes
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -290,8 +293,8 @@ public class EditEventDetails extends AppCompatActivity {
                         BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri), null, options);
 
                         // Calculate the desired width and height for the resized image
-                        int desiredWidth = 250; // Adjust the width as needed
-                        int desiredHeight = 250; // Adjust the height as needed
+                        int desiredWidth = 250; // Adjust the width
+                        int desiredHeight = 250; // Adjust the height
 
                         // Calculate the scale factor to maintain aspect ratio
                         int scaleFactor = Math.min(options.outWidth / desiredWidth, options.outHeight / desiredHeight);
@@ -363,8 +366,8 @@ public class EditEventDetails extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Handle failure
-                    Toast.makeText(EditEventDetails.this, "Failed to update image", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Error updating image", e);
+                    Toast.makeText(EditEventDetails.this, "Failed to update link", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error updating link", e);
                 });
     }
 }
