@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -74,6 +75,14 @@ public class EventDetailsActivity extends AppCompatActivity {
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
         Button attendees = findViewById(R.id.attendees);
         Button checkIns = findViewById(R.id.check_ins);
+        Button signUps = findViewById(R.id.sign_ups);
+
+        signUps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddEventDialog();
+            }
+        });
         
 
         attendees.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +170,17 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
 
                 });
+    }
+
+    private void showAddEventDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_sign_ups, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view)
+                .setTitle("Signed Up Attendees")
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
 }
