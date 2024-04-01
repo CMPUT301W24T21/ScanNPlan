@@ -57,6 +57,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         // adding listener to the button
         scanBtn.setOnClickListener(this);
 
+
     }
 
 
@@ -103,9 +104,16 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 profilesRef = db.collection("Profiles");
 
                 if (intentResult.getContents().startsWith("Events/")) {
-                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
-                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
+                    //toggleRestOfPageVisibility();
+                    findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents()))
+                            .addToBackStack(null)
+                            .commit();
+
+//                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
+//                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
                 } else if (intentResult.getContents().startsWith("QrCodes/")) {
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -136,6 +144,6 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         }
 
         // Finish the current activity to go back to the previous one
-        finish();
+        //finish();
     }
 }
