@@ -105,6 +105,8 @@ public class EventMapFragment extends Fragment  {
                                         if (documentSnap.exists()) {
                                             GeoPoint point;
                                             if (documentSnap.getGeoPoint("location") != null){
+                                                //testing logs
+                                                System.out.println("We have found document: " + documentSnap.getId());
                                                 point = documentSnap.getGeoPoint("location");
                                                 Marker marker = new Marker(map);
                                                 org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
