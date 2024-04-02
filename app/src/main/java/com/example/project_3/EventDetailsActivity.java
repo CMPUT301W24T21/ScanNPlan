@@ -85,8 +85,11 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         signUps.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showAddEventDialog();
+            public void onClick(View v) {
+                // Start the AttendeesCheckedInActivity when the button is clicked
+                Intent intent = new Intent(v.getContext(), AttendeesSignedUpActivity.class);
+                intent.putExtra("event_name", eventName); // Add event name as an extra
+                startActivity(intent);
             }
         });
 
@@ -97,7 +100,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         map.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         map.setTextColor(getResources().getColor(R.color.white));
 
-        Button signUps = findViewById(R.id.sign_ups);
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         signUps.setTextColor(getResources().getColor(R.color.white));
         
@@ -191,17 +193,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
 
                 });
-    }
-
-    private void showAddEventDialog() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.dialog_sign_ups, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view)
-                .setTitle("Signed Up Attendees")
-                .setNegativeButton("Cancel", null)
-                .show();
     }
 
 }

@@ -15,11 +15,11 @@
         android:id="@+id/rest_attendee_list_layout">
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:gravity="end"
+            android:layout_alignBottom="@+id/materialToolbar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="73dp"
             android:layout_marginBottom="14dp"
             android:text="Attendees Checked In"
             android:textSize="25dp" />
@@ -40,16 +40,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="8dp"
             android:text="Back" />
-
-        <Button
-            android:id="@+id/map_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Map" />
 
         <TextView
             android:id="@+id/attendance_count_text"
