@@ -104,7 +104,7 @@ public class BrowseProfilesFragment extends Fragment {
                         String social_link = doc.getString("social_link"); // Assuming you have a "date" field in your document
                         String contact_info = doc.getString("contact_info");
                         String profileType = doc.getString("profile_type");
-                        String profile_picture = doc.getString("profile_picture");
+                        String profile_picture = doc.getString("profile_image");
                         if (profile_picture == null) {
                             profile_picture = "";
                         }
