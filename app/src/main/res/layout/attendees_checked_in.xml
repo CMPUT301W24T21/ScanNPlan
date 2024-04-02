@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rest_attendee_list_layout">
+        <include layout="@layout/global_top_appbar"/>
         <TextView
             android:id="@+id/textView"
             android:layout_width="202dp"
@@ -23,23 +24,6 @@
             android:layout_marginBottom="14dp"
             android:text="Attendees Checked In"
             android:textSize="25dp" />
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#26202C"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="Attendees Checked In"/>
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="8dp"
-            android:text="Back" />
 
         <TextView
             android:id="@+id/attendance_count_text"
