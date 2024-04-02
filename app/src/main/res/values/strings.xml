@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project_3</string>
+    <string name="app_name">ScanNPlan</string>
     <string name="username">Username</string>
     <string name="delete">Delete</string>
     <string name="dummy_button">Dummy Button</string>
@@ -12,4 +12,6 @@
     <string name="event_location">Location:</string>
     <string name="event_details">Details/Notes:</string>
     <string name="hello">Hello World</string>
+    <string name="link_text">Link:</string>
+    <string name="real_time_attendance_placeholder">Real time attendance: %d</string>
 </resources>

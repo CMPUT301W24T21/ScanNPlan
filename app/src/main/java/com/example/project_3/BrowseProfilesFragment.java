@@ -3,6 +3,7 @@ package com.example.project_3;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -10,6 +11,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -100,7 +104,7 @@ public class BrowseProfilesFragment extends Fragment {
                         String social_link = doc.getString("social_link"); // Assuming you have a "date" field in your document
                         String contact_info = doc.getString("contact_info");
                         String profileType = doc.getString("profile_type");
-                        String profile_picture = doc.getString("profile_picture");
+                        String profile_picture = doc.getString("profile_image");
                         if (profile_picture == null) {
                             profile_picture = "";
                         }
@@ -135,7 +139,23 @@ public class BrowseProfilesFragment extends Fragment {
             }
         });
 
+        //listProfiles.
+
         return view;
 
     }
+    //Changes made here to swipe to delete
+//    ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//            Snackbar snackbar = Snackbar.make()
+//        }
+//    };
+
 }
+

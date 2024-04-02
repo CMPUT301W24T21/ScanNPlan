@@ -4,74 +4,112 @@
     android:layout_height="match_parent"
     android:id="@+id/event_activity_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/organizer_events_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#26202C"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rest_event_details">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#26202C"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
 
-    <TextView
-        android:id="@+id/event_name_text_view"
-        android:layout_width="199dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/materialToolbar"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toStartOf="@+id/floatingEditButton"
-        android:layout_toEndOf="@+id/button_back"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Event Name"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/event_name_text_view"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/materialToolbar"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toStartOf="@+id/floatingEditButton"
+            android:layout_toEndOf="@+id/button_back"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Event Name"
+            android:textSize="24sp" />
 
-    <ImageView
-        android:id="@+id/targetImage"
-        android:layout_width="288dp"
-        android:layout_height="356dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="59dp"
-        android:layout_marginBottom="220dp" />
+        <ImageView
+            android:id="@+id/targetImage"
+            android:layout_width="288dp"
+            android:layout_height="356dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="59dp"
+            android:layout_marginBottom="220dp" />
 
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/materialToolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="7dp"
-        android:text="Back" />
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/materialToolbar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="7dp"
+            android:text="Back" />
 
-    <Button
-        android:id="@+id/attendees"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="119dp"
-        android:text="Attendees" />
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="162dp"
+            android:layout_marginBottom="118dp"
+            android:text="Map" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingEditButton"
+        <Button
+            android:id="@+id/check_ins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="286dp"
+            android:layout_marginBottom="119dp"
+            android:text="Check Ins" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="3dp"
-        android:clickable="true"
-        android:contentDescription="Edit"
-        app:srcCompat="@drawable/baseline_edit_24" />
+        <Button
+            android:id="@+id/sign_ups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="119dp"
+            android:text="Sign Ups" />
+        <TextView
+            android:id="@+id/date_event"
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="287dp"
+            android:layout_marginBottom="180dp"
+            android:hint="Date:"
+            android:textSize="30dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:contentDescription="Edit"
+            app:srcCompat="@drawable/baseline_edit_24" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

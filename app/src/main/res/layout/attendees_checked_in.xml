@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/attendee_list_layout">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/organizer_events_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rest_attendee_list_layout">
+        <include layout="@layout/global_top_appbar"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/materialToolbar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="73dp"
+            android:layout_marginBottom="14dp"
+            android:text="Attendees Checked In"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/attendance_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/real_time_attendance_placeholder" />
+
+        <ListView
+            android:id="@+id/attendees_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textView"
+            android:layout_above="@id/attendance_count_text"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
