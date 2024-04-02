@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import androidx.fragment.app.FragmentManager;
 
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
@@ -80,6 +84,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+
+
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +126,8 @@ public class AttendeeEditProfileFragment extends Fragment {
                         });
             }
         });
+
+
 
         db.collection("Profiles").document(profileID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -174,6 +182,25 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+//        MaterialButton browseAllEventsButton = view.findViewById(R.id.button5);
+//        browseAllEventsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EventListFragment eventListFragment = new EventListFragment();
+//
+//                // Replace the current fragment with the EventListFragment
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.fragment_container, eventListFragment);
+//                fragmentTransaction.addToBackStack(null); // Optional, to add the transaction to the back stack
+//                fragmentTransaction.commit();
+//            }
+//
+//            private FragmentManager getSupportFragmentManager() {
+//                return null;
+//            }
+//        });
+
 
         return view;
     }
@@ -194,6 +221,10 @@ public class AttendeeEditProfileFragment extends Fragment {
     }
 
     private String encodeImage(Bitmap bitmap) {
+        if (bitmap == null) {
+            return ""; // Or any default value you want to use
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -210,6 +241,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             return null;
         }
     }
+
+
 
 
 }
