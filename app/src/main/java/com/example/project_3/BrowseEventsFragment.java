@@ -37,7 +37,7 @@ public class BrowseEventsFragment extends Fragment {
     private CollectionReference eventsRef;
     private EditText addEventEditText;
     private ArrayList<Event> eventNamesList;
-    private ListEventArrayAdapter eventNamesAdapter;
+    private EventArrayAdapter eventNamesAdapter;
     /**
      * The default constructor for the class, initializes a new instance
      */
@@ -84,7 +84,7 @@ public class BrowseEventsFragment extends Fragment {
 
         listEvents = view.findViewById(R.id.list_events_admin);
         eventNamesList = new ArrayList<>();
-        eventNamesAdapter = new ListEventArrayAdapter(view.getContext(), eventNamesList);
+        eventNamesAdapter = new EventArrayAdapter(view.getContext(), eventNamesList);
         listEvents.setAdapter(eventNamesAdapter);
         eventsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
