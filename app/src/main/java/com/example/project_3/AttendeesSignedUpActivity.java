@@ -57,6 +57,10 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
 
+        TextView appbar = findViewById(R.id.appbar_title);
+        appbar.setTextSize(22);
+        appbar.setText("Attendees Registered");
+
         attendanceCountTextView = findViewById(R.id.attendance_count_text);
 
         // Set click listener for the back button
