@@ -15,10 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminEventDetailsFragment extends Fragment {
 
     private Event event;
+    private FirebaseFirestore db;
+    private CollectionReference eventsref;
 
     public AdminEventDetailsFragment(Event event) {
         this.event = event;
@@ -43,7 +47,8 @@ public class AdminEventDetailsFragment extends Fragment {
         TextView appBar = view.findViewById(R.id.appbar_title);
         //set appbar title to reflect the fragment
         appBar.setText(event.getName());
-
+        db = FirebaseFirestore.getInstance();
+        eventsref = db.collection("Events");
         TextView date = view.findViewById(R.id.event_date);
         date.setText(event.getDate());
         TextView time = view.findViewById(R.id.event_time);
@@ -52,7 +57,15 @@ public class AdminEventDetailsFragment extends Fragment {
         location.setText(event.getLocation());
         TextView details = view.findViewById(R.id.event_details);
         details.setText(event.getDetails());
-
+        MaterialButton delete = view.findViewById(R.id.delete_event_button);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventsref.document(event.getName()).delete();
+                getParentFragmentManager().popBackStack();
+                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+            }
+        });
         MaterialButton back = view.findViewById(R.id.back_button);
         //if back is clicked pop the stack and go back to the activity
         back.setOnClickListener(new View.OnClickListener() {
