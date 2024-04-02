@@ -63,6 +63,8 @@
 <!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
         <activity android:name=".OrganizerListActivity" />
         <activity android:name=".AttendeesCheckedInActivity"/>
+        <activity android:name=".AttendeesSignedUpActivity"/>
+
         <activity
             android:name=".AttendeeActivity"
             android:exported="true" />
