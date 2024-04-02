@@ -1,7 +1,9 @@
 package com.example.project_3;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminEventDetailsFragment extends Fragment {
@@ -58,6 +63,20 @@ public class AdminEventDetailsFragment extends Fragment {
         TextView details = view.findViewById(R.id.event_details);
         details.setText(event.getDetails());
         MaterialButton delete = view.findViewById(R.id.delete_event_button);
+        ImageView image = view.findViewById(R.id.event_poster);
+        eventsref.document(event.getName()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    String baseString = document.getString("Image");
+                    if (baseString != null && !baseString.isEmpty()) {
+                        byte[] decodedBytes = Base64.decode(baseString, Base64.DEFAULT);
+                        image.setImageBitmap(BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length));
+                    }
+                }
+            }});
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
