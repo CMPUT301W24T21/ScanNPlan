@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +52,7 @@ public class AttendeeEditProfileFragment extends Fragment {
     private Bitmap bitmapImage;
 
     private ImageView profile_image;
+    private Boolean LocationEnabled;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -83,6 +87,13 @@ public class AttendeeEditProfileFragment extends Fragment {
                 }, 500); // Adjust the delay time as needed
             }
         });
+        SwitchMaterial geolocation = view.findViewById(R.id.geolocation_toggle);
+        geolocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                LocationEnabled = isChecked;
+            }
+        });
 
 
 
@@ -109,7 +120,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                         .update("name", newName,
                                 "contact_info", newContactInfo,
                                 "social_link", newSocialLink,
-                                "profile_image", base64Image)
+                                "profile_image", base64Image, "locationEnabled", LocationEnabled)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -137,8 +148,9 @@ public class AttendeeEditProfileFragment extends Fragment {
                     String contactInfo = documentSnapshot.getString("contact_info");
                     String socialLink = documentSnapshot.getString("social_link");
                     String base64Image = documentSnapshot.getString("profile_image");
-
+                    Boolean location_status = documentSnapshot.getBoolean("locationEnabled");
                     nameTextView.setText(profileName);
+                    geolocation.setChecked(location_status);
                     contactInfoTextView.setText(contactInfo);
                     socialLinkTextView.setText(socialLink);
 
