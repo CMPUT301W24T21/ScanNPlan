@@ -66,15 +66,16 @@
         app:layout_constraintVertical_bias="0.111" />
 
     <Button
-        android:id="@+id/attendees"
+        android:id="@+id/map_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
-        android:text="Attendees"
+        android:text="Map"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/check_ins" />
 
     <Button
         android:id="@+id/check_ins"
@@ -82,10 +83,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="20dp"
         android:text="Check Ins"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/attendees"
+        app:layout_constraintEnd_toStartOf="@+id/map_button"
         app:layout_constraintHorizontal_bias="0.962"
         app:layout_constraintStart_toEndOf="@+id/sign_ups" />
 
@@ -142,7 +144,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingEditButton"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
