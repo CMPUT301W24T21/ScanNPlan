@@ -1,9 +1,12 @@
 package com.example.project_3;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -139,7 +142,49 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     private void displayAttendees(List<String> attendees) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
         attendeesListView.setAdapter(adapter);
+
+        // Set click listener for the attendees list items
+        attendeesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String clickedAttendee = attendees.get(position);
+                // Display a dialog with details of the clicked attendee
+                showAttendeeDetailsDialog(clickedAttendee);
+            }
+        });
     }
+
+
+    private void showAttendeeDetailsDialog(String attendeeName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Fetch the attendee document from Firestore
+        db.collection("Attendees")
+                .whereEqualTo("name", attendeeName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int checkInCount = task.getResult().size();
+                            builder.setTitle("Attendee Details")
+                                    .setMessage("Name: " + attendeeName + "\nCheck-in Count: " + checkInCount)
+                                    .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            Log.d(TAG, "Error fetching attendee details", task.getException());
+                            // Show an error message if attendee details cannot be fetched
+                            Toast.makeText(AttendeesCheckedInActivity.this, "Failed to fetch attendee details", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
 
     private void updateRealTimeAttendance(int count) {
         attendanceCountTextView.setText("Real time attendance: " + count);
