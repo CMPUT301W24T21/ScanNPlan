@@ -108,7 +108,8 @@ public class EventMapFragment extends Fragment  {
                                                 //testing logs
                                                 System.out.println("We have found document: " + documentSnap.getId());
                                                 point = documentSnap.getGeoPoint("location");
-                                                if (documentSnap.getBoolean("locationEnabled")) {
+                                                Boolean locationEnabled = documentSnap.getBoolean("locationEnabled");
+                                                if (locationEnabled != null && locationEnabled) {
                                                     Marker marker = new Marker(map);
                                                     org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
                                                     marker.setPosition(osm_point);
@@ -118,6 +119,7 @@ public class EventMapFragment extends Fragment  {
                                                 }
                                                 else{
                                                     mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0,0.0));
+                                                    Toast.makeText(getContext(), "Some users may not want to share their location!", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
 

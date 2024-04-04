@@ -71,7 +71,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        TextView eventTextView = findViewById(R.id.event_name_text_view);
+        TextView eventTextView = findViewById(R.id.appbar_title);
         eventTextView.setText(eventName);
 
 
@@ -80,22 +80,18 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         TextView eventLocationView = findViewById(R.id.location_event);
         eventLocationView.setText("Place: " + eventLocation);
-        Button backButton = findViewById(R.id.button_back);
+        Button backButton = findViewById(R.id.back_button);
         backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
 
 
         TextView eventDetailsView = findViewById(R.id.details_event);
         eventDetailsView.setText("Notes: " + eventDetails);
 
-        Button backButton = findViewById(R.id.back_button);
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
 
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
 
-        Button attendees = findViewById(R.id.attendees);
-        attendees.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        attendees.setTextColor(getResources().getColor(R.color.white));
 
 
         Button map = findViewById(R.id.map_button);
@@ -165,12 +161,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                 intent.putExtra("imageUri", imageUri);
                 intent.putExtra("link", link);
                 startActivity(intent);
-            }
-        });
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 
