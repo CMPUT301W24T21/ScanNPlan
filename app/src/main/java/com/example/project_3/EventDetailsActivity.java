@@ -40,6 +40,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private String eventDate;
     private String eventTime;
     private String eventLocation;
+    private String eventDetails;
     private String qrCode;
     private String qrPromoCode;
     private String imageUri;
@@ -54,6 +55,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
+        eventDetails = getIntent().getStringExtra("eventDetails");
         eventDate = getIntent().getStringExtra("eventDate");
         eventTime = getIntent().getStringExtra("eventTime");
         qrCode = getIntent().getStringExtra("QRCode");
@@ -61,7 +63,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         imageUri = getIntent().getStringExtra("imageUri");
         link = getIntent().getStringExtra("link");
 
-        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null) {
+        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null ) {
             // Handle missing event details
             Toast.makeText(this, "Event details are missing.", Toast.LENGTH_SHORT).show();
             finish();
@@ -71,12 +73,19 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
-        Button backButton = findViewById(R.id.back_button);
-        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
+        TextView eventDateView = findViewById(R.id.date_event);
+        eventDateView.setText("Date: " + eventDate);
 
+        TextView eventLocationView = findViewById(R.id.location_event);
+        eventLocationView.setText("Place: " + eventLocation);
+
+        TextView eventDetailsView = findViewById(R.id.details_event);
+        eventDetailsView.setText("Notes: " + eventDetails);
+
+        Button backButton = findViewById(R.id.back_button);
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
-        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
 
         Button attendees = findViewById(R.id.attendees);
         attendees.setBackgroundColor(getResources().getColor(R.color.light_blue_100));

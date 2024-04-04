@@ -2,6 +2,7 @@ package com.example.project_3;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -92,6 +94,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     Intent intent = new Intent(OrganizerActivity.this, EventDetailsActivity.class);
                     intent.putExtra("eventName", selectedEvent.getName());
                     intent.putExtra("eventLocation", selectedEvent.getLocation());
+                    intent.putExtra("eventDetails", selectedEvent.getDetails());
                     intent.putExtra("eventDate", selectedEvent.getDate());
                     intent.putExtra("eventTime", selectedEvent.getTime());
                     intent.putExtra("imageUri", selectedEvent.getImage());
@@ -118,6 +121,8 @@ public class OrganizerActivity extends AppCompatActivity {
 
         // This button is to add a new event
         FloatingActionButton fabAddEvent = findViewById(R.id.fab_add_event);
+        fabAddEvent.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,10 +146,10 @@ public class OrganizerActivity extends AppCompatActivity {
                         // Retrieving the event data from Firestore and adding it to the list
                         String event = doc.getId();// for displaying event name in ListView
                         boolean reuse = false;
-                        String date = "No Date";
+                        String date = doc.getString("Date");
                         String time = "No Time";
                         String location = doc.getString("Location");// for displaying location in ListView
-                        String details = "No Details";
+                        String details = doc.getString("Details");
                         String imageUri = doc.getString("Image");
                         String qrCode = doc.getString("QRCode");
                         String qrPromoCode = doc.getString("QRPromoCode");
@@ -237,6 +242,11 @@ public class OrganizerActivity extends AppCompatActivity {
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
 
+        buttonPoster.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        buttonPoster.setTextColor(getResources().getColor(R.color.white));
+        buttonLink.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        buttonLink.setTextColor(getResources().getColor(R.color.white));
+
         // Setting click listener for the poster button to select an image from the gallery
         buttonPoster.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -248,10 +258,11 @@ public class OrganizerActivity extends AppCompatActivity {
             showAddLinkDialog();
         });
 
+
         // Building and displaying the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
-                .setTitle("Add an Event")
+                .setTitle("New Event")
                 .setPositiveButton("OK", (dialog, which) -> {
                     // Retrieving the input values
                     String eventName = addEventEditText.getText().toString();
@@ -282,7 +293,8 @@ public class OrganizerActivity extends AppCompatActivity {
 
 
                         Map<String, Object> data = new HashMap<>();
-                        data.put("event", "Events/" + eventName);
+                        DocumentReference documentReference = eventsRef.document(eventName);
+                        data.put("event", documentReference);
                         if(reuse_check){
                             qrRef.document("RE_USE").set(data)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

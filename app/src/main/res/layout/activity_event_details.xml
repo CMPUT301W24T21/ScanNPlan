@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/event_activity_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:layout_editor_absoluteX="-2dp"
+    tools:layout_editor_absoluteY="0dp">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -11,7 +14,10 @@
         android:layout_height="wrap_content"
         android:background="#26202C"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/event_name_text_view"
@@ -19,44 +25,45 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toStartOf="@+id/floatingEditButton"
+        android:layout_toStartOf="@+id/materialToolbar"
         android:layout_toEndOf="@+id/back_button"
         android:gravity="center_vertical|center_horizontal"
         android:text="Event Name"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintEnd_toStartOf="@+id/floatingEditButton"
+        app:layout_constraintHorizontal_bias="0.242"
+        app:layout_constraintStart_toEndOf="@+id/back_button"
+        app:layout_constraintTop_toTopOf="@+id/materialToolbar" />
 
     <ImageView
         android:id="@+id/targetImage"
-        android:layout_width="324dp"
-        android:layout_height="405dp"
+        android:layout_width="414dp"
+        android:layout_height="356dp"
         android:layout_below="@+id/materialToolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="224dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintVertical_bias="0.087" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/back_button"
         style="@style/Widget.Material3.Button"
-        android:layout_width="72dp"
-        android:layout_height="37dp"
+        android:layout_width="90dp"
+        android:layout_height="47dp"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="13dp"
-        android:drawableLeft="@drawable/baseline_arrow_back_24"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
 
     <Button
         android:id="@+id/attendees"
@@ -64,9 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="147dp"
-        android:layout_marginBottom="118dp"
-        android:text="Attendees" />
+        android:layout_marginEnd="16dp"
+        android:text="Attendees"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/check_ins"
@@ -74,9 +82,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="286dp"
-        android:layout_marginBottom="119dp"
-        android:text="Check Ins" />
+        android:layout_marginEnd="20dp"
+        android:text="Check Ins"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/attendees"
+        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintStart_toEndOf="@+id/sign_ups" />
 
     <Button
         android:id="@+id/sign_ups"
@@ -84,20 +95,50 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="118dp"
-        android:text="Sign Ups" />
+        android:layout_marginStart="16dp"
+        android:text="Sign Ups "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/date_event"
-        android:layout_width="80dp"
-        android:layout_height="34dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="287dp"
-        android:layout_marginBottom="180dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:hint="Date:"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/targetImage" />
+
+    <TextView
+        android:id="@+id/location_event"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:hint="Location:"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_event" />
+
+    <TextView
+        android:id="@+id/details_event"
+        android:layout_width="411dp"
+        android:layout_height="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:hint="Details:"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_event" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingEditButton"
@@ -106,11 +147,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="3dp"
         android:clickable="true"
         android:contentDescription="Edit"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+        app:layout_constraintTop_toTopOf="@+id/materialToolbar"
         app:srcCompat="@drawable/baseline_edit_24" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

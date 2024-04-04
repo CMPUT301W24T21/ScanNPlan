@@ -8,6 +8,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
 public class FastBlurUtil {
+    // OpenAI, 2024, ChatGPT, https://chat.openai.com/share/6f264b56-28c5-4983-9b7c-b93dd728336c
     public static Bitmap fastblur(Context context, Bitmap sentBitmap, int radius) {
 
         // Try to reuse the bitmap if possible

@@ -106,7 +106,8 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
             }
         }.execute();
     }
-
+    // OpenAI, 2024, ChatGPT, https://chat.openai.com/share/6f264b56-28c5-4983-9b7c-b93dd728336c
+    // in regards to blur and implementation of the blur in an ArrayAdapter
     private Bitmap blurBitmap(Bitmap bitmap) {
         float scaleFactor = 0.1f; // Adjust this value to control the amount of blur
         int blurRadius = 4; // Adjust this value to control the blur radius
