@@ -71,7 +71,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        TextView eventTextView = findViewById(R.id.appbar_title);
+        TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
 
@@ -82,7 +82,14 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventLocationView.setText("Place: " + eventLocation);
         Button backButton = findViewById(R.id.back_button);
         backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), OrganizerActivity.class);
+                startActivity(intent);
 
+            }
+        });
 
         TextView eventDetailsView = findViewById(R.id.details_event);
         eventDetailsView.setText("Notes: " + eventDetails);
