@@ -13,5 +13,9 @@
     <string name="event_details">Details/Notes:</string>
     <string name="hello">Hello World</string>
     <string name="link_text">Link:</string>
+
+    <string name="view_qr_y">View QR</string>
+
     <string name="real_time_attendance_placeholder">Real time attendance: %d</string>
+
 </resources>

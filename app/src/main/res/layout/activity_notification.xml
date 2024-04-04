@@ -9,9 +9,9 @@
     tools:context=".NotificationActivity">
 
     <TextView
+        android:id="@+id/textViewData"
         android:text="Some Data Here"
         android:textSize="25sp"
-        android:id="@+id/textViewData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

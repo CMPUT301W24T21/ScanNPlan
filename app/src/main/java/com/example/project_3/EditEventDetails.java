@@ -90,7 +90,8 @@ public class EditEventDetails extends AppCompatActivity {
         ImageButton qrViewButton = findViewById(R.id.view_qrcode);
 
 
-        // https://www.youtube.com/watch?v=vyt20Gg2Ckg
+        // Alphabet Inc, 2024, YouTube, https://www.youtube.com/watch?v=vyt20Gg2Ckg
+        // describes how to set up notification view
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             if(ContextCompat.checkSelfPermission(EditEventDetails.this,
                     android.Manifest.permission.POST_NOTIFICATIONS) !=
@@ -233,6 +234,8 @@ public class EditEventDetails extends AppCompatActivity {
         // Show the dialog
         dialog.show();
     }
+    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
+    // describes how to use Firebase Messaging and FCM
     void sendNotification(String title , String message){
         try{
             JSONObject jsonObject  = new JSONObject();
@@ -257,6 +260,8 @@ public class EditEventDetails extends AppCompatActivity {
 
         }
     }
+    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
+    // describes how to use Firebase Messaging and FCM
     void callApi(JSONObject jsonObject){
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();

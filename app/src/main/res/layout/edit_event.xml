@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="72dp"
                 android:layout_height="37dp"
-                android:drawableLeft="@drawable/baseline_arrow_back_24"
+                android:text="Back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
             <com.google.android.material.textview.MaterialTextView
@@ -47,137 +47,67 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
-
-<!--    <Button-->
-<!--        android:id="@+id/add_poster"-->
-<!--        style="@style/Widget.Material3.Button"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginEnd="79dp"-->
-<!--        android:layout_marginBottom="523dp"-->
-<!--        android:background="@color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Add Poster"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.496"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/appbar" />-->
-
-
-<!--    <Button-->
-<!--        android:id="@+id/add_link"-->
-<!--        style="@style/Widget.Material3.Button"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginTop="44dp"-->
-<!--        android:layout_marginEnd="78dp"-->
-<!--        android:layout_marginBottom="429dp"-->
-<!--        android:background="@color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Add Link"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.503"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/add_poster" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/create_message"-->
-<!--        style="@style/Widget.Material3.Button"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginTop="44dp"-->
-<!--        android:layout_marginEnd="78dp"-->
-<!--        android:layout_marginBottom="233dp"-->
-<!--        android:background="@color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Create Message"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.503"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/add_link" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/view_qrcode"-->
-<!--        style="@style/Widget.Material3.Button"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:layout_marginEnd="78dp"-->
-<!--        android:layout_marginBottom="331dp"-->
-<!--        android:background="@color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:onClick="onViewQRCodeClicked"-->
-<!--        android:text="View QR-code"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.496"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/create_message" />-->
-
     <ImageButton
         android:id="@+id/add_poster"
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="225dp"
-        android:padding="8dp"
-        android:background="@drawable/rounded_button"
 
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/baseline_image_search_24" />
+        android:src="@drawable/baseline_image_search_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
     <ImageButton
         android:id="@+id/create_message"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="215dp"
-        android:layout_marginBottom="225dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_button"
         android:padding="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/baseline_mail_outline_24" />
+        android:src="@drawable/baseline_notification_add_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
     <ImageButton
         android:id="@+id/view_qrcode"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="216dp"
-        android:layout_marginBottom="415dp"
+        android:layout_below="@+id/appbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_button"
         android:padding="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/baseline_qr_code_24" />
+        android:src="@drawable/baseline_qr_code_24"
+        android:text="@string/view_qr_y"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_poster" />
 
     <ImageButton
         android:id="@+id/add_link"
         android:layout_width="170dp"
         android:layout_height="170dp"
+        android:layout_below="@+id/appbar"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="415dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_button"
         android:padding="8dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/baseline_add_link_24" />
+        android:src="@drawable/baseline_add_link_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_message" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
