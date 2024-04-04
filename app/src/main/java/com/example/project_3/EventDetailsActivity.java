@@ -81,7 +81,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventLocationView = findViewById(R.id.location_event);
         eventLocationView.setText("Place: " + eventLocation);
         Button backButton = findViewById(R.id.back_button);
-        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

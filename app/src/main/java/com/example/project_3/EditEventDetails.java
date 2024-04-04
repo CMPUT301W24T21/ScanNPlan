@@ -82,7 +82,6 @@ public class EditEventDetails extends AppCompatActivity {
 
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
-        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
 
         ImageButton createMessageButton = findViewById(R.id.create_message);
         ImageButton addPosterButton = findViewById(R.id.add_poster);
