@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,11 +74,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
+
         TextView eventDateView = findViewById(R.id.date_event);
         eventDateView.setText("Date: " + eventDate);
 
         TextView eventLocationView = findViewById(R.id.location_event);
         eventLocationView.setText("Place: " + eventLocation);
+        Button backButton = findViewById(R.id.button_back);
+        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
+
 
         TextView eventDetailsView = findViewById(R.id.details_event);
         eventDetailsView.setText("Notes: " + eventDetails);
@@ -85,29 +90,52 @@ public class EventDetailsActivity extends AppCompatActivity {
         Button backButton = findViewById(R.id.back_button);
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
+
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
 
         Button attendees = findViewById(R.id.attendees);
         attendees.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         attendees.setTextColor(getResources().getColor(R.color.white));
 
+
+        Button map = findViewById(R.id.map_button);
         Button checkIns = findViewById(R.id.check_ins);
-        checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        checkIns.setTextColor(getResources().getColor(R.color.white));
 
         Button signUps = findViewById(R.id.sign_ups);
+
+        signUps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the AttendeesCheckedInActivity when the button is clicked
+                Intent intent = new Intent(v.getContext(), AttendeesSignedUpActivity.class);
+                intent.putExtra("event_name", eventName); // Add event name as an extra
+                startActivity(intent);
+            }
+        });
+
+        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+
+        checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        checkIns.setTextColor(getResources().getColor(R.color.white));
+        map.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        map.setTextColor(getResources().getColor(R.color.white));
+
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         signUps.setTextColor(getResources().getColor(R.color.white));
         
 
-        attendees.setOnClickListener(new View.OnClickListener() {
+
+        map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), OrganizerListActivity.class);
-                intent.putExtra("event_name", eventName);
-                startActivity(intent);
+                EventMapFragment map = new EventMapFragment(eventName);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
+                        .commit();
+                findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
+                }
             }
-        });
+        );
 
 
         // Set click listener for the "checked in" button

@@ -13,24 +13,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import androidx.fragment.app.FragmentManager;
 
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
@@ -45,6 +52,7 @@ public class AttendeeEditProfileFragment extends Fragment {
     private Bitmap bitmapImage;
 
     private ImageView profile_image;
+    private Boolean LocationEnabled;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -79,6 +87,15 @@ public class AttendeeEditProfileFragment extends Fragment {
                 }, 500); // Adjust the delay time as needed
             }
         });
+        SwitchMaterial geolocation = view.findViewById(R.id.geolocation_toggle);
+        geolocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                LocationEnabled = isChecked;
+            }
+        });
+
+
 
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +120,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                         .update("name", newName,
                                 "contact_info", newContactInfo,
                                 "social_link", newSocialLink,
-                                "profile_image", base64Image)
+                                "profile_image", base64Image, "locationEnabled", LocationEnabled)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -121,6 +138,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+
+
         db.collection("Profiles").document(profileID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -129,8 +148,9 @@ public class AttendeeEditProfileFragment extends Fragment {
                     String contactInfo = documentSnapshot.getString("contact_info");
                     String socialLink = documentSnapshot.getString("social_link");
                     String base64Image = documentSnapshot.getString("profile_image");
-
+                    Boolean location_status = documentSnapshot.getBoolean("locationEnabled");
                     nameTextView.setText(profileName);
+                    geolocation.setChecked(location_status);
                     contactInfoTextView.setText(contactInfo);
                     socialLinkTextView.setText(socialLink);
 
@@ -174,6 +194,25 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+//        MaterialButton browseAllEventsButton = view.findViewById(R.id.button5);
+//        browseAllEventsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EventListFragment eventListFragment = new EventListFragment();
+//
+//                // Replace the current fragment with the EventListFragment
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.fragment_container, eventListFragment);
+//                fragmentTransaction.addToBackStack(null); // Optional, to add the transaction to the back stack
+//                fragmentTransaction.commit();
+//            }
+//
+//            private FragmentManager getSupportFragmentManager() {
+//                return null;
+//            }
+//        });
+
 
         return view;
     }
@@ -194,6 +233,10 @@ public class AttendeeEditProfileFragment extends Fragment {
     }
 
     private String encodeImage(Bitmap bitmap) {
+        if (bitmap == null) {
+            return ""; // Or any default value you want to use
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -210,6 +253,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             return null;
         }
     }
+
+
 
 
 }

@@ -22,7 +22,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="73dp"
             android:layout_marginBottom="14dp"
-            android:text="Attendees Checked In"
+            android:text="Attendees Registered"
             android:textSize="25dp" />
 
         <TextView

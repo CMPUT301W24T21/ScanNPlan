@@ -5,8 +5,13 @@
     android:id="@+id/event_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:layout_editor_absoluteX="-2dp"
     tools:layout_editor_absoluteY="0dp">
+  <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/organizer_events_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -154,6 +159,7 @@
         app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
         app:layout_constraintTop_toTopOf="@+id/materialToolbar"
         app:srcCompat="@drawable/baseline_edit_24" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

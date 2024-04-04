@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -71,12 +72,13 @@ public class EventMapFragment extends Fragment  {
         eventsRef = db.collection("Events");
         map = view.findViewById(R.id.map);
         TextView appbar = view.findViewById(R.id.appbar_title);
+        appbar.setText("Map");
         Button back = view.findViewById(R.id.back_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_attendee_list_layout).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.rest_event_details).setVisibility(View.VISIBLE);
             }
         });
         map = (MapView) view.findViewById(R.id.map);
@@ -90,35 +92,49 @@ public class EventMapFragment extends Fragment  {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        List<DocumentReference> checkedIn = (List<DocumentReference>) document.get("checked_in");
-                        for (DocumentReference doc: checkedIn){
-                            doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnap) {
-                                    if (documentSnap.exists()) {
-                                        GeoPoint point;
-                                        if (documentSnap.getGeoPoint("location") != null){
-                                            point = documentSnap.getGeoPoint("location");
-                                            Marker marker = new Marker(map);
-                                            org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
-                                            marker.setPosition(osm_point);
-                                            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                            map.getOverlays().add(marker);
-                                            mapController.setCenter(osm_point);
-                                        }
+                        if (document.get("checked_in") == null){
+                            Toast.makeText(getActivity(), "No attendees have checked in yet!", Toast.LENGTH_LONG).show();
+                            back.callOnClick();
+                        }
+                        else{
+                            List<DocumentReference> checkedIn = (List<DocumentReference>) document.get("checked_in");
+                            for (DocumentReference doc: checkedIn){
+                                doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnap) {
+                                        if (documentSnap.exists()) {
+                                            GeoPoint point;
+                                            if (documentSnap.getGeoPoint("location") != null){
+                                                //testing logs
+                                                System.out.println("We have found document: " + documentSnap.getId());
+                                                point = documentSnap.getGeoPoint("location");
+                                                if (documentSnap.getBoolean("locationEnabled")) {
+                                                    Marker marker = new Marker(map);
+                                                    org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
+                                                    marker.setPosition(osm_point);
+                                                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                                    map.getOverlays().add(marker);
+                                                    mapController.setCenter(osm_point);
+                                                }
+                                                else{
+                                                    mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0,0.0));
+                                                }
+                                            }
 
                                         }
 
-                                     else {
-                                        System.out.println("No such document!");
-                                    }
-                                }
+                                        else {
+                                            System.out.println("No such document!");
+                                        }
+
+                        }
+
 
                         });
                     }
                 }
                         }
-        }});
+        }}});
 
         map.invalidate();
         mapController.setZoom(14);

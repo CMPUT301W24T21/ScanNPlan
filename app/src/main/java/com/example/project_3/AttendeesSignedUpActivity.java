@@ -31,20 +31,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendeesCheckedInActivity extends AppCompatActivity {
+public class AttendeesSignedUpActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
     private ListView attendeesListView;
     private String eventName;
-    private static final String TAG = "AttendeesCheckedInActivity";
+    private static final String TAG = "AttendeesSignedUpActivity";
     private TextView attendanceCountTextView;
     private ListenerRegistration eventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.attendees_checked_in);
+        setContentView(R.layout.attendees_signed_up);
 
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
@@ -56,11 +56,12 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         // Find views
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
+
         TextView appbar = findViewById(R.id.appbar_title);
         appbar.setTextSize(22);
-        appbar.setText("Attendees Checked In");
-        attendanceCountTextView = findViewById(R.id.attendance_count_text);
+        appbar.setText("Attendees Registered");
 
+        attendanceCountTextView = findViewById(R.id.attendance_count_text);
 
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -94,15 +95,15 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                 }
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
-                    List<DocumentReference> checkedIn = (List<DocumentReference>) documentSnapshot.get("checked_in");
-                    int realTimeAttendance = checkedIn != null ? checkedIn.size() : 0;
+                    List<DocumentReference> signedUp = (List<DocumentReference>) documentSnapshot.get("attendees");
+                    int realTimeAttendance = signedUp != null ? signedUp.size() : 0;
 
                     // Update real-time attendance count
                     updateRealTimeAttendance(realTimeAttendance);
 
-                    if (checkedIn != null) {
+                    if (signedUp != null) {
                         List<String> attendeeNames = new ArrayList<>();
-                        for (DocumentReference doc : checkedIn) {
+                        for (DocumentReference doc : signedUp) {
                             // Fetch the attendee document from Firestore
                             doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override

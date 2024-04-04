@@ -1,6 +1,9 @@
 package com.example.project_3;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -12,7 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -20,12 +27,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
-
+//source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java) for locations permission checking
 /**
  * Activity for scanning QR codes and barcodes using the ZXing library.
  */
@@ -36,6 +45,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
     private CollectionReference profilesRef;
     private CollectionReference eventsRef;
     private String profileID;
+    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     /**
      * Initializes the activity, sets up the layout, and initializes UI elements.
@@ -56,6 +66,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 
         // adding listener to the button
         scanBtn.setOnClickListener(this);
+
 
     }
 
@@ -103,9 +114,17 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 profilesRef = db.collection("Profiles");
 
                 if (intentResult.getContents().startsWith("Events/")) {
-                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
-                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
+                    //toggleRestOfPageVisibility();
+                    findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents()))
+                            .addToBackStack(null)
+                            .commit();
+
+//                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
+//                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
+                      profileID = "Test2";
                 } else if (intentResult.getContents().startsWith("QrCodes/")) {
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -114,10 +133,25 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
 
-                                    Log.d("DEBUG", "Profile path reference is:" + db.collection("Profiles").document("61efd4797ca55402").getPath());
+                                    Log.d("DEBUG", "Profile path reference is:" + db.collection("Profiles").document(profileID).getPath());
                                     //Toast.makeText(getBaseContext(), db.collection("Profiles").document(profileID).getPath(), Toast.LENGTH_LONG).show();
                                     document.getDocumentReference("event").update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
+                                    FusedLocationProviderClient fusedlocation = LocationServices.getFusedLocationProviderClient(getBaseContext());
+                                    if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                        // checks if permissions need to be requested from user again
+                                        String[] permissions = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+                                        requestPermissionsIfNecessary(permissions);
+                                        return;
+                                    }
+                                    //get last location and add it to location on geopoint
+                                    fusedlocation.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Location> task) {
+                                            Location location = task.getResult();
+                                            profilesRef.document(profileID).update("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
 
+                                        }
+                                    });
                                 } else {
                                     Log.d("DEBUG", "No such document");
                                 }
@@ -136,6 +170,22 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         }
 
         // Finish the current activity to go back to the previous one
-        finish();
+        //finish();
+    }
+    private void requestPermissionsIfNecessary(String[] permissions) {
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                permissionsToRequest.add(permission);
+            }
+        }
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
     }
 }
