@@ -11,11 +11,11 @@
         layout="@layout/global_top_appbar" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/list_of_Images"
+        android:id="@+id/list_of_Event_Images"
         style="@style/MaterialAlertDialog.Material3.Body.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List of Images"
+        android:text="List of Event Images"
         android:textAlignment="center"
         android:background="#141414"
         android:textSize="20sp"
@@ -25,12 +25,14 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <GridView
-        android:id="@+id/grid_images_admin"
+        android:id="@+id/grid_Event_images_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="4"
         app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
-        app:layout_constraintTop_toBottomOf="@+id/list_of_Images"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_of_Event_Images"
         tools:ignore="MissingConstraints">
 
     </GridView>
