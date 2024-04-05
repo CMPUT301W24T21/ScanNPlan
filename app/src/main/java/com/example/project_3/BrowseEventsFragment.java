@@ -106,7 +106,6 @@ public class BrowseEventsFragment extends Fragment {
                         eventNamesList.add(event);
                     }
                     eventNamesAdapter.notifyDataSetChanged();
-
                 }
             }
         });
