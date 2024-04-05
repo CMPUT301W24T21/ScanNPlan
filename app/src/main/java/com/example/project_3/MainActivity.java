@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,12 +53,16 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, Object> profileDocDetails;
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
     private CollectionReference tokenRef;
-
-
+    private static final String TAG = "MainActivity";
+    private void checkAndRequestNotificationPermission() {
+        if (!hasNotificationPermission()) {
+            requestNotificationPermission();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        checkAndRequestNotificationPermission();
 
         AttendeeIntent = new Intent(this, AttendeeActivity.class);
         OrganizerIntent = new Intent(this, OrganizerActivity.class);
@@ -234,5 +239,4 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
     }
-
 }

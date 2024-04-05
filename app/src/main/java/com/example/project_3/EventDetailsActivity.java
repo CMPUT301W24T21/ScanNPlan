@@ -124,8 +124,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         signUps.setTextColor(getResources().getColor(R.color.white));
-        
-
 
         map.setOnClickListener(new View.OnClickListener() {
             @Override
