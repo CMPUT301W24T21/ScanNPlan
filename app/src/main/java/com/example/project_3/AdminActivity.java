@@ -1,15 +1,12 @@
 package com.example.project_3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 
 import com.google.android.material.button.MaterialButton;
@@ -22,8 +19,10 @@ import com.google.android.material.button.MaterialButton;
 public class AdminActivity extends AppCompatActivity {
     //buttons for the admin homepage
     private MaterialButton manage_profiles;
-    private MaterialButton manage_images;
+    private MaterialButton manage_event_images;
+    private MaterialButton manage_profile_images;
     private MaterialButton manage_events;
+
     private  MaterialButton logout;
     //onCreate function for the activity
     //params: savedInstanceState: Bundle
@@ -41,7 +40,8 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_homepage);
         this.manage_events = findViewById(R.id.manage_events);
-        this.manage_images = findViewById(R.id.manage_images);
+        this.manage_event_images = findViewById(R.id.manage_event_images);
+        this.manage_profile_images = findViewById(R.id.manage_profile_images);
         this.manage_profiles = findViewById(R.id.manage_profiles);
         this.logout = findViewById(R.id.Logout_button_admin);
 
@@ -70,13 +70,28 @@ public class AdminActivity extends AppCompatActivity {
                 findViewById(R.id.admin_homepage_rest).setVisibility(View.INVISIBLE);
             }
         });
-        manage_images.setOnClickListener(new View.OnClickListener() {
+
+        //creates an event image fragment,, dude i might end it all
+        manage_event_images.setOnClickListener(new View.OnClickListener() {
             @Override
             //onClick method setting up a click listener for the manage profiles button
             //param: a View
             //returns: void
             public void onClick(View v) {
-                BrowseImagesFragment fragment = new BrowseImagesFragment();
+                BrowseEventImagesFragment fragment = new BrowseEventImagesFragment();
+                //open the fragment and add it to the stack on the container
+                getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container, fragment).addToBackStack(null).commit();
+                findViewById(R.id.admin_homepage_rest).setVisibility(View.INVISIBLE);
+            }
+        });
+        //creates a profile image fragment, commenting so i can push, why wont this work
+        manage_profile_images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //onClick method setting up a click listener for the manage profiles button
+            //param: a View
+            //returns: void
+            public void onClick(View v) {
+                BrowseProfileImagesFragment fragment = new BrowseProfileImagesFragment();
                 //open the fragment and add it to the stack on the container
                 getSupportFragmentManager().beginTransaction().replace(R.id.admin_fragment_container, fragment).addToBackStack(null).commit();
                 findViewById(R.id.admin_homepage_rest).setVisibility(View.INVISIBLE);

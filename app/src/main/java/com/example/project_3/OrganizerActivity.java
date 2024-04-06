@@ -2,6 +2,7 @@ package com.example.project_3;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -20,10 +21,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -36,13 +42,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * This is the organizer activity for organizing the events.
+ * This activity allows organizers to manage events by adding new events,
+ * viewing existing events, and updating event details.
  */
-
 public class OrganizerActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
@@ -56,11 +63,12 @@ public class OrganizerActivity extends AppCompatActivity {
     private String base64QRPromoCode;
     private String previousId = null;
     private String info;
+    private static final String TAG = "OrganizerActivity";
 
     /**
-     * Called when the activity is first created. This method initializes the activity by setting its layout,
-     * initializing Firebase, setting up UI components, setting click listeners for buttons, and listening for
-     * changes in the Firebase database.
+     * Called when the activity is first created.
+     * Initializes the activity by setting its layout, initializing Firebase,
+     * setting up UI components, setting click listeners for buttons, and listening for changes in the Firebase database.
      *
      * @param savedInstanceState A Bundle object containing the activity's previously saved state,
      *                             or null if the activity is being started fresh.
@@ -92,6 +100,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     Intent intent = new Intent(OrganizerActivity.this, EventDetailsActivity.class);
                     intent.putExtra("eventName", selectedEvent.getName());
                     intent.putExtra("eventLocation", selectedEvent.getLocation());
+                    intent.putExtra("eventDetails", selectedEvent.getDetails());
                     intent.putExtra("eventDate", selectedEvent.getDate());
                     intent.putExtra("eventTime", selectedEvent.getTime());
                     intent.putExtra("imageUri", selectedEvent.getImage());
@@ -118,10 +127,24 @@ public class OrganizerActivity extends AppCompatActivity {
 
         // This button is to add a new event
         FloatingActionButton fabAddEvent = findViewById(R.id.fab_add_event);
+        fabAddEvent.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+
+        // This button is to view notifications
+        FloatingActionButton fabNotif = findViewById(R.id.notif_button);
+        fabNotif.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddEventDialog();
+            }
+        });
+
+        fabNotif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Start the NotificationsPage when the button is clicked
+                Intent intent = new Intent(OrganizerActivity.this, NotificationsPage.class);
+                startActivity(intent);
             }
         });
 
@@ -141,10 +164,10 @@ public class OrganizerActivity extends AppCompatActivity {
                         // Retrieving the event data from Firestore and adding it to the list
                         String event = doc.getId();// for displaying event name in ListView
                         boolean reuse = false;
-                        String date = "No Date";
+                        String date = doc.getString("Date");
                         String time = "No Time";
                         String location = doc.getString("Location");// for displaying location in ListView
-                        String details = "No Details";
+                        String details = doc.getString("Details");
                         String imageUri = doc.getString("Image");
                         String qrCode = doc.getString("QRCode");
                         String qrPromoCode = doc.getString("QRPromoCode");
@@ -161,6 +184,8 @@ public class OrganizerActivity extends AppCompatActivity {
             }
         });
     }
+
+
     /**
      * Adding a new event to the list and Firebase database.
      *
@@ -201,6 +226,10 @@ public class OrganizerActivity extends AppCompatActivity {
 
     // URI for the event image
     private String imageUri;
+
+    /**
+     * Displays a dialog for adding a link to the event.
+     */
     public void showAddLinkDialog(){
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_add_link, null);
@@ -216,6 +245,7 @@ public class OrganizerActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
     /**
      * Displays a dialog for adding a new event. The dialog includes input fields for event details
      * such as name, date, time, location, and details. Additionally, it provides checkboxes for marking
@@ -234,8 +264,14 @@ public class OrganizerActivity extends AppCompatActivity {
         final EditText addEventEditTime = view.findViewById(R.id.add_time_editText);
         final EditText addEventEditLocation = view.findViewById(R.id.add_location_editText);
         final EditText addEventEditDetails = view.findViewById(R.id.add_details_editText);
+        final EditText maxAttendeesEditText = view.findViewById(R.id.max_attendees_editText);
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
+
+        buttonPoster.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        buttonPoster.setTextColor(getResources().getColor(R.color.white));
+        buttonLink.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+        buttonLink.setTextColor(getResources().getColor(R.color.white));
 
         // Setting click listener for the poster button to select an image from the gallery
         buttonPoster.setOnClickListener(v -> {
@@ -248,10 +284,11 @@ public class OrganizerActivity extends AppCompatActivity {
             showAddLinkDialog();
         });
 
+
         // Building and displaying the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view)
-                .setTitle("Add an Event")
+                .setTitle("New Event")
                 .setPositiveButton("OK", (dialog, which) -> {
                     // Retrieving the input values
                     String eventName = addEventEditText.getText().toString();
@@ -260,6 +297,8 @@ public class OrganizerActivity extends AppCompatActivity {
                     String eventTime = addEventEditTime.getText().toString();
                     String eventLocation = addEventEditLocation.getText().toString();
                     String eventDetails = addEventEditDetails.getText().toString();
+                    String maxAttendeesStr = maxAttendeesEditText.getText().toString();
+                    int maxAttendees = maxAttendeesStr.isEmpty() ? -1 : Integer.parseInt(maxAttendeesStr);
 
                     // Creating a new event object and adding it if event name is not empty
                     if (!eventName.isEmpty()) {
@@ -282,7 +321,8 @@ public class OrganizerActivity extends AppCompatActivity {
 
 
                         Map<String, Object> data = new HashMap<>();
-                        data.put("event", "Events/" + eventName);
+                        DocumentReference documentReference = eventsRef.document(eventName);
+                        data.put("event", documentReference);
                         if(reuse_check){
                             qrRef.document("RE_USE").set(data)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -319,6 +359,13 @@ public class OrganizerActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
+    /**
+     * Generates a QR code for the event based on its name and whether it's reusable.
+     *
+     * @param eventName The name of the event.
+     * @param reuse     A boolean indicating whether the event is reusable.
+     */
     private void generateQRCode(String eventName, boolean reuse) {
 
         try {
@@ -347,6 +394,14 @@ public class OrganizerActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to generate QR code.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    /**
+     * Generates a random ID for the event.
+     *
+     * @param reusePrevious A boolean indicating whether to reuse the previous ID.
+     * @return The generated random ID.
+     */
     public String generateRandomId(boolean reusePrevious) {
         if (reusePrevious && previousId != null) {
             return previousId;
@@ -356,6 +411,13 @@ public class OrganizerActivity extends AppCompatActivity {
             return newId;
         }
     }
+
+
+    /**
+     * Generates a promotional QR code for the event based on its name.
+     *
+     * @param eventName The name of the event.
+     */
     private void generatePROMOCode(String eventName) {
         try {
             String all = "Events/" + eventName;
@@ -383,6 +445,15 @@ public class OrganizerActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Handles the result of the activity started for adding an event.
+     * Retrieves the URI of the selected image and converts it to a base64 string.
+     *
+     * @param requestCode The request code passed to startActivityForResult().
+     * @param resultCode  The result code returned by the child activity.
+     * @param data        An Intent object containing the result data.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

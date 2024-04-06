@@ -7,12 +7,32 @@
     android:id="@+id/activity_main_layout"
     tools:context=".MainActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/notif_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/materialToolbar"
+        android:layout_alignParentTop="@+id/materialToolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:maxImageSize="24dp"
+        app:srcCompat="@drawable/baseline_notifications_24" />
+
     <ListView
         android:id="@+id/event_list"
         android:layout_width="match_parent"
-        android:layout_height="530dp"
-        android:padding="10dp"
-        android:layout_above="@id/fab_add_event" />
+        android:layout_height="551dp"
+        android:layout_above="@id/fab_add_event"
+        android:layout_below="@+id/materialToolbar"
+        android:layout_marginTop="29dp"
+        android:padding="10dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_event"
@@ -36,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:text="Back" />
 
     <TextView
@@ -49,5 +69,5 @@
         android:layout_marginBottom="14dp"
         android:text="List of Events"
         android:textSize="25dp" />
-
+    
 </RelativeLayout>

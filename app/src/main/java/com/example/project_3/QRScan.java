@@ -1,6 +1,11 @@
 package com.example.project_3;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -12,20 +17,34 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import android.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
+//source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java) for locations permission checking
 /**
  * Activity for scanning QR codes and barcodes using the ZXing library.
  */
@@ -36,6 +55,9 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
     private CollectionReference profilesRef;
     private CollectionReference eventsRef;
     private String profileID;
+    private GeoPoint geopoint;
+    private Boolean isLocationUpdated = Boolean.FALSE;
+    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     /**
      * Initializes the activity, sets up the layout, and initializes UI elements.
@@ -102,7 +124,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 db = FirebaseFirestore.getInstance();
                 eventsRef = db.collection("Events");
                 profilesRef = db.collection("Profiles");
-
+                profileID = getIntent().getStringExtra("profileName");
                 if (intentResult.getContents().startsWith("Events/")) {
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
@@ -114,6 +136,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 //                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 //                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
 //                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
+
                 } else if (intentResult.getContents().startsWith("QrCodes/")) {
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -122,9 +145,45 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
 
-                                    Log.d("DEBUG", "Profile path reference is:" + db.collection("Profiles").document("61efd4797ca55402").getPath());
+                                    Log.d("DEBUG", "Profile path reference is:" + db.collection("Profiles").document(profileID).getPath());
                                     //Toast.makeText(getBaseContext(), db.collection("Profiles").document(profileID).getPath(), Toast.LENGTH_LONG).show();
-                                    document.getDocumentReference("event").update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
+                                    DocumentReference eventDoc = document.getDocumentReference("event");
+                                    eventDoc.update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
+                                    //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
+                                    if (!isLocationUpdated){
+                                        String location_context = Context.LOCATION_SERVICE;
+                                        final LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(location_context);
+                                        List<String> providers = locationManager.getProviders(true);
+                                        for (final String provider : providers) {
+                                            if (getBaseContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                                final LocationListener locationListener = new LocationListener() {
+                                                    @Override
+                                                    public void onLocationChanged(Location location) {
+                                                        double latitude = location.getLatitude();
+                                                        double longitude = location.getLongitude();
+                                                        geopoint = new GeoPoint(latitude, longitude);
+                                                        profilesRef.document(profileID).update("location", geopoint);
+                                                        locationManager.removeUpdates(this);
+                                                        isLocationUpdated = true;
+                                                    }
+
+                                                    @Override
+                                                    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+                                                    @Override
+                                                    public void onProviderEnabled(String provider) {}
+
+                                                    @Override
+                                                    public void onProviderDisabled(String provider) {}
+                                                };
+                                                locationManager.requestSingleUpdate(provider, locationListener, null);
+                                            }
+                                        }
+                                    }
+                                    addEventCount(eventDoc);
+
+
+
 
                                 } else {
                                     Log.d("DEBUG", "No such document");
@@ -146,4 +205,57 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         // Finish the current activity to go back to the previous one
         //finish();
     }
+    private void requestPermissionsIfNecessary(String[] permissions) {
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                permissionsToRequest.add(permission);
+            }
+        }
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (int i = 0; i < grantResults.length; i++) {
+            permissionsToRequest.add(permissions[i]);
+        }
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+    public void addEventCount(DocumentReference eventDoc){
+        profilesRef.document(profileID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Map<String, Object> checkedInEvents = (Map<String, Object>) document.get("checked_in_events");
+                    Map<String, Object> updates = new HashMap<>();
+                    if (checkedInEvents != null && checkedInEvents.containsKey(eventDoc.getId())) {
+                        //if the user already checked in once, increment the count
+                        updates.put("checked_in_events."+eventDoc.getId(), FieldValue.increment(1));
+                        profilesRef.document(profileID).update(updates);
+                    } else {
+                        //if user has not checked_in, create new field and set the value to 1
+                        updates.put("checked_in_events."+eventDoc.getId(), 1);
+                        profilesRef.document(profileID).update(updates);
+                    }
+                }
+            }
+        });
+
+    }
+
 }

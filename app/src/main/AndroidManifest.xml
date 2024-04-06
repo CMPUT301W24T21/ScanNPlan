@@ -35,6 +35,7 @@
             android:name=".AdminActivity"
             android:exported="false" />
         <activity android:name=".QRCodeDisplayActivity" />
+        <activity android:name=".PromoQRCodeDisplayActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -48,8 +49,7 @@
         <activity android:name=".QRScan" /> <!-- Add QRScan here -->
         <activity android:name=".EventDetailsActivity" /> <!-- Add EventDetailsActivity here -->
         <activity android:name=".OrganizerActivity" /> <!-- Add OrganizerActivity here -->
-
-<!--        <activity android:name=".EditEventDetails" />&lt;!&ndash; Add EditEventDetails here &ndash;&gt;-->
+        <activity android:name=".NotificationsPage" /> <!-- Add NotificationsPage here -->
 
         <activity
             android:name=".EditEventDetails"

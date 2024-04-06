@@ -66,8 +66,9 @@ public class EventMapFragment extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map_fragment, container, false);
-        Context ctx = getContext();
-        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        Context context = getContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+        Toast.makeText(context, "Please be patient, may take a little while!", Toast.LENGTH_SHORT).show();
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
         map = view.findViewById(R.id.map);
@@ -108,12 +109,19 @@ public class EventMapFragment extends Fragment  {
                                                 //testing logs
                                                 System.out.println("We have found document: " + documentSnap.getId());
                                                 point = documentSnap.getGeoPoint("location");
-                                                Marker marker = new Marker(map);
-                                                org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
-                                                marker.setPosition(osm_point);
-                                                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                                map.getOverlays().add(marker);
-                                                mapController.setCenter(osm_point);
+                                                Boolean locationEnabled = documentSnap.getBoolean("locationEnabled");
+                                                if (locationEnabled != null && locationEnabled) {
+                                                    Marker marker = new Marker(map);
+                                                    org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
+                                                    marker.setPosition(osm_point);
+                                                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                                    map.getOverlays().add(marker);
+                                                    mapController.setCenter(osm_point);
+                                                }
+                                                else{
+                                                    mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0,0.0));
+                                                    Toast.makeText(getContext(), "Some users may not want to share their location!", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
 
                                         }

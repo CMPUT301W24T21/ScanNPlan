@@ -41,6 +41,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private String eventDate;
     private String eventTime;
     private String eventLocation;
+    private String eventDetails;
     private String qrCode;
     private String qrPromoCode;
     private String imageUri;
@@ -55,6 +56,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
+        eventDetails = getIntent().getStringExtra("eventDetails");
         eventDate = getIntent().getStringExtra("eventDate");
         eventTime = getIntent().getStringExtra("eventTime");
         qrCode = getIntent().getStringExtra("QRCode");
@@ -62,7 +64,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         imageUri = getIntent().getStringExtra("imageUri");
         link = getIntent().getStringExtra("link");
 
-        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null) {
+        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null ) {
             // Handle missing event details
             Toast.makeText(this, "Event details are missing.", Toast.LENGTH_SHORT).show();
             finish();
@@ -72,11 +74,31 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
-        Button backButton = findViewById(R.id.button_back);
-        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
+
+        TextView eventDateView = findViewById(R.id.date_event);
+        eventDateView.setText("Date: " + eventDate);
+
+        TextView eventLocationView = findViewById(R.id.location_event);
+        eventLocationView.setText("Place: " + eventLocation);
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), OrganizerActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        TextView eventDetailsView = findViewById(R.id.details_event);
+        eventDetailsView.setText("Notes: " + eventDetails);
 
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
+
+        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
+
+
 
         Button map = findViewById(R.id.map_button);
         Button checkIns = findViewById(R.id.check_ins);
@@ -102,8 +124,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         signUps.setTextColor(getResources().getColor(R.color.white));
-        
-
 
         map.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,12 +165,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                 intent.putExtra("imageUri", imageUri);
                 intent.putExtra("link", link);
                 startActivity(intent);
-            }
-        });
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 
