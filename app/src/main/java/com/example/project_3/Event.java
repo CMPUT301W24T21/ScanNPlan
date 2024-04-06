@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import java.io.Serializable;
+
 /**
  * Represents an event with various details.
  */
-public class Event {
+public class Event implements Serializable {
     private String name;
     private Boolean promo;
     private Boolean reuse;
