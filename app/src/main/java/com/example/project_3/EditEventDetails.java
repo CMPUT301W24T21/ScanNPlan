@@ -24,12 +24,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -82,7 +86,6 @@ public class EditEventDetails extends AppCompatActivity {
 
         // Getting reference to the back button
         Button backButton = findViewById(R.id.back_button);
-        backButton.setBackgroundColor(getResources().getColor(R.color.light_orange_100));
 
         ImageButton createMessageButton = findViewById(R.id.create_message);
         ImageButton addPosterButton = findViewById(R.id.add_poster);
@@ -236,30 +239,75 @@ public class EditEventDetails extends AppCompatActivity {
     }
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
-    void sendNotification(String title , String message){
-        try{
-            JSONObject jsonObject  = new JSONObject();
+    void sendNotification(String title, String message) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference tokenRef = db.collection("Tokens");
 
-            JSONObject notificationObj = new JSONObject();
-            notificationObj.put("title", title);
-            notificationObj.put("body",message);
+        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    // Get the TokenList field as a List
+                    List<String> tokenList = (List<String>) document.get("TokenList");
+                    if (tokenList != null) {
+                        // Iterate over the TokenList and send notification to each token
+                        for (String token : tokenList) {
+                            try {
+                                JSONObject jsonObject = new JSONObject();
 
-            JSONObject dataObj = new JSONObject();
-            dataObj.put("userId", title);
+                                JSONObject notificationObj = new JSONObject();
+                                notificationObj.put("title", title);
+                                notificationObj.put("body", message);
 
-            jsonObject.put("notification",notificationObj);
-            jsonObject.put("data",dataObj);
-//            jsonObject.put("to","dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9");
+                                JSONObject dataObj = new JSONObject();
+                                dataObj.put("userId", title);
 
-//            dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9
-            jsonObject.put("to","ffUl6SLvR-SZ71ssMGHAqt:APA91bELrVu0t7bq8d9ewVxoBm-P07D2rdERgB_6fOt63KMUO8Md-hPTwVg1dDGgEUmAMjvws7Lwr1WoA2F0oit3HB7c1sDpHpHsQA-Vv6hRgs1VODaYXD1LoN6mw451SlL0dqtVH2MI");
+                                jsonObject.put("notification", notificationObj);
+                                jsonObject.put("data", dataObj);
+                                jsonObject.put("to", token);
 
-            callApi(jsonObject);
+                                callApi(jsonObject);
 
-        }catch (Exception e){
-
-        }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error sending notification to token: " + token, e);
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "TokenList is null");
+                    }
+                } else {
+                    Log.d(TAG, "No such document");
+                }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
+            }
+        });
     }
+
+//        void sendNotification(String title , String message){
+//        try{
+//            JSONObject jsonObject  = new JSONObject();
+//
+//            JSONObject notificationObj = new JSONObject();
+//            notificationObj.put("title", title);
+//            notificationObj.put("body",message);
+//
+//            JSONObject dataObj = new JSONObject();
+//            dataObj.put("userId", title);
+//
+//            jsonObject.put("notification",notificationObj);
+//            jsonObject.put("data",dataObj);
+////            jsonObject.put("to","dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9");
+//
+////            dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9
+//            jsonObject.put("to","c2yFLYtWRAKa9Hp3xxbmnn:APA91bE7tLZ7Wh1uB1WiU0vpzgwEMX19wc1SoLCYxMKW2QF23H6YbNq2CLNH5HcrVli8GMzWN2kpMaawb15UIVMpe5cYYtH9_j1Je8Pe41WFxrHKUmJAUDcT4_P_WvYVpOaujzd_-1tV");
+//
+//            callApi(jsonObject);
+//
+//        }catch (Exception e){
+//
+//        }
+//    }
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void callApi(JSONObject jsonObject){

@@ -10,19 +10,17 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.textview.MaterialTextView;
-
 import java.util.ArrayList;
 
 /**
  * !Once we are able to use images able to build out this file to show images
  */
-public class GridImagesArrayAdapter extends ArrayAdapter {
+public class GridProfileImagesArrayAdapter extends ArrayAdapter {
 
     private ArrayList<Profile> images;
     private Context context;
 
-    public GridImagesArrayAdapter(Context context, ArrayList<Profile> images){
+    public GridProfileImagesArrayAdapter(Context context, ArrayList<Profile> images){
 
         super(context,0, images);
         this.images = images;
@@ -35,13 +33,13 @@ public class GridImagesArrayAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertview, @NonNull ViewGroup parent){
         View view;
         if (convertview == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.images_grid_content,parent, false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.profile_images_grid_content,parent, false);
         }
         else {
             view = convertview;
         }
         Profile profile = images.get(position);
-        ImageView image = view.findViewById(R.id.imageView);
+        ImageView image = view.findViewById(R.id.Profile_imageView);
         if (profile.getProfile_picture()!= null) {
             image.setImageBitmap(profile.getProfile_picture());
         }

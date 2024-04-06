@@ -21,11 +21,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -38,6 +42,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -58,6 +63,7 @@ public class OrganizerActivity extends AppCompatActivity {
     private String base64QRPromoCode;
     private String previousId = null;
     private String info;
+    private static final String TAG = "OrganizerActivity";
 
     /**
      * Called when the activity is first created. This method initializes the activity by setting its layout,
@@ -123,10 +129,21 @@ public class OrganizerActivity extends AppCompatActivity {
         FloatingActionButton fabAddEvent = findViewById(R.id.fab_add_event);
         fabAddEvent.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
 
+        FloatingActionButton fabNotif = findViewById(R.id.notif_button);
+        fabNotif.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddEventDialog();
+            }
+        });
+
+        fabNotif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Start the NotificationsPage when the button is clicked
+                Intent intent = new Intent(OrganizerActivity.this, NotificationsPage.class);
+                startActivity(intent);
             }
         });
 
