@@ -310,5 +310,6 @@ public class AttendeeEditProfileFragment extends Fragment {
 
     private String generatePlaceholderImage() {
         return generateBase64Image("Placeholder");
+        //remember to change to profile id
     }
 }
