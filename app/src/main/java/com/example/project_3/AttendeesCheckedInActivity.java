@@ -1,6 +1,5 @@
 package com.example.project_3;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -33,9 +32,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AttendeesCheckedInActivity extends AppCompatActivity {
-
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
     private ListView attendeesListView;
@@ -63,7 +62,6 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         appbar.setTextSize(22);
         appbar.setText("Attendees Checked In");
         attendanceCountTextView = findViewById(R.id.attendance_count_text);
-
 
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +117,6 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         });
     }
 
-
     private void displayAttendees(List<String> attendees) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
         attendeesListView.setAdapter(adapter);
@@ -135,37 +132,54 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         });
     }
 
-
     private void showAttendeeDetailsDialog(String attendeeName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // Fetch the attendee document from Firestore
-        db.collection("Attendees")
-                .whereEqualTo("name", attendeeName)
+        db.collection("Profiles")
+                .document(attendeeName) // Assuming attendeeName is the profile ID
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            int checkInCount = task.getResult().size();
-                            builder.setTitle("Attendee Details")
-                                    .setMessage("Name: " + attendeeName + "\nCheck-in Count: " + checkInCount)
-                                    .setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                                    .show();
+                            DocumentSnapshot profileSnapshot = task.getResult();
+                            if (profileSnapshot.exists()) {
+                                Object checkedInEventsObj = profileSnapshot.get("checked_in_events");
+                                if (checkedInEventsObj instanceof Map) {
+                                    Map<String, Long> checkedInEvents = (Map<String, Long>) checkedInEventsObj;
+                                    Long checkInCount = checkedInEvents.get(eventName);
+                                    if (checkInCount != null) {
+                                        int count = checkInCount.intValue();
+                                        String profileName = profileSnapshot.getString("name"); // Retrieve the 'name' field
+                                        builder.setTitle("Attendee Details")
+                                                .setMessage("Name: " + profileName + "\nCheck-in Count: " + count)
+                                                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
+                                        return;
+                                    }
+                                }
+                                // If the checked_in_events field is not a map or if the event name is not found
+                                // Show an error message
+                                Toast.makeText(AttendeesCheckedInActivity.this, "Check-in count not found for this event", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d(TAG, "Profile document not found");
+                                // Show an error message if the profile document cannot be found
+                                Toast.makeText(AttendeesCheckedInActivity.this, "Profile document not found", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Log.d(TAG, "Error fetching attendee details", task.getException());
-                            // Show an error message if attendee details cannot be fetched
-                            Toast.makeText(AttendeesCheckedInActivity.this, "Failed to fetch attendee details", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Error fetching profile details", task.getException());
+                            // Show an error message if profile details cannot be fetched
+                            Toast.makeText(AttendeesCheckedInActivity.this, "Failed to fetch profile details", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
 
     private void updateRealTimeAttendance(int count) {
         attendanceCountTextView.setText("Real time attendance: " + count);
@@ -180,4 +194,3 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
         }
     }
 }
-
