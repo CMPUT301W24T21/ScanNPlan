@@ -119,22 +119,21 @@ public class AttendeeEditProfileFragment extends Fragment {
                 String newContactInfo = contactInfoTextView.getText().toString();
                 String newSocialLink = socialLinkTextView.getText().toString();
 
-                // Check if bitmapImage is null before decoding and re-encoding the image
+                String base64Image = "";
                 if (bitmapImage != null) {
                     try {
                         bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                        base64Image = encodeImage(bitmapImage);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }
-
-                String base64Image = bitmapImage != null ? encodeImage(bitmapImage) : "";
 
                 db.collection("Profiles").document(profileID)
                         .update("name", newName,
                                 "contact_info", newContactInfo,
                                 "social_link", newSocialLink,
-                                "profile_image", base64Image, "locationEnabled", LocationEnabled)
+                                 "locationEnabled", LocationEnabled)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -151,6 +150,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                         });
             }
         });
+
 
 
         db.collection("Profiles").document(profileID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -220,6 +220,26 @@ public class AttendeeEditProfileFragment extends Fragment {
                 try {
                     bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
                     profile_image.setImageBitmap(bitmapImage);
+                    String base64Image = encodeImage(bitmapImage);
+
+                    // Update the profile image in Firestore immediately
+                    db.collection("Profiles").document(profileID)
+                            .update("profile_image", base64Image)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "Profile image updated successfully");
+                                    Toast.makeText(getActivity(), "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Firestore", "Error updating profile image", e);
+                                    Toast.makeText(getActivity(), "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
