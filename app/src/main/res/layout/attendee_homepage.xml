@@ -36,43 +36,57 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/your_events_textview" />
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/openCameraButton"
+            android:id="@+id/announcementsButton"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:src="@android:drawable/ic_menu_camera"
-            style="@style/Widget.Material3.FloatingActionButton.Surface"
+            android:src="@drawable/baseline_circle_notifications_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/BrowseEventsButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/openCameraButton"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_marginBottom="10dp"
             android:text="Camera"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/EditProfile"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/BrowseEventsButton" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/EditProfile"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:src="@android:drawable/ic_menu_manage"
-            style="@style/Widget.Material3.FloatingActionButton.Surface"
+            android:src="@drawable/baseline_edit_24"
             android:text="Edit Profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/openCameraButton" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/BrowseEventsButton"
+            style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:src="@android:drawable/ic_menu_agenda"
-            style="@style/Widget.Material3.FloatingActionButton.Surface"
             android:text="Browse Events"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/openCameraButton"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/announcementsButton" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
