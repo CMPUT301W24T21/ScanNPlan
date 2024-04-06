@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +36,7 @@ import java.util.Map;
  */
 
 public class AttendeeActivity extends AppCompatActivity {
-    private Button openCameraButton;
+    private FloatingActionButton openCameraButton;
 
     private Intent QRIntent;
     ArrayList<Event> eventArray;
@@ -43,7 +44,7 @@ public class AttendeeActivity extends AppCompatActivity {
     private ListView eventListView;
     private EventArrayAdapter eventAdapter;
 
-    private ExtendedFloatingActionButton editProfileButton;
+    private FloatingActionButton editProfileButton;
     private Profile profile;
     private FirebaseFirestore db;
     private String profileID;
@@ -87,7 +88,7 @@ public class AttendeeActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         //get profile details
         profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        profileID = "9a747b30be9a8ed2";
+//        profileID = "9a747b30be9a8ed2";
         QRIntent = new Intent(this, QRScan.class);
         QRIntent.putExtra("profileName", profileID);
         openCameraButton.setOnClickListener(new View.OnClickListener() {
