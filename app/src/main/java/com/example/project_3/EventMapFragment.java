@@ -66,8 +66,9 @@ public class EventMapFragment extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map_fragment, container, false);
-        Context ctx = getContext();
-        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        Context context = getContext();
+        Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+        Toast.makeText(context, "Please be patient, may take a little while!", Toast.LENGTH_SHORT).show();
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
         map = view.findViewById(R.id.map);
