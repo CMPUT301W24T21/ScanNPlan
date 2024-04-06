@@ -118,7 +118,6 @@ public class AttendeeEditProfileFragment extends Fragment {
                 String newContactInfo = contactInfoTextView.getText().toString();
                 String newSocialLink = socialLinkTextView.getText().toString();
                 String base64Image = encodeImage(bitmapImage);
-
                 db.collection("Profiles").document(profileID)
                         .update("name", newName,
                                 "contact_info", newContactInfo,
