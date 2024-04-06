@@ -87,6 +87,7 @@ public class AttendeeActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         //get profile details
         profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        profileID = "9a747b30be9a8ed2";
         QRIntent = new Intent(this, QRScan.class);
         QRIntent.putExtra("profileName", profileID);
         openCameraButton.setOnClickListener(new View.OnClickListener() {
