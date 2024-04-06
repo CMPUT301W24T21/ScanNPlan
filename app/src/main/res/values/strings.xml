@@ -17,5 +17,6 @@
     <string name="view_qr_y">View QR</string>
 
     <string name="real_time_attendance_placeholder">Real time attendance: %d</string>
+    <string name="max_attendees">Max Attendees:</string>
 
 </resources>

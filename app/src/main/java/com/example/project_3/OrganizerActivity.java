@@ -239,6 +239,7 @@ public class OrganizerActivity extends AppCompatActivity {
         final EditText addEventEditTime = view.findViewById(R.id.add_time_editText);
         final EditText addEventEditLocation = view.findViewById(R.id.add_location_editText);
         final EditText addEventEditDetails = view.findViewById(R.id.add_details_editText);
+        final EditText maxAttendeesEditText = view.findViewById(R.id.max_attendees_editText);
         Button buttonPoster = view.findViewById(R.id.buttonPoster);
         Button buttonLink = view.findViewById(R.id.buttonLink);
 
@@ -271,6 +272,8 @@ public class OrganizerActivity extends AppCompatActivity {
                     String eventTime = addEventEditTime.getText().toString();
                     String eventLocation = addEventEditLocation.getText().toString();
                     String eventDetails = addEventEditDetails.getText().toString();
+                    String maxAttendeesStr = maxAttendeesEditText.getText().toString();
+                    int maxAttendees = maxAttendeesStr.isEmpty() ? -1 : Integer.parseInt(maxAttendeesStr);
 
                     // Creating a new event object and adding it if event name is not empty
                     if (!eventName.isEmpty()) {
