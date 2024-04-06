@@ -98,39 +98,19 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
                     List<DocumentReference> checkedIn = (List<DocumentReference>) documentSnapshot.get("checked_in");
-                    int realTimeAttendance = checkedIn != null ? checkedIn.size() : 0;
-
-                    // Update real-time attendance count
-                    updateRealTimeAttendance(realTimeAttendance);
-
                     if (checkedIn != null) {
                         List<String> attendeeNames = new ArrayList<>();
-                        for (DocumentReference doc : checkedIn) {
-                            // Fetch the attendee document from Firestore
-                            doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot attendeeDoc = task.getResult();
-                                        if (attendeeDoc.exists()) {
-                                            // Get the name of the attendee
-                                            String attendeeName = attendeeDoc.getString("name");
-                                            if (attendeeName != null) {
-                                                attendeeNames.add(attendeeName);
-                                                displayAttendees(attendeeNames);
-
-                                                // Update real-time attendance count after all attendee names are fetched
-                                                updateRealTimeAttendance(attendeeNames.size());
-                                            }
-                                        } else {
-                                            Log.d(TAG, "Attendee document not found");
-                                        }
-                                    } else {
-                                        Log.d(TAG, "Error fetching attendee document", task.getException());
-                                    }
-                                }
-                            });
+                        for (DocumentReference attendeeRef : checkedIn) {
+                            // Get the name of the attendee directly from the reference
+                            String attendeeName = attendeeRef.getId(); // Assuming the attendee document IDs are the names
+                            if (attendeeName != null) {
+                                attendeeNames.add(attendeeName);
+                            }
                         }
+                        // Update the UI with the attendee names
+                        displayAttendees(attendeeNames);
+                        // Update real-time attendance count
+                        updateRealTimeAttendance(attendeeNames.size());
                     }
                 } else {
                     Log.d(TAG, "Event document not found");
@@ -138,6 +118,7 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void displayAttendees(List<String> attendees) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
