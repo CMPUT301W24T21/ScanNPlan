@@ -13,7 +13,7 @@
         android:id="@+id/profile_image"
         android:layout_width="284dp"
         android:layout_height="231dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_name_editText"
+        app:layout_constraintBottom_toTopOf="@+id/profile_name_InputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,38 +36,66 @@
         app:layout_constraintBottom_toBottomOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="@+id/profile_image" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/profile_name_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="255dp"
-        android:layout_height="52dp"
-        android:text="Profile_Name"
-        app:layout_constraintBottom_toTopOf="@+id/homepage_editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/homepage_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="249dp"
-        android:layout_height="58dp"
-        android:text="Homepage_Name"
-        app:layout_constraintBottom_toTopOf="@+id/contact_info_editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_name_editText" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profile_name_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Profile Name"
+        app:layout_constraintTop_toBottomOf="@id/profile_image"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_InputLayout">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/contact_info_editText"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
-        android:layout_width="237dp"
-        android:layout_height="57dp"
-        android:text="Contact Info"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepage_editText" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profile_name_editText"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/homepage_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Homepage"
+        app:layout_constraintTop_toBottomOf="@id/profile_name_InputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/contact_info_InputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/homepage_editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contact_info_InputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Info"
+        app:layout_constraintTop_toBottomOf="@id/homepage_InputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contact_info_editText"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -77,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_info_editText">
+        app:layout_constraintTop_toBottomOf="@+id/contact_info_InputLayout">
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/push_notifications_toggle"
