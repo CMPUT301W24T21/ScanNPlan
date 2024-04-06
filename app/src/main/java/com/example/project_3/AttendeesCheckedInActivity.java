@@ -115,7 +115,9 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                         List<String> attendeeNames = new ArrayList<>();
                         for (DocumentReference attendeeRef : checkedIn) {
                             // Get the name of the attendee directly from the reference
+
                             String attendeeName = attendeeRef.getId();
+
                             if (attendeeName != null) {
                                 attendeeNames.add(attendeeName);
                             }
@@ -133,11 +135,13 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     }
 
 
+
     /**
      * Displays the list of attendees in a ListView and sets click listeners for each item.
      *
      * @param attendees List of attendee names to be displayed
      */
+
     private void displayAttendees(List<String> attendees) {
         // Create an ArrayAdapter to fill the ListView with attendee names
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);

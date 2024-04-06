@@ -83,10 +83,12 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         fetchSignedUpAttendees();
     }
 
+
     /**
      * Fetches the list of signed-up attendees from Firestore for the current event.
      * Updates the UI with the attendee names.
      */
+
     private void fetchSignedUpAttendees() {
         // Check if eventName is null
         if (eventName == null) {
@@ -107,13 +109,17 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
                 }
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
+
                     // Retrieve the list of signed-up attendees
+
                     List<DocumentReference> checkedIn = (List<DocumentReference>) documentSnapshot.get("attendees");
                     if (checkedIn != null) {
                         List<String> attendeeNames = new ArrayList<>();
                         for (DocumentReference attendeeRef : checkedIn) {
                             // Get the name of the attendee directly from the reference
+
                             String attendeeName = attendeeRef.getId();
+
                             if (attendeeName != null) {
                                 attendeeNames.add(attendeeName);
                             }
@@ -144,6 +150,7 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
      * Cleans up resources when the activity is destroyed.
      * Removes the Firestore listener to avoid memory leaks.
      */
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
