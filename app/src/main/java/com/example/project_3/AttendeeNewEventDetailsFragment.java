@@ -148,7 +148,9 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                 db = FirebaseFirestore.getInstance();
                 db.collection("Profiles").document(profileID).update("events", FieldValue.arrayUnion(db.document(docPath)));
                 db.document(docPath).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
-
+//                getParentFragmentManager().popBackStack();
+//                getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                getActivity().finish();
             }
         });
 

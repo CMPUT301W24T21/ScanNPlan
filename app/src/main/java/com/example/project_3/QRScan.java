@@ -40,6 +40,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -146,7 +147,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 
                                     Log.d("DEBUG", "Profile path reference is:" + db.collection("Profiles").document(profileID).getPath());
                                     //Toast.makeText(getBaseContext(), db.collection("Profiles").document(profileID).getPath(), Toast.LENGTH_LONG).show();
-                                    document.getDocumentReference("event").update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
+                                    DocumentReference eventDoc = document.getDocumentReference("event");
+                                    eventDoc.update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
                                     //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
                                     if (!isLocationUpdated){
                                         String location_context = Context.LOCATION_SERVICE;
@@ -178,6 +180,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                             }
                                         }
                                     }
+                                    addEventCount(eventDoc);
+
 
 
 
@@ -230,6 +234,28 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
+    }
+    public void addEventCount(DocumentReference eventDoc){
+        profilesRef.document(profileID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Map<String, Object> checkedInEvents = (Map<String, Object>) document.get("checked_in_events");
+                    Map<String, Object> updates = new HashMap<>();
+                    if (checkedInEvents != null && checkedInEvents.containsKey(eventDoc.getId())) {
+                        //if the user already checked in once, increment the count
+                        updates.put("checked_in_events."+eventDoc.getId(), FieldValue.increment(1));
+                        profilesRef.document(profileID).update(updates);
+                    } else {
+                        //if user has not checked_in, create new field and set the value to 1
+                        updates.put("checked_in_events."+eventDoc.getId(), 1);
+                        profilesRef.document(profileID).update(updates);
+                    }
+                }
+            }
+        });
+
     }
 
 }

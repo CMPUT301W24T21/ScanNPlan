@@ -1,5 +1,9 @@
 package com.example.project_3;
 
+/**
+ * This activity displays the promo QR code for a specific event along with event details.
+ */
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,11 +36,17 @@ public class PromoQRCodeDisplayActivity extends AppCompatActivity {
     private String qrPromoCode;
     private String imageUri;
     private String link;
+
+    /**
+     * Initializes the activity layout and retrieves event details from the intent.
+     * Retrieves QR code image and event details from Firestore and displays them.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.promo_qr_code_display);
 
+        // Retrieve event details from the intent
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDate = getIntent().getStringExtra("eventDate");
@@ -59,6 +69,7 @@ public class PromoQRCodeDisplayActivity extends AppCompatActivity {
         });
 
         Button shareButton = findViewById(R.id.share_button);
+        // Setting click listener for the share button to share the QR code image
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +79,7 @@ public class PromoQRCodeDisplayActivity extends AppCompatActivity {
                 Bitmap qrCodeBitmap = Bitmap.createBitmap(qrCodeImageView.getDrawingCache());
                 qrCodeImageView.setDrawingCacheEnabled(false);
 
-                // Create an intent with ACTION_SEND
+                // Create an intent with ACTION_SEND to share the QR code image
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("image/*");
 
@@ -79,12 +90,12 @@ public class PromoQRCodeDisplayActivity extends AppCompatActivity {
                 Uri qrCodeUri = Uri.parse(path);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
 
-                // Start the activity chooser
+                // Start the activity chooser to allow user to select where to share the image
                 startActivity(Intent.createChooser(shareIntent, "Share QR Code"));
             }
         });
 
-
+        // Retrieve QR code image from Firestore and display it in the ImageView
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)
                 .get()

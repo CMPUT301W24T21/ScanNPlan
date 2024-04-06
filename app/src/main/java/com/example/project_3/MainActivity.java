@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         getFcmToken();
 
-        //profileId = "This is an admin profile";
+        profileId = "This is an admin profile";
         profileId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d("DEBUG", profileId);
 
@@ -118,21 +118,6 @@ public class MainActivity extends AppCompatActivity {
                                     (String) profileDocDetails.get("social_link"),
                                     (String) profileDocDetails.get("profile_type")));
                             user.getUserProfile().setProfileID(doc.getId());
-                            //get the id and from here start the valid intent lol?
-                            //please work????
-                            Log.d("DEBUG", user.getUserProfile().getProfileType());
-                            if (Objects.equals(user.getUserProfile().getProfileType(), "Attendee")){
-                                startActivity(AttendeeIntent);
-                            } else if (Objects.equals(user.getUserProfile().getProfileType(), "Organizer")) {
-                                startActivity(OrganizerIntent);
-                            } else if (Objects.equals(user.getUserProfile().getProfileType(), "Admin")) {
-                                startActivity(AdminIntent);
-                            }
-
-                            // Start the AttendeeIntent here
-
-//                            AttendeeIntent = new Intent(MainActivity.this, AttendeeActivity.class);
-//                            startActivity(AttendeeIntent);
                         }
                     }
                     if (!idFound){
@@ -150,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         profileData.put("social_link", user.getUserProfile().getSocial_link());
                         profileData.put("profile_type", user.getUserProfile().getProfileType());
                         profileData.put("events", new ArrayList<DocumentReference>());
+                        profileData.put("locationEnabled", Boolean.FALSE);
                         profilesRef.document(profileId).set(profileData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

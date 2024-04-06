@@ -1,5 +1,9 @@
 package com.example.project_3;
 
+/**
+ * This activity displays the QR code for a specific event along with event details.
+ */
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,11 +37,16 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
     private String imageUri;
     private String link;
 
+    /**
+     * Initializes the activity layout and retrieves event details from the intent.
+     * Retrieves QR code image and event details from Firestore and displays them.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code_display);
 
+        // Retrieve event details from the intent
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDate = getIntent().getStringExtra("eventDate");
@@ -60,25 +69,26 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
         });
 
         Button nextButton = findViewById(R.id.next_button);
-
+        // Setting click listener for the next button to navigate to the PromoQRCodeDisplayActivity
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the QRCodeDisplayActivity
+                // Navigate to the PromoQRCodeDisplayActivity
                 Intent intent = new Intent(QRCodeDisplayActivity.this, PromoQRCodeDisplayActivity.class);
-                intent.putExtra("eventName", eventName); // Pass event details if needed
+                // Pass event details to PromoQRCodeDisplayActivity if needed
+                intent.putExtra("eventName", eventName);
                 intent.putExtra("eventLocation", eventLocation);
                 intent.putExtra("eventDate", eventDate);
                 intent.putExtra("eventTime", eventTime);
                 intent.putExtra("QRCode", qrCode);
                 intent.putExtra("QRPromoCode", qrPromoCode);
-                // Pass any necessary data to QRCodeDisplayActivity if needed
+                // Pass any necessary data to PromoQRCodeDisplayActivity if needed
                 startActivity(intent);
             }
         });
 
-
         Button shareButton = findViewById(R.id.share_button);
+        // Setting click listener for the share button to share the QR code image
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +98,7 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
                 Bitmap qrCodeBitmap = Bitmap.createBitmap(qrCodeImageView.getDrawingCache());
                 qrCodeImageView.setDrawingCacheEnabled(false);
 
-                // Create an intent with ACTION_SEND
+                // Create an intent with ACTION_SEND to share the QR code image
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("image/*");
 
@@ -99,14 +109,12 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
                 Uri qrCodeUri = Uri.parse(path);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
 
-                // Start the activity chooser
+                // Start the activity chooser to allow the user to select where to share the image
                 startActivity(Intent.createChooser(shareIntent, "Share QR Code"));
             }
         });
 
-
-
-
+        // Retrieve QR code image from Firestore and display it in the ImageView
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)
                 .get()
