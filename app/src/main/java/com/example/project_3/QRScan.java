@@ -21,6 +21,8 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -112,7 +114,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 db = FirebaseFirestore.getInstance();
                 eventsRef = db.collection("Events");
                 profilesRef = db.collection("Profiles");
-
+                profileID = "Test2";
                 if (intentResult.getContents().startsWith("Events/")) {
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
@@ -124,7 +126,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 //                    profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 //                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
 //                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
-                      profileID = "Test2";
+
                 } else if (intentResult.getContents().startsWith("QrCodes/")) {
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -144,14 +146,13 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                         return;
                                     }
                                     //get last location and add it to location on geopoint
-                                    fusedlocation.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                                    fusedlocation.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<Location> task) {
-                                            Location location = task.getResult();
+                                        public void onSuccess(Location location) {
                                             profilesRef.document(profileID).update("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
-
                                         }
                                     });
+
                                 } else {
                                     Log.d("DEBUG", "No such document");
                                 }

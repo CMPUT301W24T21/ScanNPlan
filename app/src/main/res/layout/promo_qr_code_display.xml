@@ -25,7 +25,7 @@
         android:layout_marginBottom="15dp"
         android:layout_toEndOf="@+id/back_qr_button"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Check In QR Code"
+        android:text="Promo QR Code"
         android:textSize="24sp" />
 
     <ImageView
@@ -50,19 +50,6 @@
         android:text="Back" />
 
     <Button
-        android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/materialToolbar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="325dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="7dp"
-        android:textSize="9sp"
-        android:text="Next" />
-
-    <Button
         android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +58,5 @@
         android:layout_marginEnd="146dp"
         android:layout_marginBottom="119dp"
         android:text="Share" />
-
-
 
 </RelativeLayout>
