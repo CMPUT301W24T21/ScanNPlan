@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +36,7 @@ import java.util.Map;
  */
 
 public class AttendeeActivity extends AppCompatActivity {
-    private Button openCameraButton;
+    private FloatingActionButton openCameraButton;
 
     private Intent QRIntent;
     ArrayList<Event> eventArray;
@@ -43,7 +44,7 @@ public class AttendeeActivity extends AppCompatActivity {
     private ListView eventListView;
     private EventArrayAdapter eventAdapter;
 
-    private ExtendedFloatingActionButton editProfileButton;
+    private FloatingActionButton editProfileButton;
     private Profile profile;
     private FirebaseFirestore db;
     private String profileID;
@@ -67,7 +68,7 @@ public class AttendeeActivity extends AppCompatActivity {
 
 
         this.openCameraButton = findViewById(R.id.openCameraButton);
-        QRIntent = new Intent(this, QRScan.class);
+
         //sends to the QRscan class
 
         editProfileButton = findViewById(R.id.EditProfile);
@@ -75,12 +76,21 @@ public class AttendeeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toggleRestOfPageVisibility();
-                replaceFragment(new AttendeeEditProfileFragment());
+                replaceFragment(new AttendeeEditProfileFragment(profileID));
                 //turn the visibility of the page off and turns the other one on
             }
         });
 
 
+
+
+
+        db = FirebaseFirestore.getInstance();
+        //get profile details
+        profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        profileID = "9a747b30be9a8ed2";
+        QRIntent = new Intent(this, QRScan.class);
+        QRIntent.putExtra("profileName", profileID);
         openCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +99,6 @@ public class AttendeeActivity extends AppCompatActivity {
                 //start the qrscanning page
             }
         });
-
-
-        db = FirebaseFirestore.getInstance();
-        //get profile details
-        profileID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-
         db.collection("Profiles").document(profileID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {

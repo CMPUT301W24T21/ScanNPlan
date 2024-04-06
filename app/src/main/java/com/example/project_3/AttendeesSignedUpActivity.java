@@ -1,5 +1,8 @@
 package com.example.project_3;
 
+/**
+ * This activity displays the list of attendees who have signed up for a particular event.
+ */
 
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +44,10 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
     private TextView attendanceCountTextView;
     private ListenerRegistration eventListener;
 
+    /**
+     * Initializes the activity layout, Firestore instance, and necessary references.
+     * Retrieves the event name from the intent and sets up UI components.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +80,16 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         });
 
         // Fetch checked-in attendees and display them in the ListView
-        fetchCheckedInAttendees();
+        fetchSignedUpAttendees();
     }
 
-    private void fetchCheckedInAttendees() {
+
+    /**
+     * Fetches the list of signed-up attendees from Firestore for the current event.
+     * Updates the UI with the attendee names.
+     */
+
+    private void fetchSignedUpAttendees() {
         // Check if eventName is null
         if (eventName == null) {
             Log.d(TAG, "Event name is null");
@@ -86,6 +99,7 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
 
         DocumentReference eventDocRef = eventsRef.document(eventName);
 
+        // Listen for changes in the event document to update attendee list in real-time
         eventListener = eventDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -95,40 +109,24 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
                 }
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
-                    List<DocumentReference> signedUp = (List<DocumentReference>) documentSnapshot.get("attendees");
-                    int realTimeAttendance = signedUp != null ? signedUp.size() : 0;
 
-                    // Update real-time attendance count
-                    updateRealTimeAttendance(realTimeAttendance);
+                    // Retrieve the list of signed-up attendees
 
-                    if (signedUp != null) {
+                    List<DocumentReference> checkedIn = (List<DocumentReference>) documentSnapshot.get("attendees");
+                    if (checkedIn != null) {
                         List<String> attendeeNames = new ArrayList<>();
-                        for (DocumentReference doc : signedUp) {
-                            // Fetch the attendee document from Firestore
-                            doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot attendeeDoc = task.getResult();
-                                        if (attendeeDoc.exists()) {
-                                            // Get the name of the attendee
-                                            String attendeeName = attendeeDoc.getString("name");
-                                            if (attendeeName != null) {
-                                                attendeeNames.add(attendeeName);
-                                                displayAttendees(attendeeNames);
+                        for (DocumentReference attendeeRef : checkedIn) {
+                            // Get the name of the attendee directly from the reference
 
-                                                // Update real-time attendance count after all attendee names are fetched
-                                                updateRealTimeAttendance(attendeeNames.size());
-                                            }
-                                        } else {
-                                            Log.d(TAG, "Attendee document not found");
-                                        }
-                                    } else {
-                                        Log.d(TAG, "Error fetching attendee document", task.getException());
-                                    }
-                                }
-                            });
+                            String attendeeName = attendeeRef.getId();
+
+                            if (attendeeName != null) {
+                                attendeeNames.add(attendeeName);
+                            }
                         }
+                        // Update the UI with the attendee names
+                        displayAttendees(attendeeNames);
+
                     }
                 } else {
                     Log.d(TAG, "Event document not found");
@@ -137,14 +135,21 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * Displays the list of signed-up attendees in a ListView.
+     *
+     * @param attendees List of attendee names to be displayed
+     */
     private void displayAttendees(List<String> attendees) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
         attendeesListView.setAdapter(adapter);
     }
 
-    private void updateRealTimeAttendance(int count) {
-        attendanceCountTextView.setText("Real time attendance: " + count);
-    }
+    /**
+     * Cleans up resources when the activity is destroyed.
+     * Removes the Firestore listener to avoid memory leaks.
+     */
 
     @Override
     protected void onDestroy() {

@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/max_attendees_editText" />
 
     <EditText
         android:id="@+id/add_time_editText"
@@ -50,6 +50,21 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_date_editText" />
+
+    <EditText
+        android:id="@+id/max_attendees_editText"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:hint="@string/max_attendees"
+        android:inputType="number"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_event_editText" />
 
     <EditText
         android:id="@+id/add_location_editText"
@@ -78,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_time_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/add_location_editText" />
 
     <CheckBox
         android:id="@+id/reuseChecker"
@@ -99,7 +114,7 @@
         android:text="Poster"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_location_editText"
+        app:layout_constraintTop_toBottomOf="@+id/add_details_editText"
         app:layout_constraintVertical_bias="0.037" />
 
     <Button
@@ -112,7 +127,7 @@
         app:layout_constraintEnd_toStartOf="@+id/reuseChecker"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/buttonPoster"
-        app:layout_constraintTop_toBottomOf="@+id/add_location_editText"
+        app:layout_constraintTop_toBottomOf="@+id/add_details_editText"
         app:layout_constraintVertical_bias="0.037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

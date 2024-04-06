@@ -35,6 +35,7 @@
             android:name=".AdminActivity"
             android:exported="false" />
         <activity android:name=".QRCodeDisplayActivity" />
+        <activity android:name=".PromoQRCodeDisplayActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

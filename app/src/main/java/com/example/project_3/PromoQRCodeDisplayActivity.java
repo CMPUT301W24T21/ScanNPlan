@@ -1,7 +1,7 @@
 package com.example.project_3;
 
 /**
- * This activity displays the QR code for a specific event along with event details.
+ * This activity displays the promo QR code for a specific event along with event details.
  */
 
 import android.content.Intent;
@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 
-public class QRCodeDisplayActivity extends AppCompatActivity {
+public class PromoQRCodeDisplayActivity extends AppCompatActivity {
     private String eventName;
     private String eventLocation;
     private String eventDate;
@@ -44,7 +44,7 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.qr_code_display);
+        setContentView(R.layout.promo_qr_code_display);
 
         // Retrieve event details from the intent
         eventName = getIntent().getStringExtra("eventName");
@@ -63,27 +63,8 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the QRCodeDisplayActivity and return to the EditEventDetails activity
+                // Finish the QRCodeDisplayActivity and return to the QRCodeDisplayActivity
                 finish();
-            }
-        });
-
-        Button nextButton = findViewById(R.id.next_button);
-        // Setting click listener for the next button to navigate to the PromoQRCodeDisplayActivity
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to the PromoQRCodeDisplayActivity
-                Intent intent = new Intent(QRCodeDisplayActivity.this, PromoQRCodeDisplayActivity.class);
-                // Pass event details to PromoQRCodeDisplayActivity if needed
-                intent.putExtra("eventName", eventName);
-                intent.putExtra("eventLocation", eventLocation);
-                intent.putExtra("eventDate", eventDate);
-                intent.putExtra("eventTime", eventTime);
-                intent.putExtra("QRCode", qrCode);
-                intent.putExtra("QRPromoCode", qrPromoCode);
-                // Pass any necessary data to PromoQRCodeDisplayActivity if needed
-                startActivity(intent);
             }
         });
 
@@ -105,11 +86,11 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
                 // Add the QR code bitmap as an extra to the intent
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 qrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-                String path = MediaStore.Images.Media.insertImage(getContentResolver(), qrCodeBitmap, "QR Code", null);
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), qrCodeBitmap, "QR Promo Code", null);
                 Uri qrCodeUri = Uri.parse(path);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, qrCodeUri);
 
-                // Start the activity chooser to allow the user to select where to share the image
+                // Start the activity chooser to allow user to select where to share the image
                 startActivity(Intent.createChooser(shareIntent, "Share QR Code"));
             }
         });
@@ -124,7 +105,7 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null && document.exists()) {
-                                String base64Image = document.getString("QR Code");
+                                String base64Image = document.getString("QR Promo Code");
                                 if (base64Image != null && !base64Image.isEmpty()) {
                                     // Decode base64 string to bitmap
                                     byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
@@ -142,11 +123,11 @@ public class QRCodeDisplayActivity extends AppCompatActivity {
 
                             } else {
                                 // Handle document not found
-                                Toast.makeText(QRCodeDisplayActivity.this, "Event details not found.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PromoQRCodeDisplayActivity.this, "Event details not found.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             // Handle Firestore query failure
-                            Toast.makeText(QRCodeDisplayActivity.this, "Failed to retrieve event details.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PromoQRCodeDisplayActivity.this, "Failed to retrieve event details.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
