@@ -4,16 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,8 +24,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import androidx.fragment.app.FragmentManager;
+
 
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
@@ -46,6 +44,8 @@ public class AttendeeEditProfileFragment extends Fragment {
     private EditText contactInfoTextView;
     private EditText socialLinkTextView;
     private TextView appBarView;
+
+    private Uri selectedImageUri;
 
     private User user;
     private String profileID;
@@ -59,7 +59,6 @@ public class AttendeeEditProfileFragment extends Fragment {
 
     public AttendeeEditProfileFragment(String profileID){
         this.profileID = profileID;
-
     }
 
     @Nullable
@@ -75,6 +74,10 @@ public class AttendeeEditProfileFragment extends Fragment {
         contactInfoTextView = view.findViewById(R.id.contact_info_editText);
         profile_image = view.findViewById(R.id.profile_image);
 
+        // Set the profile image to a placeholder image
+        String placeholderBase64Image = generatePlaceholderImage();
+        Bitmap placeholderBitmap = decodeImage(placeholderBase64Image);
+        profile_image.setImageBitmap(placeholderBitmap);
 
         MaterialButton back = view.findViewById(R.id.back_button);
         back.setOnClickListener(new View.OnClickListener() {
@@ -99,8 +102,6 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
-
-
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +119,23 @@ public class AttendeeEditProfileFragment extends Fragment {
                 String newName = nameTextView.getText().toString();
                 String newContactInfo = contactInfoTextView.getText().toString();
                 String newSocialLink = socialLinkTextView.getText().toString();
-                String base64Image = encodeImage(bitmapImage);
+
+
+                String base64Image = "";
+                if (bitmapImage != null) {
+                    try {
+                        bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                        base64Image = encodeImage(bitmapImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 db.collection("Profiles").document(profileID)
                         .update("name", newName,
                                 "contact_info", newContactInfo,
                                 "social_link", newSocialLink,
-                                "profile_image", base64Image, "locationEnabled", LocationEnabled)
+                                 "locationEnabled", LocationEnabled)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -188,7 +200,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                             public void onSuccess(Void aVoid) {
                                 Log.d("Firestore", "Profile image deleted successfully");
                                 //  clear the ImageView
-                                profile_image.setImageDrawable(null);
+                                profile_image.setImageBitmap(placeholderBitmap);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -201,26 +213,6 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
-//        MaterialButton browseAllEventsButton = view.findViewById(R.id.button5);
-//        browseAllEventsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EventListFragment eventListFragment = new EventListFragment();
-//
-//                // Replace the current fragment with the EventListFragment
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.fragment_container, eventListFragment);
-//                fragmentTransaction.addToBackStack(null); // Optional, to add the transaction to the back stack
-//                fragmentTransaction.commit();
-//            }
-//
-//            private FragmentManager getSupportFragmentManager() {
-//                return null;
-//            }
-//        });
-
-
         return view;
     }
 
@@ -229,12 +221,36 @@ public class AttendeeEditProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            try {
-                bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
-                profile_image.setImageBitmap(bitmapImage);
-            } catch (IOException e) {
-                e.printStackTrace();
+            selectedImageUri = data.getData();
+            if (selectedImageUri != null) {
+                try {
+                    bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                    profile_image.setImageBitmap(bitmapImage);
+                    String base64Image = encodeImage(bitmapImage);
+
+                    // Update the profile image in Firestore immediately
+                    db.collection("Profiles").document(profileID)
+                            .update("profile_image", base64Image)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "Profile image updated successfully");
+                                    Toast.makeText(getActivity(), "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Firestore", "Error updating profile image", e);
+                                    Toast.makeText(getActivity(), "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("Image Loading", "Selected image URI is null");
             }
         }
     }
@@ -250,8 +266,10 @@ public class AttendeeEditProfileFragment extends Fragment {
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
-
     private Bitmap decodeImage(String base64Image) {
+        if (base64Image == null || base64Image.isEmpty()) {
+            return null;
+        }
         try {
             byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
@@ -261,7 +279,36 @@ public class AttendeeEditProfileFragment extends Fragment {
         }
     }
 
+    private String generateBase64Image(String name) {
+        int width = 200;
+        int height = 50;
 
+        // Create a Bitmap with white background
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(image);
+        canvas.drawColor(Color.WHITE);
 
+        // Set paint for the text
+        android.graphics.Paint paint = new android.graphics.Paint();
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(20);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
+        // Draw the text in the center of the image
+        android.graphics.Rect bounds = new android.graphics.Rect();
+        paint.getTextBounds(name, 0, name.length(), bounds);
+        int x = (width - bounds.width()) / 2;
+        int y = (height + bounds.height()) / 2;
+        canvas.drawText(name, x, y, paint);
+
+        // Convert the image to base64
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+    private String generatePlaceholderImage() {
+        return generateBase64Image("Placeholder");
+    }
 }
