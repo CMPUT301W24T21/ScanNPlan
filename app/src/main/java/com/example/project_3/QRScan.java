@@ -114,7 +114,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 db = FirebaseFirestore.getInstance();
                 eventsRef = db.collection("Events");
                 profilesRef = db.collection("Profiles");
-                profileID = "Test2";
+                profileID = getIntent().getStringExtra("profileName");
                 if (intentResult.getContents().startsWith("Events/")) {
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
