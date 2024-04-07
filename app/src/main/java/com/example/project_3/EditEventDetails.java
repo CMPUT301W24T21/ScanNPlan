@@ -319,7 +319,7 @@ public class EditEventDetails extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     // Get the TokenList field as a List
-                    List<String> tokenList = (List<String>) document.get("OrganizerTokens");
+                    List<String> tokenList = (List<String>) document.get("AttendeesTokens");
                     if (tokenList != null) {
                         // Iterate over the TokenList and send notification to each token
                         for (String token : tokenList) {
