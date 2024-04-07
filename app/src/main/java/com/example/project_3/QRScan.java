@@ -150,7 +150,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                     DocumentReference eventDoc = document.getDocumentReference("event");
                                     eventDoc.update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
                                     //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
-                                    getLocation();
+                                    getLocation(eventDoc);
                                     addEventCount(eventDoc);
 
                                 } else {
@@ -203,7 +203,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
-    private void getLocation(){
+    private void getLocation(DocumentReference eventDoc){
         if (!isLocationUpdated) {
             String location_context = Context.LOCATION_SERVICE;
             final LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(location_context);
@@ -216,7 +216,13 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
                             geopoint = new GeoPoint(latitude, longitude);
-                            profilesRef.document(profileID).update("location", geopoint);
+                            Map<String, GeoPoint> checkInLocations = new HashMap<>();
+                            checkInLocations.put(profileID, geopoint);
+
+                            eventDoc.update("check_in_locations", checkInLocations);
+
+                            locationManager.removeUpdates(this);
+                            isLocationUpdated = true;
                             locationManager.removeUpdates(this);
                             isLocationUpdated = true;
                         }

@@ -25,6 +25,7 @@ import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,7 @@ public class EventMapFragment extends Fragment  {
     private MapView map;
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
+    private CollectionReference profilesRef;
     private String event;
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -71,6 +73,7 @@ public class EventMapFragment extends Fragment  {
         Toast.makeText(context, "Please be patient, may take a little while!", Toast.LENGTH_SHORT).show();
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
+        profilesRef = db.collection("Profiles");
         map = view.findViewById(R.id.map);
         TextView appbar = view.findViewById(R.id.appbar_title);
         appbar.setText("Map");
@@ -93,51 +96,43 @@ public class EventMapFragment extends Fragment  {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        if (document.get("checked_in") == null){
+                        if (document.get("checked_in") == null) {
                             Toast.makeText(getActivity(), "No attendees have checked in yet!", Toast.LENGTH_LONG).show();
                             back.callOnClick();
-                        }
-                        else{
-                            List<DocumentReference> checkedIn = (List<DocumentReference>) document.get("checked_in");
-                            for (DocumentReference doc: checkedIn){
-                                doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        } else {
+                            Map<String, GeoPoint> checkedIn = (Map<String, GeoPoint>) document.get("check_in_locations");
+                            //https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+                            for (Map.Entry<String, GeoPoint> entry : checkedIn.entrySet()) {
+                                String profileId = entry.getKey();
+                                GeoPoint point = entry.getValue();
+                                profilesRef.document(profileId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnap) {
                                         if (documentSnap.exists()) {
-                                            GeoPoint point;
-                                            if (documentSnap.getGeoPoint("location") != null){
-                                                //testing logs
-                                                System.out.println("We have found document: " + documentSnap.getId());
-                                                point = documentSnap.getGeoPoint("location");
-                                                Boolean locationEnabled = documentSnap.getBoolean("locationEnabled");
-                                                if (locationEnabled != null && locationEnabled) {
-                                                    Marker marker = new Marker(map);
-                                                    org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
-                                                    marker.setPosition(osm_point);
-                                                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                                    map.getOverlays().add(marker);
-                                                    mapController.setCenter(osm_point);
-                                                }
-                                                else{
-                                                    mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0,0.0));
-                                                    Toast.makeText(getContext(), "Some users may not want to share their location!", Toast.LENGTH_SHORT).show();
-                                                }
+                                            Boolean locationEnabled = documentSnap.getBoolean("locationEnabled");
+                                            if (locationEnabled != null && locationEnabled) {
+                                                Marker marker = new Marker(map);
+                                                org.osmdroid.util.GeoPoint osm_point = new org.osmdroid.util.GeoPoint(point.getLatitude(), point.getLongitude());
+                                                marker.setPosition(osm_point);
+                                                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                                map.getOverlays().add(marker);
+                                                mapController.setCenter(osm_point);
+                                            } else {
+                                                mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0, 0.0));
+                                                Toast.makeText(getContext(), "Some users may not want to share their location!", Toast.LENGTH_SHORT).show();
                                             }
-
-                                        }
-
-                                        else {
+                                        } else {
                                             System.out.println("No such document!");
                                         }
+                                    }
+                                });
+                            }
+
 
                         }
-
-
-                        });
                     }
                 }
-                        }
-        }}});
+            }});
 
         map.invalidate();
         mapController.setZoom(14);
