@@ -297,7 +297,7 @@ public class EditEventDetails extends AppCompatActivity {
         announcement.put("content", title + " - " + message);
         announcement.put("event_name", eventName);
         announcement.put("timestamp", new Timestamp(new Date()));
-        db.collection("Events").document(eventName).update("Announcements", FieldValue.arrayUnion(announcement));
+        db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
     }
 
 //        void sendNotification(String title , String message){

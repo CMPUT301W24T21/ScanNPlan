@@ -178,7 +178,7 @@ public class OrganizerActivity extends AppCompatActivity {
 
                         ArrayList<Map<String, Object>> eventAnnouncements = new ArrayList<>();
 
-                        eventDataList.add(new Event(event, date, time, location,
+                        eventDataList.add(0,new Event(event, date, time, location,
                                 details, reuse, imageUri, qrCode, qrPromoCode, link, eventAnnouncements));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
@@ -211,7 +211,7 @@ public class OrganizerActivity extends AppCompatActivity {
         data.put("Link", event.getLink());
         ArrayList<Map<String, Object>> announcements = event.getAnnouncementss();
         if (announcements != null) {
-            data.put("Announcements", announcements);
+            data.put("announcements", announcements);
         }
         // Store data in Firebase
         eventsRef.document(event.getName()).set(data)

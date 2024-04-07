@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -83,7 +84,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                         Log.d("DEBUG", "!!!!!Doc Found");
                         Map<String, Object> eventDetails = document.getData();
                         //Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
-
+                        ArrayList<Map<String, Object>> announcements = new ArrayList<>();
                         selectedEvent = new Event(document.getId().toString(),
                                 (String) eventDetails.get("Date"),
                                 (String) eventDetails.get("Time"),
@@ -93,7 +94,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                                 (String) eventDetails.get("Image"),
                                 null,
                                 null,
-                                null, null);
+                                null, announcements);
 
                         //set appbar title to reflect the fragment
                         appBar.setText(selectedEvent.getName());
