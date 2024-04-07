@@ -48,7 +48,7 @@ public class NotificationActivity extends AppCompatActivity {
         // Todo:
         //  - Create notificationAdapter Class (DONE)
         //  - Link it to the listview (DONE)
-        //  - go through each event, go through each notification for each event, add it to an arrray of notifications
+        //  - go through each event, go through each notification for each event, add it to an arrray of notifications (DONE)
 
         allAnnouncementList = new ArrayList<Announcement>();
 
