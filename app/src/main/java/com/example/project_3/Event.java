@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,10 @@ public class Event {
     private String details;
     private String image;
     private String link;
-    private List<Map<String, Object>> announcements; // List of maps
+    private ArrayList<Announcement> announcements;
+    private ArrayList<Map<String, Object>> announcementss;
+
+
 
     /**
      * Constructs an event with specified details.
@@ -39,7 +43,7 @@ public class Event {
      */
     public Event(String name, String date, String time, String location,
                  String details, boolean reuse, String image, String qrCode,
-                 String qrPromoCode, String link, List<Map<String, Object>> announcements) {
+                 String qrPromoCode, String link, ArrayList<Map<String, Object>> announcementss) {
         this.name = name;
         this.reuse = reuse;
         this.date = date;
@@ -50,15 +54,32 @@ public class Event {
         this.qrCode = qrCode;
         this.qrPromoCode = qrPromoCode;
         this.link = link;
+        this.announcementss = announcementss;
+    }
+    public Event(String name, String date, String time, String location,
+                 String details, ArrayList<Announcement> announcements,  boolean reuse, String image, String qrCode,
+                 String qrPromoCode, String link) {
+        this.name = name;
+        this.reuse = reuse;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
         this.announcements = announcements;
+        this.image = image;
+        this.qrCode = qrCode;
+        this.qrPromoCode = qrPromoCode;
+        this.link = link;
+    }
+    public ArrayList<Map<String, Object>> getAnnouncementss() {
+        return announcementss;
     }
 
-    public List<Map<String, Object>> getAnnouncements() {
-        return announcements;
+    public void setAnnouncementss(ArrayList<Map<String, Object>> announcementss) {
+        this.announcementss = announcementss;
     }
-
-    public void setAnnouncements(List<Map<String, Object>> announcements) {
-        this.announcements = announcements;
+    //
+    public Event() {
     }
 
     public String getLink() {
@@ -247,4 +268,12 @@ public class Event {
      * @param qrPromoCode The PROMO QR code to be associated with the event.
      */
     public void setQrPromoCode(String qrPromoCode) {this.qrPromoCode = qrPromoCode;}
+
+    public ArrayList<Announcement> getAnnouncements() {
+        return this.announcements;
+    }
+
+    public void setAnnouncements(ArrayList<Announcement> announcements) {
+        this.announcements = announcements;
+    }
 }

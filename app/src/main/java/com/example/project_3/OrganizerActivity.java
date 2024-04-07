@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,7 +36,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -80,8 +80,6 @@ public class OrganizerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.organizer_events);
 
-        getFcmToken();
-
         // Initializing Firebase
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
@@ -111,14 +109,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     intent.putExtra("QRCode", selectedEvent.getQrCode());
                     intent.putExtra("QRPromoCode", selectedEvent.getQrPromoCode());
                     intent.putExtra("link", selectedEvent.getLink());
-
-                    ArrayList<HashMap<String, Object>> announcementsList = new ArrayList<>();
-                    for (Map<String, Object> map : selectedEvent.getAnnouncements()) {
-                        HashMap<String, Object> hashMap = new HashMap<>(map);
-                        announcementsList.add(hashMap);
-                    }
-                    intent.putExtra("announcements", announcementsList);
-
+                    intent.putExtra("announcements", selectedEvent.getAnnouncements());
                     startActivity(intent);
                 }
             }
@@ -185,112 +176,17 @@ public class OrganizerActivity extends AppCompatActivity {
                         String qrPromoCode = doc.getString("QRPromoCode");
                         String link = doc.getString("link");
 
-                        List<Map<String, Object>> announcementsList = (List<Map<String, Object>>) doc.get("announcements");
-                        if (announcementsList == null) {
-                            announcementsList = new ArrayList<>();
-                        }
+                        ArrayList<Map<String, Object>> eventAnnouncements = new ArrayList<>();
 
-                        eventDataList.add(0,new Event(event, date, time, location,
-                                details, reuse, imageUri, qrCode, qrPromoCode, link, announcementsList));
-
+                        eventDataList.add(new Event(event, date, time, location,
+                                details, reuse, imageUri, qrCode, qrPromoCode, link, eventAnnouncements));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
             }
         });
     }
-    void getFcmToken(){
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
-            if(task.isSuccessful()){
-                String token = task.getResult();
-                Log.i("My token", token);
-                saveTokenToFirestore(token);
-            }
-        });
-    }
-    void saveTokenToFirestore(String token) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
 
-        // Check if document exists and retrieve its data
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Document exists, retrieve token list and update
-                    List<String> tokensList = (List<String>) document.get("OrganizerTokens");
-                    if (tokensList != null) {
-                        // Add the new token to the end of the list
-                        tokensList.add(token);
-                    } else {
-                        // Token list is null, create a new list with the token
-                        tokensList = new ArrayList<>();
-                        tokensList.add(token);
-                    }
-                    // Update Firestore with the modified token list
-                    tokenRef.document("tokenz").update("OrganizerTokens", tokensList)
-                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token added successfully"))
-                            .addOnFailureListener(e -> Log.e("Firestore", "Error adding token", e));
-                } else {
-                    // Document doesn't exist, create a new one with the token
-                    Map<String, Object> data = new HashMap<>();
-                    List<String> tokensList = new ArrayList<>();
-                    tokensList.add(token);
-                    data.put("OrganizerTokens", tokensList);
-                    // Update Firestore with the new token list
-                    tokenRef.document("tokenz").set(data)
-                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "New document created with token"))
-                            .addOnFailureListener(e -> Log.e("Firestore", "Error creating document", e));
-                }
-            } else {
-                Log.e("Firestore", "Error getting document", task.getException());
-            }
-        });
-    }
-
-    //    void saveTokenToFirestore(String token) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference tokenRef = db.collection("Tokens");
-//
-//        // Check if document exists and retrieve its data
-//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                DocumentSnapshot document = task.getResult();
-//                if (document.exists()) {
-//                    // Document exists, retrieve token list and update
-//                    List<String> tokensList = (List<String>) document.get("OrganizerTokens");
-//                    if (tokensList != null && !tokensList.isEmpty()) {
-//                        // Add the new token to the end of the list
-//                        tokensList.add(token);
-//                    } else {
-//                        // Token list is empty, create a new list with the token
-//                        tokensList = new ArrayList<>();
-//                        tokensList.add(token);
-//                    }
-//                    // Update Firestore with the modified token list
-//                    updateTokenListInFirestore(tokenRef, tokensList);
-//                } else {
-//                    // Document doesn't exist, create a new one with the token
-//                    List<String> tokensList = new ArrayList<>();
-//                    tokensList.add(token);
-//                    // Update Firestore with the new token list
-//                    updateTokenListInFirestore(tokenRef, tokensList);
-//                }
-//            } else {
-//                Log.e("Firestore", "Error getting document", task.getException());
-//            }
-//        });
-//    }
-    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
-        // Create a HashMap to store the token list
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("OrganizerTokens", tokensList);
-
-        // Update Firestore with the token list
-        tokenRef.document("tokenz").set(data)
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
-    }
 
     /**
      * Adding a new event to the list and Firebase database.
@@ -313,13 +209,10 @@ public class OrganizerActivity extends AppCompatActivity {
         data.put("QR Code", event.getQrCode());
         data.put("QR Promo Code", event.getQrPromoCode());
         data.put("Link", event.getLink());
-
-        List<Map<String, Object>> announcements = event.getAnnouncements();
+        ArrayList<Map<String, Object>> announcements = event.getAnnouncementss();
         if (announcements != null) {
             data.put("Announcements", announcements);
         }
-
-
         // Store data in Firebase
         eventsRef.document(event.getName()).set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -415,8 +308,7 @@ public class OrganizerActivity extends AppCompatActivity {
                     // Creating a new event object and adding it if event name is not empty
                     if (!eventName.isEmpty()) {
                         Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
-                                eventDetails, reuse_check, imageUri, "", "", "", Collections.singletonList(new HashMap<>()));
-
+                                eventDetails, reuse_check, imageUri, "", "", "", new ArrayList<Map<String, Object>>());
 
                         newEvent.setReuse(reuse_check);
                         newEvent.setImage(imageUri);
@@ -612,4 +504,3 @@ public class OrganizerActivity extends AppCompatActivity {
         }
     }
 }
-

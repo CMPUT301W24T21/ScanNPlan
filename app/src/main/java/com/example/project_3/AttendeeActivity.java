@@ -1,5 +1,4 @@
 package com.example.project_3;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;

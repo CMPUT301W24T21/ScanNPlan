@@ -1,5 +1,4 @@
 package com.example.project_3;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
