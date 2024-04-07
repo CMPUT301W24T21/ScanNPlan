@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,11 +27,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -66,9 +64,6 @@ public class AttendeeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
-
-        getFcmToken();
-
         eventListView = findViewById(R.id.event_listView);
         eventArray = new ArrayList<Event>();
         eventAdapter = new EventArrayAdapter(this,  eventArray);
@@ -161,17 +156,32 @@ public class AttendeeActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Map<String, Object> eventDetails = document.getData();
                                         //Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
-
+                                        ArrayList<Map<String, Object>> firebaseAnnouncements = (ArrayList<Map<String, Object>>) eventDetails.get("announcements");
+                                        ArrayList<Announcement> localAnnouncementsList = new ArrayList<Announcement>();
+                                        if (firebaseAnnouncements == null) {
+                                            firebaseAnnouncements = new ArrayList<>();
+                                        } else {
+                                            for (int i = 0; i < firebaseAnnouncements.size(); i++) {
+                                                com.google.firebase.Timestamp firebaseTimestamp = (com.google.firebase.Timestamp) firebaseAnnouncements.get(i).get("timestamp");
+                                                Date date = firebaseTimestamp.toDate();
+                                                Timestamp timestamp = new Timestamp(date.getTime());
+                                                String content = (String) firebaseAnnouncements.get(i).get("content");
+                                                String eventName = (String) firebaseAnnouncements.get(i).get("event_name");
+                                                localAnnouncementsList.add(new Announcement(timestamp, content, eventName));
+                                            }
+                                        }
+                                        Log.d("DEBUG", "Announcement Content:" + localAnnouncementsList.toString());
                                         eventArray.add(new Event(document.getId().toString(),
                                                 (String) eventDetails.get("Date"),
                                                 (String) eventDetails.get("Time"),
                                                 (String) eventDetails.get("Location"),
                                                 (String) eventDetails.get("Details"),
+                                                localAnnouncementsList,
                                                 (boolean) eventDetails.get("Reuse"),
                                                 (String) eventDetails.get("Image"),
                                                 null,
                                                 null,
-                                                null,null));
+                                                null));
                                         eventAdapter.notifyDataSetChanged();
 
                                     } else {
@@ -195,97 +205,7 @@ public class AttendeeActivity extends AppCompatActivity {
     /**
      * Toggles the visibility of the rest of the page when editing the profile.
      */
-    void getFcmToken(){
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
-            if(task.isSuccessful()){
-                String token = task.getResult();
-                Log.i("My token", token);
-                saveTokenToFirestore(token);
-            }
-        });
-    }
-//    void saveTokenToFirestore(String token) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference tokenRef = db.collection("Tokens");
-//
-//        // Check if document exists and retrieve its data
-//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                DocumentSnapshot document = task.getResult();
-//                if (document.exists()) {
-//                    // Document exists, retrieve token list and update
-//                    List<String> tokensList = (List<String>) document.get("AttendeesTokens");
-//                    if (tokensList != null && !tokensList.isEmpty()) {
-//                        // Add the new token to the end of the list
-//                        tokensList.add(token);
-//                    } else {
-//                        // Token list is empty, create a new list with the token
-//                        tokensList = new ArrayList<>();
-//                        tokensList.add(token);
-//                    }
-//                    // Update Firestore with the modified token list
-//                    updateTokenListInFirestore(tokenRef, tokensList);
-//                } else {
-//                    // Document doesn't exist, create a new one with the token
-//                    List<String> tokensList = new ArrayList<>();
-//                    tokensList.add(token);
-//                    // Update Firestore with the new token list
-//                    updateTokenListInFirestore(tokenRef, tokensList);
-//                }
-//            } else {
-//                Log.e("Firestore", "Error getting document", task.getException());
-//            }
-//        });
-//    }
-void saveTokenToFirestore(String token) {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference tokenRef = db.collection("Tokens");
 
-    // Check if document exists and retrieve its data
-    tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-        if (task.isSuccessful()) {
-            DocumentSnapshot document = task.getResult();
-            if (document.exists()) {
-                // Document exists, retrieve token list and update
-                List<String> tokensList = (List<String>) document.get("AttendeesTokens");
-                if (tokensList != null) {
-                    // Add the new token to the end of the list
-                    tokensList.add(token);
-                } else {
-                    // Token list is null, create a new list with the token
-                    tokensList = new ArrayList<>();
-                    tokensList.add(token);
-                }
-                // Update Firestore with the modified token list
-                tokenRef.document("tokenz").update("AttendeesTokens", tokensList)
-                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token added successfully"))
-                        .addOnFailureListener(e -> Log.e("Firestore", "Error adding token", e));
-            } else {
-                // Document doesn't exist, create a new one with the token
-                Map<String, Object> data = new HashMap<>();
-                List<String> tokensList = new ArrayList<>();
-                tokensList.add(token);
-                data.put("OrganizerTokens", tokensList);
-                // Update Firestore with the new token list
-                tokenRef.document("tokenz").set(data)
-                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "New document created with token"))
-                        .addOnFailureListener(e -> Log.e("Firestore", "Error creating document", e));
-            }
-        } else {
-            Log.e("Firestore", "Error getting document", task.getException());
-        }
-    });
-}
-    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
-        // Create a HashMap to store the token list
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("AttendeesTokens", tokensList);
-
-        // Update Firestore with the token list
-        tokenRef.document("tokenz").set(data)
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
-    }
 
 
     private void toggleRestOfPageVisibility() {

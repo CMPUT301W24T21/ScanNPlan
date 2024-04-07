@@ -21,22 +21,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+import com.google.firebase.messaging.RemoteMessageCreator;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -59,11 +72,8 @@ public class EditEventDetails extends AppCompatActivity {
     private String imageUry;
     private String link;
     private String info;
-    private String info_1;
-    private String info_2;
-    private String info_3;
-    private String info_4;
-    private String info_5;
+    private FirebaseFirestore db;
+
 
     private static final int ADD_EVENT_REQUEST = 1;
     private static final String TAG = "EditEventDetails";
@@ -81,6 +91,7 @@ public class EditEventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
+        db = FirebaseFirestore.getInstance();
 
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
@@ -98,7 +109,6 @@ public class EditEventDetails extends AppCompatActivity {
         ImageButton addPosterButton = findViewById(R.id.add_poster);
         ImageButton addLink = findViewById(R.id.add_link);
         ImageButton qrViewButton = findViewById(R.id.view_qrcode);
-        ImageButton detailsButton = findViewById(R.id.edit_details);
 
 
         // Alphabet Inc, 2024, YouTube, https://www.youtube.com/watch?v=vyt20Gg2Ckg
@@ -137,9 +147,6 @@ public class EditEventDetails extends AppCompatActivity {
         addLink.setOnClickListener(v -> {
             showAddLinkDialog();
         });
-        detailsButton.setOnClickListener(v -> {
-            showEditDetailsDialog(eventName);
-        });
         qrViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,37 +164,6 @@ public class EditEventDetails extends AppCompatActivity {
         });
 
     }
-    public void showEditDetailsDialog(String realName){
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.dialog_edit_details, null);
-        final EditText editDate = view.findViewById(R.id.edit_date);
-        final EditText editTime = view.findViewById(R.id.edit_time);
-        final EditText editLocation = view.findViewById(R.id.edit_location);
-        final EditText editDetails = view.findViewById(R.id.edit_details);
-        final EditText editMax = view.findViewById(R.id.edit_max_peeps);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view)
-                .setTitle("Edit Details for the Event")
-                .setPositiveButton("OK", (dialog, which) -> {
-                    String eventNewDate = editDate.getText().toString();
-                    String eventNewTime = editTime.getText().toString();
-                    String eventNewLocation = editLocation.getText().toString();
-                    String eventNewDetails = editDetails.getText().toString();
-                    String eventNewMax = editMax.getText().toString();
-
-                    info_1 = eventNewDate;
-                    info_2 = eventNewTime;
-                    info_3 = eventNewLocation;
-                    info_4 = eventNewDetails;
-                    info_5 = eventNewMax;
-
-                    updateDetailsInDatabase(info_1, info_2, info_3,info_4,info_5);
-
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
     public void showAddLinkDialog(){
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_add_link, null);
@@ -204,6 +180,8 @@ public class EditEventDetails extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+
+
     }
     private void showCreateMessageDialog() {
         // Create AlertDialog Builder
@@ -249,7 +227,6 @@ public class EditEventDetails extends AppCompatActivity {
 
                 if (!title.isEmpty() || !description.isEmpty()) {
                     sendNotification(title , description);
-                    addNotifToFb(title, description);
                 } else {
                     // Display a toast or alert indicating that title and description are required
                     Toast.makeText(EditEventDetails.this, "Title and description are required", Toast.LENGTH_SHORT).show();
@@ -278,83 +255,75 @@ public class EditEventDetails extends AppCompatActivity {
         // Show the dialog
         dialog.show();
     }
-    void addNotifToFb(String title, String description){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference eventRef = db.collection("Events").document(eventName);
-        eventRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    List<Map<String, Object>> existingAnnouncements = (List<Map<String, Object>>) document.get("Announcements");
-
-                    // Add the new announcement to the existing list
-                    Map<String, Object> newAnnouncement = new HashMap<>();
-
-                    newAnnouncement.put("title", title);
-                    newAnnouncement.put("content", description);
-                    newAnnouncement.put("timestamp", new Date()); // Use current date/time
-                    existingAnnouncements.add(newAnnouncement);
-
-                    // Update the document with the updated list of announcements
-                    eventRef.update("Announcements", existingAnnouncements)
-                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "Document updated successfully"))
-                            .addOnFailureListener(e -> Log.e("Firestore", "Error updating document", e));
-                } else {
-                    Log.d("Firestore", "No such document");
-                }
-            } else {
-                Log.e("Firestore", "Error getting document", task.getException());
-            }
-        });
-
-    }
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void sendNotification(String title, String message) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
+        // Taken from: https://stackoverflow.com/questions/55948318/how-to-send-a-firebase-message-to-topic-from-android
 
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Get the TokenList field as a List
-                    List<String> tokenList = (List<String>) document.get("AttendeesTokens");
-                    if (tokenList != null) {
-                        // Iterate over the TokenList and send notification to each token
-                        for (String token : tokenList) {
-                            try {
-                                JSONObject jsonObject = new JSONObject();
+        RequestQueue mRequestQue = Volley.newRequestQueue(this);
 
-                                JSONObject notificationObj = new JSONObject();
-                                notificationObj.put("title", title);
-                                notificationObj.put("body", message);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("to", "/topics/" + ("Events/"+eventName).hashCode());
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title", title);
+            notificationObj.put("body", message);
+            //replace notification with data when went send data
+            json.put("notification", notificationObj);
 
-                                JSONObject dataObj = new JSONObject();
-                                dataObj.put("userId", title);
-
-                                jsonObject.put("notification", notificationObj);
-                                jsonObject.put("data", dataObj);
-                                jsonObject.put("to", token);
-
-                                callApi(jsonObject);
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error sending notification to token: " + token, e);
-                            }
-                        }
-                    } else {
-                        Log.d(TAG, "TokenList is null");
-                    }
-                } else {
-                    Log.d(TAG, "No such document");
+            String URL = "https://fcm.googleapis.com/fcm/send";
+            JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
+                    json,
+                    response -> Log.d("MUR", "onResponse: "),
+                    error -> Log.d("MUR", "onError: " + error.networkResponse)
+            ) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht");
+                    return header;
                 }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
+            };
+
+
+            mRequestQue.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> announcement = new HashMap<String, Object>();
+        announcement.put("content", title + " - " + message);
+        announcement.put("event_name", eventName);
+        announcement.put("timestamp", new Timestamp(new Date()));
+        db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
+
+
     }
 
+//        void sendNotification(String title , String message){
+//        try{
+//            JSONObject jsonObject  = new JSONObject();
+//
+//            JSONObject notificationObj = new JSONObject();
+//            notificationObj.put("title", title);
+//            notificationObj.put("body",message);
+//
+//            JSONObject dataObj = new JSONObject();
+//            dataObj.put("userId", title);
+//
+//            jsonObject.put("notification",notificationObj);
+//            jsonObject.put("data",dataObj);
+////            jsonObject.put("to","dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9");
+//
+////            dhAQk8JEQEOTXPNLLLvAUF:APA91bGlmtSDnAZoEurlAWHj6iKWqtwZmnir6TdOvSc1yCIay3nHPoyv7BgGsPPmN_9pGoROx_viPqJe7LLdkVAGSDpb2yJVrZ-L9B81vT7lhjqrbSd6F9Th6q_Hx60KsOnV7tO6RFg9
+//            jsonObject.put("to","c2yFLYtWRAKa9Hp3xxbmnn:APA91bE7tLZ7Wh1uB1WiU0vpzgwEMX19wc1SoLCYxMKW2QF23H6YbNq2CLNH5HcrVli8GMzWN2kpMaawb15UIVMpe5cYYtH9_j1Je8Pe41WFxrHKUmJAUDcT4_P_WvYVpOaujzd_-1tV");
+//
+//            callApi(jsonObject);
+//
+//        }catch (Exception e){
+//
+//        }
+//    }
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void callApi(JSONObject jsonObject){
@@ -375,8 +344,8 @@ public class EditEventDetails extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
             }
         });
-    }
 
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -440,8 +409,6 @@ public class EditEventDetails extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     // Handle successful update
                     sendNotification(eventName , "Poster: Updated");
-                    addNotifToFb(eventName, "Poster: Updated");
-
                 })
                 .addOnFailureListener(e -> {
                     // Handle failure
@@ -465,88 +432,11 @@ public class EditEventDetails extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     // Handle successful update
                     sendNotification(eventName , "Link: Updated");
-                    addNotifToFb(eventName, "Link: Updated");
                 })
                 .addOnFailureListener(e -> {
                     // Handle failure
                     Toast.makeText(EditEventDetails.this, "Failed to update link", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Error updating link", e);
                 });
-    }
-    private void updateDetailsInDatabase(String date, String time, String location
-            , String details, String max) {
-
-        // Get the Firestore instance
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference eventsRef = db.collection("Events").document(eventName);
-
-        if(date != null && !date.isEmpty()){
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Date", date);
-
-            // Update the document in the database
-            eventsRef.update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        // Handle successful update
-                        sendNotification(eventName , "Date: Updated");
-                        addNotifToFb(eventName, "Date: Updated");
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle failure
-                        Toast.makeText(EditEventDetails.this, "Failed to update Date", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error updating Date", e);
-                    });
-        }
-        if(time != null && !time.isEmpty()){
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Time", time);
-
-            // Update the document in the database
-            eventsRef.update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        // Handle successful update
-                        sendNotification(eventName , "Time: Updated");
-                        addNotifToFb(eventName, "Time: Updated");
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle failure
-                        Toast.makeText(EditEventDetails.this, "Failed to update Time", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error updating Time", e);
-                    });
-        }
-        if(location != null && !location.isEmpty()){
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Location", location);
-
-            // Update the document in the database
-            eventsRef.update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        // Handle successful update
-                        sendNotification(eventName , "Location: Updated");
-                        addNotifToFb(eventName, "Location: Updated");
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle failure
-                        Toast.makeText(EditEventDetails.this, "Failed to update Location", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error updating Location", e);
-                    });
-        }
-        if(details != null && !details.isEmpty()){
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Details", details);
-
-            // Update the document in the database
-            eventsRef.update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        // Handle successful update
-                        sendNotification(eventName , "Details: Updated");
-                        addNotifToFb(eventName, "Details: Updated");
-                    })
-                    .addOnFailureListener(e -> {
-                        // Handle failure
-                        Toast.makeText(EditEventDetails.this, "Failed to update Details", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Error updating Details", e);
-                    });
-        }
     }
 }

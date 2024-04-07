@@ -22,7 +22,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class AttendeeNewEventDetailsFragment extends Fragment {
@@ -65,6 +67,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //create the view and set the layout
         View view = inflater.inflate(R.layout.attendee_new_event_details, container, false);
+        Context context = view.getContext();
         //Universal appbar and the back button as well
         TextView appBar = view.findViewById(R.id.appbar_title);
 
@@ -144,6 +147,20 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(docPath.hashCode()))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                String msg = "Subscribed";
+                                if (!task.isSuccessful()) {
+                                    msg = "Subscribe failed";
+                                }
+                                Log.d("SUBSCRIBED", msg);
+
+                                Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                 profileID = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                 db = FirebaseFirestore.getInstance();
                 db.collection("Profiles").document(profileID).update("events", FieldValue.arrayUnion(db.document(docPath)));
