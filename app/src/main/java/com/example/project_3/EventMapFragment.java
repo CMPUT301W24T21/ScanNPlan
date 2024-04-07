@@ -135,7 +135,7 @@ public class EventMapFragment extends Fragment  {
             }});
 
         map.invalidate();
-        mapController.setZoom(12);
+        mapController.setZoom(14);
         return view;
     }
 

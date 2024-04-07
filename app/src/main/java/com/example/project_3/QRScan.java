@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -75,14 +74,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         // the button and textviews
         scanBtn = findViewById(R.id.scanBtn);
         messageText = findViewById(R.id.textContent);
-        messageText.setText("Scan your Check-in or Promo QR Code");
         messageFormat = findViewById(R.id.textFormat);
-        messageFormat.setText("Press the Scan button to continue!");
-        if (!hasLocationPermissions()){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_REQUEST_CODE);
-            Toast.makeText(this, "It is recommended to turn on location permissions for check-in. You can choose to hide your geolocation from the organizer anytime in your Edit Profile page!", Toast.LENGTH_LONG).show();
-
-        }
 
         // adding listener to the button
         scanBtn.setOnClickListener(this);
@@ -124,8 +116,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
                 Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 // if the intentResult is not null we'll set
                 // the content and format of scan message
                 messageText.setText(intentResult.getContents());
@@ -146,8 +137,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 //                    profilesRef.document(profileID).update("events", FieldValue.arrayUnion(db.document(intentResult.getContents())));
 //                    db.document(intentResult.getContents()).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
 
-                }
-                else if (intentResult.getContents().startsWith("QrCodes/")) {
+                } else if (intentResult.getContents().startsWith("QrCodes/")) {
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -159,10 +149,9 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                     //Toast.makeText(getBaseContext(), db.collection("Profiles").document(profileID).getPath(), Toast.LENGTH_LONG).show();
                                     DocumentReference eventDoc = document.getDocumentReference("event");
                                     eventDoc.update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
+                                    //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
                                     getLocation(eventDoc);
                                     addEventCount(eventDoc);
-                                    Toast.makeText(getBaseContext(), "Succesfully Checked-In!", Toast.LENGTH_SHORT).show();
-                                    finish();
 
                                 } else {
                                     Log.d("DEBUG", "No such document");
@@ -182,7 +171,23 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         }
 
         // Finish the current activity to go back to the previous one
-
+        //finish();
+    }
+    private void requestPermissionsIfNecessary(String[] permissions) {
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                permissionsToRequest.add(permission);
+            }
+        }
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -197,10 +202,6 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
-    }
-    private boolean hasLocationPermissions() {
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
     private void getLocation(DocumentReference eventDoc){
         if (!isLocationUpdated) {

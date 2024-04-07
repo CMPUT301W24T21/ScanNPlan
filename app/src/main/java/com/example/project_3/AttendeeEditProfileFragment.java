@@ -17,19 +17,18 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.google.android.material.materialswitch.MaterialSwitch;
-
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -37,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
@@ -47,6 +47,7 @@ public class AttendeeEditProfileFragment extends Fragment {
 
     private Uri selectedImageUri;
 
+    private User user;
     private String profileID;
 
     private Bitmap bitmapImage;
@@ -56,7 +57,7 @@ public class AttendeeEditProfileFragment extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    public AttendeeEditProfileFragment(String profileID) {
+    public AttendeeEditProfileFragment(String profileID){
         this.profileID = profileID;
     }
 
@@ -74,7 +75,7 @@ public class AttendeeEditProfileFragment extends Fragment {
         profile_image = view.findViewById(R.id.profile_image);
 
         // Set the profile image to a placeholder image
-        String placeholderBase64Image = generatePlaceholderImage("Placeholder");
+        String placeholderBase64Image = generatePlaceholderImage();
         Bitmap placeholderBitmap = decodeImage(placeholderBase64Image);
         profile_image.setImageBitmap(placeholderBitmap);
 
@@ -93,7 +94,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                 }, 500); // Adjust the delay time as needed
             }
         });
-        SwitchMaterial geolocation = view.findViewById(R.id.geolocation_toggle);
+        MaterialSwitch geolocation = view.findViewById(R.id.geolocation_toggle);
         geolocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -119,11 +120,22 @@ public class AttendeeEditProfileFragment extends Fragment {
                 String newContactInfo = contactInfoTextView.getText().toString();
                 String newSocialLink = socialLinkTextView.getText().toString();
 
+
+                String base64Image = "";
+                if (bitmapImage != null) {
+                    try {
+                        bitmapImage = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImageUri);
+                        base64Image = encodeImage(bitmapImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 db.collection("Profiles").document(profileID)
                         .update("name", newName,
                                 "contact_info", newContactInfo,
                                 "social_link", newSocialLink,
-                                "locationEnabled", LocationEnabled)
+                                 "locationEnabled", LocationEnabled)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -141,6 +153,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
+
+
         db.collection("Profiles").document(profileID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -150,7 +164,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                     String socialLink = documentSnapshot.getString("social_link");
                     String base64Image = documentSnapshot.getString("profile_image");
                     Boolean location_status = documentSnapshot.getBoolean("locationEnabled");
-                    if (location_status == null) {
+                    if (location_status == null){
                         location_status = false;
                         db.collection("Profiles").document(profileID).update("locationEnabled", Boolean.FALSE);
                     }
@@ -162,30 +176,8 @@ public class AttendeeEditProfileFragment extends Fragment {
                     Bitmap decodedImage = decodeImage(base64Image);
                     if (decodedImage != null) {
                         profile_image.setImageBitmap(decodedImage);
-                    } else {
-                        // Generate placeholder image using profile name
-                        String placeholderBase64Image = generatePlaceholderImage(profileName);
-                        Bitmap placeholderBitmap = decodeImage(placeholderBase64Image);
-                        profile_image.setImageBitmap(placeholderBitmap);
-
-                        // Save placeholder image to Firebase if profile image is empty
-                        if (base64Image == null || base64Image.isEmpty()) {
-                            db.collection("Profiles").document(profileID)
-                                    .update("profile_image", placeholderBase64Image)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("Firestore", "Placeholder image saved successfully");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("Firestore", "Error saving placeholder image", e);
-                                        }
-                                    });
-                        }
                     }
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -199,12 +191,15 @@ public class AttendeeEditProfileFragment extends Fragment {
         deletePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // removes the profile image into another random string that will be changed to be
+                //deterministically changed
                 db.collection("Profiles").document(profileID)
-                        .update("profile_image", "")
+                        .update("profile_image", FieldValue.delete())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("Firestore", "Profile image deleted successfully");
+                                //  clear the ImageView
                                 profile_image.setImageBitmap(placeholderBitmap);
                             }
                         })
@@ -233,6 +228,7 @@ public class AttendeeEditProfileFragment extends Fragment {
                     profile_image.setImageBitmap(bitmapImage);
                     String base64Image = encodeImage(bitmapImage);
 
+                    // Update the profile image in Firestore immediately
                     db.collection("Profiles").document(profileID)
                             .update("profile_image", base64Image)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -261,7 +257,7 @@ public class AttendeeEditProfileFragment extends Fragment {
 
     private String encodeImage(Bitmap bitmap) {
         if (bitmap == null) {
-            return "";
+            return ""; // Or any default value you want to use
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -283,28 +279,37 @@ public class AttendeeEditProfileFragment extends Fragment {
         }
     }
 
-    private String generatePlaceholderImage(String name) {
+    private String generateBase64Image(String name) {
         int width = 200;
         int height = 50;
 
+        // Create a Bitmap with white background
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         android.graphics.Canvas canvas = new android.graphics.Canvas(image);
         canvas.drawColor(Color.WHITE);
 
+        // Set paint for the text
         android.graphics.Paint paint = new android.graphics.Paint();
         paint.setColor(Color.BLACK);
         paint.setTextSize(20);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
+        // Draw the text in the center of the image
         android.graphics.Rect bounds = new android.graphics.Rect();
         paint.getTextBounds(name, 0, name.length(), bounds);
         int x = (width - bounds.width()) / 2;
         int y = (height + bounds.height()) / 2;
         canvas.drawText(name, x, y, paint);
 
+        // Convert the image to base64
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
+    private String generatePlaceholderImage() {
+        return generateBase64Image("Placeholder");
+        //remember to change to profile id
     }
 }
