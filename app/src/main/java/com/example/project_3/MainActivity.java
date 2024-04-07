@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
@@ -67,10 +68,18 @@ public class MainActivity extends AppCompatActivity {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
         }
-        if (!hasLocationPermissions()) {
-            requestLocationPermission();
+        else {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!hasLocationPermissions()) {
+                            requestLocationPermission();
+                        }
+                    }
+                    //Adding a delay to allow processing time between prompts
+                }, 200);
+            }
         }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,42 +256,26 @@ public class MainActivity extends AppCompatActivity {
         return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            // After notification permission has been requested then check location permission
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!hasLocationPermissions()) {
+                        requestLocationPermission();
+                    }
+                }
+            }, 200);
+        }
+    }
 
     private void requestLocationPermission() {
-        //Microsoft Copilot. (2024), April 6th
-        //Prompt:it just says location permissions denied as soon as the app opens with this code and no prompt is showing up.
-        //is it possible to send the user into settings and turn the permission on:
-        // (the boolean function works)
-        // private void checkAndRequestNotificationPermission() {
-        //        if (!hasNotificationPermission()) {
-        //            requestNotificationPermission();
-        //        }
-        //        if (!hasLocationPermissions()) {
-        //            requestLocationPermission();
-        //        }
-        //
-        //    }
-        //private void requestLocationPermission(){
-        // ActivityCompat.requestPermissions(this,
-        //            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-        //            REQUEST_PERMISSIONS_REQUEST_CODE);
-        //}
-        new AlertDialog.Builder(this)
-                .setTitle("Location Permission Needed")
-                .setMessage("Please enable location permission in settings")
-                .setPositiveButton("Go to settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Take the user to the app settings
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                        intent.setData(uri);
-                        startActivity(intent);
-                    }
-                })
-                .create()
-                .show();
+        // Ask the user for location permissions
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+
     }
 
 
