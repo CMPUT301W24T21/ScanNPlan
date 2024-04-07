@@ -18,5 +18,11 @@
 
     <string name="real_time_attendance_placeholder">Real time attendance: %d</string>
     <string name="max_attendees">Max Attendees:</string>
+    <string name="edits_name">Edit Name:</string>
+    <string name="edits_date">Edit Date:</string>
+    <string name="edits_time">Edit Time:</string>
+    <string name="edits_location">Edit Location:</string>
+    <string name="edits_max_peeps">Edit Max Attendees</string>
+    <string name="edits_details">Edit Details:</string>
 
 </resources>

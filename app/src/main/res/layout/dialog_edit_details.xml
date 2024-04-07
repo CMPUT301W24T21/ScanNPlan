@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/edit_date"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edits_date"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_time"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edits_time"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_date" />
+
+    <EditText
+        android:id="@+id/edit_location"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edits_location"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="175dp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_time"/>
+
+    <EditText
+        android:id="@+id/edit_details"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edits_details"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="282dp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_max_peeps"/>
+
+    <EditText
+        android:id="@+id/edit_max_peeps"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/edits_max_peeps"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="175dp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_location"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

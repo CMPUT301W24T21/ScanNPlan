@@ -4,13 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an event with various details.
  */
-public class Event implements Serializable {
+public class Event {
     private String name;
     private Boolean promo;
     private Boolean reuse;
@@ -23,6 +24,9 @@ public class Event implements Serializable {
     private String image;
     private String link;
     private ArrayList<Announcement> announcements;
+    private ArrayList<Map<String, Object>> announcementss;
+
+
 
     /**
      * Constructs an event with specified details.
@@ -39,7 +43,7 @@ public class Event implements Serializable {
      */
     public Event(String name, String date, String time, String location,
                  String details, boolean reuse, String image, String qrCode,
-                 String qrPromoCode, String link) {
+                 String qrPromoCode, String link, ArrayList<Map<String, Object>> announcementss) {
         this.name = name;
         this.reuse = reuse;
         this.date = date;
@@ -50,6 +54,7 @@ public class Event implements Serializable {
         this.qrCode = qrCode;
         this.qrPromoCode = qrPromoCode;
         this.link = link;
+        this.announcementss = announcementss;
     }
     public Event(String name, String date, String time, String location,
                  String details, ArrayList<Announcement> announcements,  boolean reuse, String image, String qrCode,
@@ -66,7 +71,13 @@ public class Event implements Serializable {
         this.qrPromoCode = qrPromoCode;
         this.link = link;
     }
+    public ArrayList<Map<String, Object>> getAnnouncementss() {
+        return announcementss;
+    }
 
+    public void setAnnouncementss(ArrayList<Map<String, Object>> announcementss) {
+        this.announcementss = announcementss;
+    }
     //
     public Event() {
     }

@@ -38,9 +38,12 @@
         android:id="@+id/fab_add_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -65,9 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/materialToolbar"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="73dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@+id/button"
+        android:gravity="center_vertical|center_horizontal"
         android:text="List of Events"
         android:textSize="25dp" />
-    
+
 </RelativeLayout>

@@ -1,5 +1,4 @@
 package com.example.project_3;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,7 +84,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                         String qrPromoCode = doc.getString("QRPromoCode");
                         String link = doc.getString("link");
                         eventDataList.add(new Event(event, date, time, location,
-                                details, reuse, imageUri, qrCode, qrPromoCode, link));
+                                details, reuse, imageUri, qrCode, qrPromoCode, link, null));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
