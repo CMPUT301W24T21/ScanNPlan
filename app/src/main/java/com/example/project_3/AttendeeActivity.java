@@ -155,16 +155,20 @@ public class AttendeeActivity extends AppCompatActivity {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         Map<String, Object> eventDetails = document.getData();
-                                        Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
+                                        //Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
                                         ArrayList<Map<String, Object>> firebaseAnnouncements = (ArrayList<Map<String, Object>>) eventDetails.get("announcements");
                                         ArrayList<Announcement> localAnnouncementsList = new ArrayList<Announcement>();
-                                        for (int i = 0; i < firebaseAnnouncements.size(); i++) {
-                                            com.google.firebase.Timestamp firebaseTimestamp = (com.google.firebase.Timestamp) firebaseAnnouncements.get(i).get("timestamp");
-                                            Date date = firebaseTimestamp.toDate();
-                                            Timestamp timestamp = new Timestamp(date.getTime());
-                                            String content = (String) firebaseAnnouncements.get(i).get("content");
-                                            String eventName = (String) firebaseAnnouncements.get(i).get("event_name");
-                                            localAnnouncementsList.add(new Announcement(timestamp, content, eventName));
+                                        if (firebaseAnnouncements == null) {
+                                            firebaseAnnouncements = new ArrayList<>();
+                                        } else {
+                                            for (int i = 0; i < firebaseAnnouncements.size(); i++) {
+                                                com.google.firebase.Timestamp firebaseTimestamp = (com.google.firebase.Timestamp) firebaseAnnouncements.get(i).get("timestamp");
+                                                Date date = firebaseTimestamp.toDate();
+                                                Timestamp timestamp = new Timestamp(date.getTime());
+                                                String content = (String) firebaseAnnouncements.get(i).get("content");
+                                                String eventName = (String) firebaseAnnouncements.get(i).get("event_name");
+                                                localAnnouncementsList.add(new Announcement(timestamp, content, eventName));
+                                            }
                                         }
                                         Log.d("DEBUG", "Announcement Content:" + localAnnouncementsList.toString());
                                         eventArray.add(new Event(document.getId().toString(),

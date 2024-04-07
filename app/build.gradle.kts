@@ -73,5 +73,6 @@ dependencies {
 
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.palette:palette:1.0.0")
+    implementation("com.android.volley:volley:1.2.1")
 
 }
