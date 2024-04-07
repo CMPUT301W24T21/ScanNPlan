@@ -13,46 +13,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rest_attendee_list_layout">
-
         <include layout="@layout/global_top_appbar"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/materialToolbar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="73dp"
+            android:layout_marginBottom="14dp"
+            android:text="Attendees Signed Up"
+            android:textSize="25dp" />
 
-        <!-- ListView positioned at the top -->
+        <TextView
+            android:id="@+id/attendance_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/real_time_attendance_placeholder" />
+
+        <EditText
+            android:id="@+id/max_attendees_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="Max Attendees Limit"
+            android:inputType="number"
+            android:maxLength="3" />
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/max_attendees_edittext"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:text="Confirm" />
+
         <ListView
             android:id="@+id/attendees_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/materialToolbar"
+            android:layout_below="@id/confirm_button"
+            android:layout_above="@id/attendance_count_text"
             android:padding="8dp" />
 
-        <!-- "Max Attendees" part positioned at the bottom -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="16dp">
-
-            <EditText
-                android:id="@+id/max_attendees_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Max Attendees"
-                android:inputType="number" />
-
-            <!-- Add Submit Button -->
-            <Button
-                android:id="@+id/submit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/max_attendees_edit_text"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:text="Submit" />
-
-        </RelativeLayout>
-
     </RelativeLayout>
-
-
-
-
 </RelativeLayout>
