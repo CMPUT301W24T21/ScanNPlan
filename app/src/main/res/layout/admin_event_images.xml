@@ -26,14 +26,17 @@
 
     <GridView
         android:id="@+id/grid_Event_images_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numColumns="4"
+        android:layout_width="401dp"
+        android:layout_height="570dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:numColumns="2"
         app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_of_Event_Images"
-        tools:ignore="MissingConstraints">
+        >
 
     </GridView>
 

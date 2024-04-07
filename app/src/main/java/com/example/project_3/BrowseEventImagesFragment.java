@@ -28,14 +28,14 @@ import java.util.ArrayList;
  */
 public class BrowseEventImagesFragment extends Fragment {
 
-    // we want to pull images seperatly from both profiles and images, we are gonna do profiles frist just to get them on the board
+    // we want to pull images separately from both profiles and images, we are gonna do profiles first just to get them on the board
     // i assume this will basically be doubling the database lines that we pull from our profiles and events collections
     private TextView appbar;
     private GridView GridImages;
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
     private ArrayList<Event> eventsImages;
-    private GridEventImagesArrayAdapter imagesAdapter;
+    private EventArrayAdapter imagesAdapter;
     /**
      * Default constructor, initializes new instance of the fragment
      */
@@ -71,15 +71,16 @@ public class BrowseEventImagesFragment extends Fragment {
         GridImages= view.findViewById(R.id.grid_Event_images_admin);
         TextView appBar = view.findViewById(R.id.appbar_title);
         //set appbar title to reflect the fragment
-        appBar.setText("Browse Event Images");
+        appBar.setText("Event Images");
         MaterialButton back = view.findViewById(R.id.back_button);
         //if back is clicked pop the stack and go back to the activity
         //firebase setup and filling the gridview
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
+
         GridImages = view.findViewById(R.id.grid_Event_images_admin);
         eventsImages = new ArrayList<>();
-        imagesAdapter = new GridEventImagesArrayAdapter(view.getContext(), eventsImages);
+        imagesAdapter = new EventArrayAdapter(view.getContext(), eventsImages);
         GridImages.setAdapter(imagesAdapter);
         //updates the UI with the image data
 
@@ -91,30 +92,20 @@ public class BrowseEventImagesFragment extends Fragment {
                     Log.e("Firestore", error.toString());
                     return;
                 }
-                //Need to update and fix this!
-                //Just get the name, date
-
-                //update for event can be done as soon as event picture function is completed
-
-//                if (value != null){
-//                    eventsImages.clear();
-//                    for (QueryDocumentSnapshot doc : value) {
-//                        String name = doc.getString("name");
-//                        String social_link = doc.getString("social_link"); // Assuming you have a "date" field in your document
-//                        String contact_info = doc.getString("contact_info");
-//                        String profileType = doc.getString("profile_type");
-//                        String profile_picture = doc.getString("profile_picture");
-//                        if (profile_picture == null) {
-//                            profile_picture = "";
-//                        }
-//                        Profile profile;
-//                        profile = new Profile(profile_picture, name, contact_info, social_link, profileType);
-//                        profile.setProfileID(doc.getId());// Use the appropriate constructor
-//                        eventsImages.add(profile);
-//                    }
-//                    imagesAdapter.notifyDataSetChanged();
-//
-//                }
+                if (value != null) {
+                    eventsImages.clear();
+                    for (QueryDocumentSnapshot doc : value) {
+                        String eventName = doc.getId();
+                        String date = doc.getString("Date");
+                        String time = doc.getString("Time");
+                        String location = doc.getString("Location");
+                        String details = doc.getString("Details");
+                        //creating an event object and adding it to the local list
+                        Event event = new Event(eventName, date, time, location, details);
+                        eventsImages.add(event);
+                    }
+                    imagesAdapter.notifyDataSetChanged();
+                }
             }
         });
 
