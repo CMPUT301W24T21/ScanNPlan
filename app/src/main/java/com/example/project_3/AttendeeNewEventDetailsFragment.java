@@ -90,7 +90,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                                 (String) eventDetails.get("Image"),
                                 null,
                                 null,
-                                null);
+                                null,null);
 
                         //set appbar title to reflect the fragment
                         appBar.setText(selectedEvent.getName());

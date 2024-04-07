@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
-        getFcmToken();
+//        getFcmToken();
 
         profileId = "This is an admin profile";
         profileId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -155,58 +155,58 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void getFcmToken(){
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
-            if(task.isSuccessful()){
-                String token = task.getResult();
-                Log.i("My token", token);
-                saveTokenToFirestore(token);
-            }
-        });
-    }
-    void saveTokenToFirestore(String token) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
-
-        // Check if document exists and retrieve its data
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Document exists, retrieve token list and update
-                    List<String> tokensList = (List<String>) document.get("TokenList");
-                    if (tokensList != null && !tokensList.isEmpty()) {
-                        // Add the new token to the end of the list
-                        tokensList.add(token);
-                    } else {
-                        // Token list is empty, create a new list with the token
-                        tokensList = new ArrayList<>();
-                        tokensList.add(token);
-                    }
-                    // Update Firestore with the modified token list
-                    updateTokenListInFirestore(tokenRef, tokensList);
-                } else {
-                    // Document doesn't exist, create a new one with the token
-                    List<String> tokensList = new ArrayList<>();
-                    tokensList.add(token);
-                    // Update Firestore with the new token list
-                    updateTokenListInFirestore(tokenRef, tokensList);
-                }
-            } else {
-                Log.e("Firestore", "Error getting document", task.getException());
-            }
-        });
-    }
-    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
-        // Create a HashMap to store the token list
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("TokenList", tokensList);
-
-        // Update Firestore with the token list
-        tokenRef.document("tokenz").set(data)
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
-    }
+//    void getFcmToken(){
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
+//            if(task.isSuccessful()){
+//                String token = task.getResult();
+//                Log.i("My token", token);
+//                saveTokenToFirestore(token);
+//            }
+//        });
+//    }
+//    void saveTokenToFirestore(String token) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference tokenRef = db.collection("Tokens");
+//
+//        // Check if document exists and retrieve its data
+//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    // Document exists, retrieve token list and update
+//                    List<String> tokensList = (List<String>) document.get("TokenList");
+//                    if (tokensList != null && !tokensList.isEmpty()) {
+//                        // Add the new token to the end of the list
+//                        tokensList.add(token);
+//                    } else {
+//                        // Token list is empty, create a new list with the token
+//                        tokensList = new ArrayList<>();
+//                        tokensList.add(token);
+//                    }
+//                    // Update Firestore with the modified token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                } else {
+//                    // Document doesn't exist, create a new one with the token
+//                    List<String> tokensList = new ArrayList<>();
+//                    tokensList.add(token);
+//                    // Update Firestore with the new token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                }
+//            } else {
+//                Log.e("Firestore", "Error getting document", task.getException());
+//            }
+//        });
+//    }
+//    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
+//        // Create a HashMap to store the token list
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("TokenList", tokensList);
+//
+//        // Update Firestore with the token list
+//        tokenRef.document("tokenz").set(data)
+//                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
+//                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
+//    }
     private boolean hasNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);

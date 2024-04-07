@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Represents an event with various details.
  */
@@ -19,6 +22,7 @@ public class Event {
     private String details;
     private String image;
     private String link;
+    private List<Map<String, Object>> announcements; // List of maps
 
     /**
      * Constructs an event with specified details.
@@ -35,7 +39,7 @@ public class Event {
      */
     public Event(String name, String date, String time, String location,
                  String details, boolean reuse, String image, String qrCode,
-                 String qrPromoCode, String link) {
+                 String qrPromoCode, String link, List<Map<String, Object>> announcements) {
         this.name = name;
         this.reuse = reuse;
         this.date = date;
@@ -46,6 +50,15 @@ public class Event {
         this.qrCode = qrCode;
         this.qrPromoCode = qrPromoCode;
         this.link = link;
+        this.announcements = announcements;
+    }
+
+    public List<Map<String, Object>> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(List<Map<String, Object>> announcements) {
+        this.announcements = announcements;
     }
 
     public String getLink() {

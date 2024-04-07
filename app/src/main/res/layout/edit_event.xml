@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Edit Event"
-                android:textSize="24sp"
+                android:gravity="center_vertical|center_horizontal"                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.293"
                 app:layout_constraintStart_toEndOf="@+id/back_button"
@@ -64,6 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View QR"
@@ -94,6 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/create_message" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Poster"
@@ -102,6 +104,16 @@
         app:layout_constraintHorizontal_bias="0.237"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_poster" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Details"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_details" />
 
     <ImageButton
         android:id="@+id/create_message"
@@ -148,6 +160,21 @@
         android:src="@drawable/baseline_add_link_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_message" />
+
+    <ImageButton
+        android:id="@+id/edit_details"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_below="@+id/appbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_edit_calendar_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
