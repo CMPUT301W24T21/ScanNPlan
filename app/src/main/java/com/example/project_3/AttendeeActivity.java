@@ -81,6 +81,25 @@ public class AttendeeActivity extends AppCompatActivity {
             }
         });
 
+        // Assuming attendeebrowseevents is a button
+        FloatingActionButton browseEventsButton = findViewById(R.id.BrowseEventsButton);
+        browseEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to start the AttendeeBrowseEventsActivity
+                Intent intent = new Intent(AttendeeActivity.this, AttendeeBrowseEventsActivity.class);
+                startActivity(intent);
+
+                // Optionally, you can finish the current activity if you don't want it to remain in the back stack
+                finish();
+            }
+        });
+
+
+
+
+
+
 
 
 
@@ -253,7 +272,7 @@ public class AttendeeActivity extends AppCompatActivity {
 
             AttendeeEventDetailsFragment fragment = new AttendeeEventDetailsFragment(selectedEvent);
             getSupportFragmentManager().beginTransaction()
-            .add(R.id.attendee_fragment_container, fragment, null).addToBackStack("test").commit();
+                    .add(R.id.attendee_fragment_container, fragment, null).addToBackStack("test").commit();
         }
     };
 
