@@ -1,14 +1,21 @@
 package com.example.project_3;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,13 +59,19 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference profilesRef;
     private Map<String, Object> profileDocDetails;
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 102;
     private CollectionReference tokenRef;
     private static final String TAG = "MainActivity";
+
     private void checkAndRequestNotificationPermission() {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
         }
+        if (!hasLocationPermissions()) {
+            requestLocationPermission();
+        }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                             user.getUserProfile().setProfileID(doc.getId());
                         }
                     }
-                    if (!idFound){
+                    if (!idFound) {
                         user = new User(new Profile(null,
                                 "New User!",
                                 "",
@@ -155,15 +168,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void getFcmToken(){
+    void getFcmToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
-            if(task.isSuccessful()){
+            if (task.isSuccessful()) {
                 String token = task.getResult();
                 Log.i("My token", token);
                 saveTokenToFirestore(token);
             }
         });
     }
+
     void saveTokenToFirestore(String token) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference tokenRef = db.collection("Tokens");
@@ -197,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
         // Create a HashMap to store the token list
         HashMap<String, Object> data = new HashMap<>();
@@ -207,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
                 .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
     }
+
     private boolean hasNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -214,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true; // On versions lower than Oreo, no permission is required.
     }
+
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Request permission for notification
@@ -225,4 +242,50 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
     }
-}
+
+    private boolean hasLocationPermissions() {
+        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        //Microsoft Copilot. (2024), April 6th
+        //Prompt:it just says location permissions denied as soon as the app opens with this code and no prompt is showing up.
+        //is it possible to send the user into settings and turn the permission on:
+        // (the boolean function works)
+        // private void checkAndRequestNotificationPermission() {
+        //        if (!hasNotificationPermission()) {
+        //            requestNotificationPermission();
+        //        }
+        //        if (!hasLocationPermissions()) {
+        //            requestLocationPermission();
+        //        }
+        //
+        //    }
+        //private void requestLocationPermission(){
+        // ActivityCompat.requestPermissions(this,
+        //            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+        //            REQUEST_PERMISSIONS_REQUEST_CODE);
+        //}
+        new AlertDialog.Builder(this)
+                .setTitle("Location Permission Needed")
+                .setMessage("Please enable location permission in settings")
+                .setPositiveButton("Go to settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Take the user to the app settings
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }
+                })
+                .create()
+                .show();
+    }
+
+
+    }
+
+
