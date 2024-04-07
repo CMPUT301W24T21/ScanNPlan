@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Represents an event with various details.
@@ -21,6 +22,7 @@ public class Event implements Serializable {
     private String details;
     private String image;
     private String link;
+    private ArrayList<Announcement> announcements;
 
     /**
      * Constructs an event with specified details.
@@ -236,4 +238,12 @@ public class Event implements Serializable {
      * @param qrPromoCode The PROMO QR code to be associated with the event.
      */
     public void setQrPromoCode(String qrPromoCode) {this.qrPromoCode = qrPromoCode;}
+
+    public ArrayList<Announcement> getAnnouncements() {
+        return this.announcements;
+    }
+
+    public void setAnnouncements(ArrayList<Announcement> announcements) {
+        this.announcements = announcements;
+    }
 }

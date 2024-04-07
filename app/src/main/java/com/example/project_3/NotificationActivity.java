@@ -8,12 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity {
     ListView announcementsListView;
-    EventArrayAdapter eventAdapter;
+    AnnouncementArrayAdapter eventAdapter;
+    ArrayList<Announcement> allAnnouncementList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +34,34 @@ public class NotificationActivity extends AppCompatActivity {
         // - Create notificationAdapter Class
         // - Link it to the listview
         // - go through each event, go through each notification for each event, add it to an arrray of notifications
-        eventAdapter = new EventArrayAdapter(this, eventArray);
-        announcementsListView.setAdapter(eventAdapter);
 
+        allAnnouncementList = new ArrayList<Announcement>();
 
-        for (int i = 0; i < eventArray.size(); i++) {
+//        for (int i = 0; i < eventArray.size(); i++) {
+//            Event currentEvent = eventArray.get(i);
+//            allAnnouncementList.addAll(currentEvent.getAnnouncements());
+//        }
+        //*************
+        //This is a test of the announcements
+        java.util.Date date = new java.util.Date();
+        allAnnouncementList.add(new Announcement(new Timestamp(date.getTime()), "Earliest Announcement content", "Event1"));
 
-        }
+        allAnnouncementList.add(new Announcement(new Timestamp(date.getTime()+1000), "middle Announcement content", "Event2"));
 
+        allAnnouncementList.add(new Announcement(new Timestamp(date.getTime()+1000), "Most recent Announcement content", "Event3"));
+        //*******************
 
+        allAnnouncementList.sort(new Comparator<Announcement>() {
+            @Override
+            public int compare(Announcement o1, Announcement o2) {
+                if (o1.timestamp.compareTo(o2.timestamp) > 0) {
+                    return -1;
+                } else if (o1.timestamp.compareTo(o2.timestamp) < 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
     }
 }
