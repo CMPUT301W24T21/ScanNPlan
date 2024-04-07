@@ -292,7 +292,7 @@ public class EditEventDetails extends AppCompatActivity {
             e.printStackTrace();
         }
         Map<String, Object> announcement = new HashMap<String, Object>();
-        announcement.put("content", title +" - "+ message);
+        announcement.put("content", title + " - " + message);
         announcement.put("event_name", eventName);
         announcement.put("timestamp", new Timestamp(new Date()));
         db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
