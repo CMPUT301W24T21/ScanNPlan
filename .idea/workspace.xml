@@ -148,6 +148,7 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/NotificationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/NotificationActivity.java" afterDir="false" />
 =======
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/EventMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/EventMapFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/QRScan.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/project_3/QRScan.java" afterDir="false" />
 >>>>>>> 67975320ea3edbe3c067e69dd6a9315d9a6484c4
     </list>
