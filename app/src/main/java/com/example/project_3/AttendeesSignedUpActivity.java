@@ -1,7 +1,7 @@
 package com.example.project_3;
 
 /**
- * This activity displays the list of attendees who have checked in to a particular event.
+ * This activity displays the list of attendees who have signed up to a particular event.
  */
 
 import android.app.AlertDialog;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,7 +43,7 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
     private TextView attendanceCountTextView;
     private ListenerRegistration eventListener;
     private Button confirmButton;
-    private TextView maxAttendeesEditText;
+    private EditText maxAttendeesEditText;
 
     /**
      * Initializes the activity layout, Firestore instance, and necessary references.
@@ -67,7 +69,20 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         appbar.setTextSize(22);
         appbar.setText("Attendees Signed Up");
         attendanceCountTextView = findViewById(R.id.attendance_count_text);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (!maxAttendeesEditText.getText().toString().isEmpty()) {
+                    db.collection("Events").document(eventName).update("max_attendees", Integer.parseInt(maxAttendeesEditText.getText().toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(getBaseContext(), "Max sign up count has been set!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
+                }
+                }
+        });
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
