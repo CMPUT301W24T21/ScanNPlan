@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,10 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
     private TextView attendanceCountTextView;
     private ListenerRegistration eventListener;
 
+    private EditText maxAttendeesEditText;
+    private Button submitButton;
+    private int currentAttendanceCount = 0;
+
     /**
      * Initializes the activity layout, Firestore instance, and necessary references.
      * Retrieves the event name from the intent and sets up UI components.
@@ -63,6 +68,8 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         // Find views
         Button backButton = findViewById(R.id.back_button);
         attendeesListView = findViewById(R.id.attendees_list_view);
+        maxAttendeesEditText = findViewById(R.id.max_attendees_edit_text);
+        submitButton = findViewById(R.id.submit_button);
 
         TextView appbar = findViewById(R.id.appbar_title);
         appbar.setTextSize(22);
@@ -76,6 +83,14 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Finish the AttendeesCheckedInActivity and return to the previous activity
                 finish();
+            }
+        });
+
+        // Set click listener for the submit button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateMaxAttendeesInput();
             }
         });
 
@@ -127,6 +142,8 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
                         // Update the UI with the attendee names
                         displayAttendees(attendeeNames);
 
+                        updateRealTimeAttendance(currentAttendanceCount);
+
                     }
                 } else {
                     Log.d(TAG, "Event document not found");
@@ -145,6 +162,62 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, attendees);
         attendeesListView.setAdapter(adapter);
     }
+
+    private void updateRealTimeAttendance(int count) {
+        if (attendanceCountTextView != null) {
+            attendanceCountTextView.setText("Real-time attendance: " + count);
+        } else {
+            Log.e(TAG, "attendanceCountTextView is null");
+        }
+    }
+
+
+
+    /**
+     * Validates the user input for maximum attendees.
+     */
+    /**
+     * Validates the user input for maximum attendees.
+     */
+    private void validateMaxAttendeesInput() {
+        String maxAttendeesStr = maxAttendeesEditText.getText().toString().trim();
+        if (!maxAttendeesStr.isEmpty()) {
+            int maxAttendees = Integer.parseInt(maxAttendeesStr);
+            if (maxAttendees >= currentAttendanceCount) {
+                // Update the maximum attendees count in Firestore
+                updateMaxAttendeesInFirestore(maxAttendees);
+            } else {
+                // Display an error message indicating that the input should be greater than or equal to the current attendance count
+                Toast.makeText(this, "Maximum attendees should be greater than or equal to the current attendance count", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    /**
+     * Updates the maximum attendees count in Firestore for the current event.
+     *
+     * @param maxAttendees The maximum attendees count entered by the user
+     */
+    private void updateMaxAttendeesInFirestore(int maxAttendees) {
+        DocumentReference eventDocRef = eventsRef.document(eventName);
+
+        // Update the "max_attendees" field in the event document
+        eventDocRef.update("max_attendees", maxAttendees)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AttendeesSignedUpActivity.this, "Maximum attendees updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(AttendeesSignedUpActivity.this, "Failed to update maximum attendees", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Error updating maximum attendees", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+
 
     /**
      * Cleans up resources when the activity is destroyed.
