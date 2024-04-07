@@ -150,6 +150,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
                 db.document(docPath).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
 //                getParentFragmentManager().popBackStack();
 //                getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Event registered successfully!", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
         });
