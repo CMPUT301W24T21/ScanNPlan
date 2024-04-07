@@ -50,6 +50,7 @@ public class AttendeeActivity extends AppCompatActivity {
     private EventArrayAdapter eventAdapter;
 
     private FloatingActionButton editProfileButton;
+    private FloatingActionButton announcementsButton;
     private Profile profile;
     private FirebaseFirestore db;
     private String profileID;
@@ -89,8 +90,29 @@ public class AttendeeActivity extends AppCompatActivity {
             }
         });
 
+        // Assuming attendeebrowseevents is a button
+        FloatingActionButton browseEventsButton = findViewById(R.id.BrowseEventsButton);
+        browseEventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to start the AttendeeBrowseEventsActivity
+                Intent intent = new Intent(AttendeeActivity.this, AttendeeBrowseEventsActivity.class);
+                startActivity(intent);
 
+                // Optionally, you can finish the current activity if you don't want it to remain in the back stack
+                finish();
+            }
+        });
 
+        announcementsButton = findViewById(R.id.announcementsButton);
+        announcementsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notificationIntent = new Intent(getBaseContext(), NotificationActivity.class);
+                notificationIntent.putExtra("eventArray", eventArray);
+                startActivity(notificationIntent);
+            }
+        });
 
 
         db = FirebaseFirestore.getInstance();
@@ -168,55 +190,6 @@ public class AttendeeActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        //test events
-//
-////        String[] EventNames = {"concert1", "party2", "boardgames3"};
-////        String[] EventLocation = {"123 4th st", "567 8th avenue", "91011 12blv"};
-////
-////
-//        ArrayList<Event> dataList= new ArrayList<Event>();
-////        for (int i = 0; i < EventNames.length; i++) {
-////            boolean details = dataList.add(new Event(EventNames[i], "DATE123", "TIME456", EventLocation[i], "DETAILS789"));
-////        }
-////
-////
-////        eventAdapter = new EventArrayAdapter(this, dataList);
-////        eventList = findViewById(R.id.event_listView);
-////        eventList.setAdapter(eventAdapter);
-////        eventList.setOnItemClickListener(listSelector);
-//
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("events")
-//                //.whereEqualTo("ProfileId", "ProfileEvent ID") // just a template to compare
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                String eventName = document.getString("eventName");
-//                                String eventDate = document.getString("eventDate");
-//                                String eventTime = document.getString("eventTime");
-//                                String eventLocation = document.getString("eventLocation");
-//                                String eventDetails = document.getString("eventDetails");
-//
-//                                Event event = new Event(eventName, eventDate, eventTime, eventLocation, eventDetails);
-//                                dataList.add(event); // Add the event to the dataList
-//                            }
-//                            eventAdapter = new EventArrayAdapter(AttendeeActivity.this, dataList); // Create a new adapter with the updated dataList
-//                            eventListView = findViewById(R.id.event_listView);
-//                            eventListView.setAdapter(eventAdapter);
-//                            eventListView.setOnItemClickListener(listSelector);
-//                            eventAdapter.notifyDataSetChanged(); // Notify the adapter that the data set has changed
-//                        } else {
-//                            //Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
-//
-//
     }
 
     /**
@@ -351,7 +324,7 @@ void saveTokenToFirestore(String token) {
 
             AttendeeEventDetailsFragment fragment = new AttendeeEventDetailsFragment(selectedEvent);
             getSupportFragmentManager().beginTransaction()
-            .add(R.id.attendee_fragment_container, fragment, null).addToBackStack("test").commit();
+                    .add(R.id.attendee_fragment_container, fragment, null).addToBackStack("test").commit();
         }
     };
 

@@ -150,40 +150,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                     DocumentReference eventDoc = document.getDocumentReference("event");
                                     eventDoc.update("checked_in", FieldValue.arrayUnion(db.collection("Profiles").document(profileID)));
                                     //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
-                                    if (!isLocationUpdated){
-                                        String location_context = Context.LOCATION_SERVICE;
-                                        final LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(location_context);
-                                        List<String> providers = locationManager.getProviders(true);
-                                        for (final String provider : providers) {
-                                            if (getBaseContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                                                final LocationListener locationListener = new LocationListener() {
-                                                    @Override
-                                                    public void onLocationChanged(Location location) {
-                                                        double latitude = location.getLatitude();
-                                                        double longitude = location.getLongitude();
-                                                        geopoint = new GeoPoint(latitude, longitude);
-                                                        profilesRef.document(profileID).update("location", geopoint);
-                                                        locationManager.removeUpdates(this);
-                                                        isLocationUpdated = true;
-                                                    }
-
-                                                    @Override
-                                                    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-                                                    @Override
-                                                    public void onProviderEnabled(String provider) {}
-
-                                                    @Override
-                                                    public void onProviderDisabled(String provider) {}
-                                                };
-                                                locationManager.requestSingleUpdate(provider, locationListener, null);
-                                            }
-                                        }
-                                    }
+                                    getLocation(eventDoc);
                                     addEventCount(eventDoc);
-
-
-
 
                                 } else {
                                     Log.d("DEBUG", "No such document");
@@ -233,6 +201,49 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     this,
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+    private void getLocation(DocumentReference eventDoc){
+        if (!isLocationUpdated) {
+            String location_context = Context.LOCATION_SERVICE;
+            final LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(location_context);
+            List<String> providers = locationManager.getProviders(true);
+            for (final String provider : providers) {
+                if (getBaseContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    final LocationListener locationListener = new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            geopoint = new GeoPoint(latitude, longitude);
+                            eventDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Map<String, GeoPoint> checkInLocations = (Map<String, GeoPoint>) documentSnapshot.get("check_in_locations");
+                                    if (checkInLocations == null) {
+                                        checkInLocations = new HashMap<>();
+                                    }
+                                    checkInLocations.put(profileID, geopoint);
+                                    eventDoc.update("check_in_locations", checkInLocations);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+                        }
+                    };
+                    locationManager.requestSingleUpdate(provider, locationListener, null);
+                }
+            }
         }
     }
     public void addEventCount(DocumentReference eventDoc){
