@@ -43,6 +43,9 @@ public class AnnouncementArrayAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        Announcement announcement = announcements.get(position);
+        viewHolder.EventName.setText(announcement.getEventName());
+        viewHolder.announcementContent.setText(announcement.getContent());
 
         return view;
     }

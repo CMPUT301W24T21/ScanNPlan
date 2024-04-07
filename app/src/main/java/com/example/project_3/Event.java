@@ -51,6 +51,25 @@ public class Event implements Serializable {
         this.qrPromoCode = qrPromoCode;
         this.link = link;
     }
+    public Event(String name, String date, String time, String location,
+                 String details, ArrayList<Announcement> announcements,  boolean reuse, String image, String qrCode,
+                 String qrPromoCode, String link) {
+        this.name = name;
+        this.reuse = reuse;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.details = details;
+        this.announcements = announcements;
+        this.image = image;
+        this.qrCode = qrCode;
+        this.qrPromoCode = qrPromoCode;
+        this.link = link;
+    }
+
+    //
+    public Event() {
+    }
 
     public String getLink() {
         return link;

@@ -51,7 +51,7 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
             viewHolder.eventPic = view.findViewById(R.id.eventPic);
             view.setTag(viewHolder);
         } else {
-            view = conver@mtView;
+            view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
 
