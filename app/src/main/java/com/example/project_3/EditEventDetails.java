@@ -21,20 +21,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+import com.google.firebase.messaging.RemoteMessageCreator;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -57,6 +72,8 @@ public class EditEventDetails extends AppCompatActivity {
     private String imageUry;
     private String link;
     private String info;
+    private FirebaseFirestore db;
+
 
     private static final int ADD_EVENT_REQUEST = 1;
     private static final String TAG = "EditEventDetails";
@@ -74,6 +91,7 @@ public class EditEventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_event);
+        db = FirebaseFirestore.getInstance();
 
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
@@ -240,48 +258,46 @@ public class EditEventDetails extends AppCompatActivity {
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void sendNotification(String title, String message) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
+        // Taken from: https://stackoverflow.com/questions/55948318/how-to-send-a-firebase-message-to-topic-from-android
 
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Get the TokenList field as a List
-                    List<String> tokenList = (List<String>) document.get("TokenList");
-                    if (tokenList != null) {
-                        // Iterate over the TokenList and send notification to each token
-                        for (String token : tokenList) {
-                            try {
-                                JSONObject jsonObject = new JSONObject();
+        RequestQueue mRequestQue = Volley.newRequestQueue(this);
 
-                                JSONObject notificationObj = new JSONObject();
-                                notificationObj.put("title", title);
-                                notificationObj.put("body", message);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("to", "/topics/" + ("Events/"+eventName).hashCode());
+            JSONObject notificationObj = new JSONObject();
+            notificationObj.put("title", title);
+            notificationObj.put("body", message);
+            //replace notification with data when went send data
+            json.put("notification", notificationObj);
 
-                                JSONObject dataObj = new JSONObject();
-                                dataObj.put("userId", title);
-
-                                jsonObject.put("notification", notificationObj);
-                                jsonObject.put("data", dataObj);
-                                jsonObject.put("to", token);
-
-                                callApi(jsonObject);
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error sending notification to token: " + token, e);
-                            }
-                        }
-                    } else {
-                        Log.d(TAG, "TokenList is null");
-                    }
-                } else {
-                    Log.d(TAG, "No such document");
+            String URL = "https://fcm.googleapis.com/fcm/send";
+            JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
+                    json,
+                    response -> Log.d("MUR", "onResponse: "),
+                    error -> Log.d("MUR", "onError: " + error.networkResponse)
+            ) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht");
+                    return header;
                 }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
+            };
+
+
+            mRequestQue.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> announcement = new HashMap<String, Object>();
+        announcement.put("content", title + " - " + message);
+        announcement.put("event_name", eventName);
+        announcement.put("timestamp", new Timestamp(new Date()));
+        db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
+
+
     }
 
 //        void sendNotification(String title , String message){

@@ -27,7 +27,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -153,12 +156,27 @@ public class AttendeeActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Map<String, Object> eventDetails = document.getData();
                                         //Log.d("DEBUG", "DocumentSnapshot data: " + document.getData());
-
+                                        ArrayList<Map<String, Object>> firebaseAnnouncements = (ArrayList<Map<String, Object>>) eventDetails.get("announcements");
+                                        ArrayList<Announcement> localAnnouncementsList = new ArrayList<Announcement>();
+                                        if (firebaseAnnouncements == null) {
+                                            firebaseAnnouncements = new ArrayList<>();
+                                        } else {
+                                            for (int i = 0; i < firebaseAnnouncements.size(); i++) {
+                                                com.google.firebase.Timestamp firebaseTimestamp = (com.google.firebase.Timestamp) firebaseAnnouncements.get(i).get("timestamp");
+                                                Date date = firebaseTimestamp.toDate();
+                                                Timestamp timestamp = new Timestamp(date.getTime());
+                                                String content = (String) firebaseAnnouncements.get(i).get("content");
+                                                String eventName = (String) firebaseAnnouncements.get(i).get("event_name");
+                                                localAnnouncementsList.add(new Announcement(timestamp, content, eventName));
+                                            }
+                                        }
+                                        Log.d("DEBUG", "Announcement Content:" + localAnnouncementsList.toString());
                                         eventArray.add(new Event(document.getId().toString(),
                                                 (String) eventDetails.get("Date"),
                                                 (String) eventDetails.get("Time"),
                                                 (String) eventDetails.get("Location"),
                                                 (String) eventDetails.get("Details"),
+                                                localAnnouncementsList,
                                                 (boolean) eventDetails.get("Reuse"),
                                                 (String) eventDetails.get("Image"),
                                                 null,
