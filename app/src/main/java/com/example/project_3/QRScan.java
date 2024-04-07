@@ -216,15 +216,17 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
                             geopoint = new GeoPoint(latitude, longitude);
-                            Map<String, GeoPoint> checkInLocations = new HashMap<>();
-                            checkInLocations.put(profileID, geopoint);
-
-                            eventDoc.update("check_in_locations", checkInLocations);
-
-                            locationManager.removeUpdates(this);
-                            isLocationUpdated = true;
-                            locationManager.removeUpdates(this);
-                            isLocationUpdated = true;
+                            eventDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Map<String, GeoPoint> checkInLocations = (Map<String, GeoPoint>) documentSnapshot.get("check_in_locations");
+                                    if (checkInLocations == null) {
+                                        checkInLocations = new HashMap<>();
+                                    }
+                                    checkInLocations.put(profileID, geopoint);
+                                    eventDoc.update("check_in_locations", checkInLocations);
+                                }
+                            });
                         }
 
                         @Override
