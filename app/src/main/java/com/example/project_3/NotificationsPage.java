@@ -31,12 +31,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Activity for displaying notifications received from Firebase Firestore.
+ */
+
 public class NotificationsPage extends AppCompatActivity {
 
     private ListView notificationsListView;
     private ArrayAdapter<String> adapter;
     private List<String> fieldNames;
 
+    /**
+     * Called when the activity is created. Initializes the ListView and fetches notification field names from Firestore.
+     *
+     * @param savedInstanceState A Bundle containing the activity's previously saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +57,7 @@ public class NotificationsPage extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fieldNames);
         notificationsListView.setAdapter(adapter);
 
-        // Fetch field names from your document
+        // Fetch field names
         fetchFieldNames();
 
         Button backButton = findViewById(R.id.buttonBack);
@@ -60,6 +69,9 @@ public class NotificationsPage extends AppCompatActivity {
         });
     }
 
+    /**
+     * Fetches notification field names from Firebase Firestore and updates the ListView.
+     */
     private void fetchFieldNames() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference notifsCollection = db.collection("Notifications");

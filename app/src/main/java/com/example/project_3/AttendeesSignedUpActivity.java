@@ -71,18 +71,30 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
         attendanceCountTextView = findViewById(R.id.attendance_count_text);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 if (!maxAttendeesEditText.getText().toString().isEmpty()) {
-                    db.collection("Events").document(eventName).update("max_attendees", Integer.parseInt(maxAttendeesEditText.getText().toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(getBaseContext(), "Max sign up count has been set!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    int newMaxAttendees = Integer.parseInt(maxAttendeesEditText.getText().toString());
+                    // Get the current attendance count
+                    int currentAttendanceCount = attendeesListView.getAdapter().getCount();
 
+                    // Check if the new max attendees is greater than or equal to the current attendance count
+                    if (newMaxAttendees >= currentAttendanceCount) {
+                        // Update the max attendees count in Firestore
+                        db.collection("Events").document(eventName).update("max_attendees", newMaxAttendees)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(getBaseContext(), "Max sign up count has been set!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        // Show an error message if the new max attendees count is less than the current attendance count
+                        Toast.makeText(getBaseContext(), "Max sign up count cannot be less than current attendance count", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                }
+            }
         });
+
         // Set click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +256,7 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
      */
     private void updateRealTimeAttendance(int count) {
         attendanceCountTextView.setText("Total sign ups: " + count);
+        //db.collection("Events").document(eventName).update("current_attendees", count);
     }
 
 
