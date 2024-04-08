@@ -1,5 +1,7 @@
 package com.example.project_3;
 
+import static com.example.project_3.ImageGen.generatePlaceholderImage;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -38,6 +40,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * Fragment for editing attendee profile settings.
+ */
+
 public class AttendeeEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
     private EditText nameTextView;
@@ -59,6 +65,9 @@ public class AttendeeEditProfileFragment extends Fragment {
     public AttendeeEditProfileFragment(String profileID) {
         this.profileID = profileID;
     }
+    /**
+     * Sets up the fragment's UI and initializes the Firebase Firestore instance.
+     */
 
     @Nullable
     @Override
@@ -74,7 +83,7 @@ public class AttendeeEditProfileFragment extends Fragment {
         profile_image = view.findViewById(R.id.profile_image);
 
         // Set the profile image to a placeholder image
-        String placeholderBase64Image = generatePlaceholderImage("Placeholder");
+        String placeholderBase64Image = generatePlaceholderImage("Deleted Image");
         Bitmap placeholderBitmap = decodeImage(placeholderBase64Image);
         profile_image.setImageBitmap(placeholderBitmap);
 
@@ -220,6 +229,10 @@ public class AttendeeEditProfileFragment extends Fragment {
         return view;
     }
 
+
+    /**
+     * Handles the result of the image selection from the gallery.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -258,6 +271,11 @@ public class AttendeeEditProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Encodes a Bitmap image to a Base64 string.
+     * @param bitmap The Bitmap image to encode.
+     * @return The Base64 string representation of the image.
+     */
     private String encodeImage(Bitmap bitmap) {
         if (bitmap == null) {
             return "";
@@ -268,6 +286,12 @@ public class AttendeeEditProfileFragment extends Fragment {
         byte[] imageBytes = baos.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
+
+    /**
+     * Decodes a Base64 string to a Bitmap image.
+     * @param base64Image The Base64 string to decode.
+     * @return The decoded Bitmap image.
+     */
 
     private Bitmap decodeImage(String base64Image) {
         if (base64Image == null || base64Image.isEmpty()) {
@@ -282,28 +306,5 @@ public class AttendeeEditProfileFragment extends Fragment {
         }
     }
 
-    private String generatePlaceholderImage(String name) {
-        int width = 200;
-        int height = 50;
 
-        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        android.graphics.Canvas canvas = new android.graphics.Canvas(image);
-        canvas.drawColor(Color.WHITE);
-
-        android.graphics.Paint paint = new android.graphics.Paint();
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(20);
-        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-
-        android.graphics.Rect bounds = new android.graphics.Rect();
-        paint.getTextBounds(name, 0, name.length(), bounds);
-        int x = (width - bounds.width()) / 2;
-        int y = (height + bounds.height()) / 2;
-        canvas.drawText(name, x, y, paint);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
 }
