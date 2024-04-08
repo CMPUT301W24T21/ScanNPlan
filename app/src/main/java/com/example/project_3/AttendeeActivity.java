@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,7 +69,16 @@ public class AttendeeActivity extends AppCompatActivity {
         eventAdapter = new EventArrayAdapter(this,  eventArray);
         eventListView.setAdapter(eventAdapter);
         eventListView.setOnItemClickListener(listSelector);
-
+        Button back  = findViewById(R.id.back_button);
+        TextView appbar = findViewById(R.id.appbar_title);
+        appbar.setText("Your Events");
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         this.openCameraButton = findViewById(R.id.openCameraButton);
 
