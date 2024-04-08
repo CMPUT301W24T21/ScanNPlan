@@ -147,7 +147,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents()))
+                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents(), Boolean.TRUE))
                             .addToBackStack(null)
                             .commit();
 
