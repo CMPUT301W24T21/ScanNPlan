@@ -69,8 +69,8 @@ public class AdminEventDetailsFragment extends Fragment {
         eventsref = db.collection("Events");
         // Set various event details
         TextView date = view.findViewById(R.id.event_date);
-        TextView eventName = view.findViewById(R.id.event_name);
-        eventName.setText(event.getName());
+        //TextView eventName = view.findViewById(R.id.event_name);
+        //eventName.setText(event.getName());
         date.setText(event.getDate());
         TextView time = view.findViewById(R.id.event_time);
         time.setText(event.getTime());

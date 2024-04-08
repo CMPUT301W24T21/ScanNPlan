@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/event_activity_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_vertical1">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -47,7 +48,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="9dp"
         android:layout_marginBottom="7dp"
-        android:text="Back" />
+        android:text="Back"
+        app:backgroundTint="@color/Beige"/>
 
     <Button
         android:id="@+id/share_button"
@@ -57,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="146dp"
         android:layout_marginBottom="119dp"
-        android:text="Share" />
+        android:text="Share"
+        app:backgroundTint="@color/Beige"/>
 
 </RelativeLayout>

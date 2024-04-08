@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_vertical1">
     <include layout="@layout/global_top_appbar"/>
     <ImageView
         android:id="@+id/profile_details_pfp"
@@ -21,6 +22,8 @@
         android:layout_width="108dp"
         android:layout_height="48dp"
         android:text="Delete"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_details_pfp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,46 +36,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
-        app:layout_constraintBottom_toTopOf="@+id/profile_details_social"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_details_pfp" />
+        tools:layout_editor_absoluteY="373dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profile_details_social"
         style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:text="Instagram"
-        app:layout_constraintBottom_toTopOf="@+id/profile_details_email"
+        app:layout_constraintBottom_toTopOf="@+id/delete_profile_details_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_details_user" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profile_details_email"
         style="@style/TextAppearance.Material3.DisplaySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="25dp"
         android:text="Email"
-        app:layout_constraintBottom_toTopOf="@+id/event_details"
+        app:layout_constraintBottom_toTopOf="@+id/profile_details_social"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_details_social" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_details_user" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_profile_details_button"
-        android:text="Delete"
-        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Delete"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_details_email" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

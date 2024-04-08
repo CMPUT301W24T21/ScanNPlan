@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="250dp" >
+    android:layout_height="250dp"
+    >
 <!--    Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=1jsCeazcEP8-->
 <!--    describes how to make a card view-->
     <androidx.cardview.widget.CardView
@@ -15,11 +16,13 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_2">
 
             <ImageView
                 android:id="@+id/eventPic"
@@ -44,6 +47,7 @@
                 android:layout_marginEnd="27dp"
                 android:layout_toEndOf="@+id/eventPic"
                 android:text="Event Name"
+                android:textColor="@color/OffWhite"
                 android:textSize="25dp"></TextView>
 
             <TextView
@@ -60,6 +64,7 @@
                 android:layout_marginBottom="-62dp"
                 android:layout_toEndOf="@+id/eventPic"
                 android:text="Event Location"
+                android:textColor="@color/OffWhite"
                 android:textSize="20dp"></TextView>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
