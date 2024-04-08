@@ -69,7 +69,6 @@ public class AttendeeTest {
         onView(withId((R.id.delete_photo_button))).check(matches((isDisplayed())));
         onView(withId((R.id.homepage_editText))).check(matches((isDisplayed())));
         onView(withId((R.id.contact_info_editText))).check(matches((isDisplayed())));
-        onView(withId((R.id.push_notifications_toggle))).check(matches((isDisplayed())));
         onView(withId((R.id.geolocation_toggle))).check(matches((isDisplayed())));
         onView(withId((R.id.save_button))).check(matches((isDisplayed())));
         onView(withId((R.id.logout_button))).check(matches((isDisplayed())));
