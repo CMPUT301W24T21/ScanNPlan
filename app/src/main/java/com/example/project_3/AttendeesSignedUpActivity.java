@@ -244,7 +244,6 @@ public class AttendeesSignedUpActivity extends AppCompatActivity {
      */
     private void updateRealTimeAttendance(int count) {
         attendanceCountTextView.setText("Total sign ups: " + count);
-        db.collection("Events").document(eventName).update("current_attendees", count);
     }
 
 

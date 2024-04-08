@@ -1,6 +1,7 @@
 package com.example.project_3;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,6 +28,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class AttendeeNewEventDetailsFragment extends Fragment {
@@ -34,6 +37,8 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     private Event selectedEvent;
     private String docPath;
     private String profileID;
+    private int max_attendees;
+    private int current_attendees = 0;
     private FirebaseFirestore db;
 
 
@@ -73,6 +78,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         TextView appBar = view.findViewById(R.id.appbar_title);
 
         db = FirebaseFirestore.getInstance();
+
         Log.d("DEBUG", "docPath: " + docPath);
         db.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -140,7 +146,16 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
 
             }
         });
-
+        db.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                max_attendees = task.getResult().getLong("max_attendees").intValue();
+                List<DocumentReference> signups = (List<DocumentReference>) task.getResult().get("attendees");
+                if (signups != null){
+                    current_attendees = signups.size();
+                }
+            }
+        });
 
 
 
@@ -148,28 +163,35 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(docPath.hashCode()))
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                String msg = "Subscribed";
-                                if (!task.isSuccessful()) {
-                                    msg = "Subscribe failed";
+                if (current_attendees + 1 <= max_attendees) {
+                    FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(docPath.hashCode()))
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    String msg = "Subscribed";
+                                    if (!task.isSuccessful()) {
+                                        msg = "Subscribe failed";
+                                    }
+                                    Log.d("SUBSCRIBED", msg);
+
+                                    Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                                 }
-                                Log.d("SUBSCRIBED", msg);
+                            });
 
-                                Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                profileID = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-                db = FirebaseFirestore.getInstance();
-                db.collection("Profiles").document(profileID).update("events", FieldValue.arrayUnion(db.document(docPath)));
-                db.document(docPath).update("attendees", FieldValue.arrayUnion(db.document("Profiles/"+ profileID)));
+                    profileID = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+                    db = FirebaseFirestore.getInstance();
+                    db.collection("Profiles").document(profileID).update("events", FieldValue.arrayUnion(db.document(docPath)));
+                    db.document(docPath).update("attendees", FieldValue.arrayUnion(db.document("Profiles/" + profileID)));
 //                getParentFragmentManager().popBackStack();
 //                getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(), "Event registered successfully!", Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                    Toast.makeText(getActivity(), "Event registered successfully!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Event is full!", Toast.LENGTH_SHORT).show();
+
+                }
+                Intent intent = new Intent(getActivity(), AttendeeActivity.class);
+                startActivity(intent);
             }
         });
 
