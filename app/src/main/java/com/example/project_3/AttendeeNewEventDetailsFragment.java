@@ -37,7 +37,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     private Event selectedEvent;
     private String docPath;
     private String profileID;
-    private int max_attendees;
+    private int max_attendees = Integer.MAX_VALUE;
     private int current_attendees = 0;
     private FirebaseFirestore db;
 
@@ -149,7 +149,10 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         db.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                max_attendees = task.getResult().getLong("max_attendees").intValue();
+                Long number = task.getResult().getLong("max_attendees");
+                if (number != null){
+                    max_attendees = number.intValue();
+                }
                 List<DocumentReference> signups = (List<DocumentReference>) task.getResult().get("attendees");
                 if (signups != null){
                     current_attendees = signups.size();
