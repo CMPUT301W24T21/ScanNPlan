@@ -36,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -66,7 +67,7 @@ public class OrganizerActivity extends AppCompatActivity {
     private String previousId = null;
     private String info;
     private static final String TAG = "OrganizerActivity";
-
+    private String docPath;
     /**
      * Called when the activity is first created.
      * Initializes the activity by setting its layout, initializing Firebase,
@@ -79,6 +80,8 @@ public class OrganizerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.organizer_events);
+
+
 
         // Initializing Firebase
         db = FirebaseFirestore.getInstance();
@@ -305,10 +308,41 @@ public class OrganizerActivity extends AppCompatActivity {
                     String maxAttendeesStr = maxAttendeesEditText.getText().toString();
                     int maxAttendees = maxAttendeesStr.isEmpty() ? -1 : Integer.parseInt(maxAttendeesStr);
 
+//                    docPath = "Events/" + eventName;
+//                    FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(docPath.hashCode()))
+//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<Void> task) {
+//                                    String msg = "Subscribed";
+//                                    if (!task.isSuccessful()) {
+//                                        msg = "Subscribe failed";
+//                                    }
+//                                    Log.d("SUBSCRIBED", msg);
+//
+//                                    Toast.makeText(OrganizerActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+
+
                     // Creating a new event object and adding it if event name is not empty
                     if (!eventName.isEmpty()) {
                         Event newEvent = new Event(eventName, eventDate, eventTime, eventLocation,
                                 eventDetails, reuse_check, imageUri, "", "", "", new ArrayList<Map<String, Object>>());
+
+                        docPath = "Events/" + eventName;
+                        FirebaseMessaging.getInstance().subscribeToTopic(String.valueOf(docPath.hashCode()))
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        String msg = "Subscribed";
+                                        if (!task.isSuccessful()) {
+                                            msg = "Subscribe failed";
+                                        }
+                                        Log.d("SUBSCRIBED", msg);
+
+                                        Toast.makeText(OrganizerActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
                         newEvent.setReuse(reuse_check);
                         newEvent.setImage(imageUri);
@@ -324,9 +358,9 @@ public class OrganizerActivity extends AppCompatActivity {
 
                         addNewEvent(newEvent);
 
-
                         Map<String, Object> data = new HashMap<>();
                         DocumentReference documentReference = eventsRef.document(eventName);
+
                         data.put("event", documentReference);
                         if(reuse_check){
                             qrRef.document("RE_USE").set(data)
@@ -371,8 +405,7 @@ public class OrganizerActivity extends AppCompatActivity {
      * @param eventName The name of the event.
      * @param reuse     A boolean indicating whether the event is reusable.
      */
-    private void generateQRCode(String eventName, boolean reuse) {
-
+    private void generateQRCode(String eventName, boolean reuse){
         try {
             generateRandomId(reuse);
             QRCodeWriter writer = new QRCodeWriter();

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +37,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
     private CollectionReference tokenRef;
     private static final String TAG = "MainActivity";
+    private String docPath;
     private void checkAndRequestNotificationPermission() {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         Organizer_button.setOnClickListener(V -> {
             OrganizerIntent = new Intent(this, OrganizerActivity.class);
             startActivity(OrganizerIntent);
+
         });
         Admin_button.setOnClickListener(V -> {
             AdminIntent = new Intent(this, AdminActivity.class);

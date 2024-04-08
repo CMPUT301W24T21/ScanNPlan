@@ -266,7 +266,7 @@ public class EditEventDetails extends AppCompatActivity {
 
         JSONObject json = new JSONObject();
         try {
-            json.put("to", "/topics/" + ("Events/"+eventName).hashCode());
+            json.put("to", "/topics/" + ("Events/" + eventName).hashCode());
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title", title);
             notificationObj.put("body", message);

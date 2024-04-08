@@ -146,13 +146,22 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                         displayAttendees(attendeeNames);
                         // Update real-time attendance count
                         updateRealTimeAttendance(attendeeNames.size());
-                        if(attendeeNames.size() == 1){
-                            sendNotification(eventName, "First Attendee Checked IN!");
+                        if(attendeeNames.size() == 1) {
+                            // Display AlertDialog for first attendee
+                            showAlertDialog("First Attendee Checked IN!");
                         }
-                        if(attendeeNames.size() == 5  || attendeeNames.size() == 25 ||  attendeeNames.size() == 50 || attendeeNames.size() == 100
-                        || attendeeNames.size() == 200 || attendeeNames.size() == 300){
-                            sendNotification(eventName, "Checked-in attendees: " + attendeeNames.size());
+                        if(attendeeNames.size() == 5 || attendeeNames.size() == 25 || attendeeNames.size() == 50 || attendeeNames.size() == 100
+                                || attendeeNames.size() == 200 || attendeeNames.size() == 300) {
+                            // Display AlertDialog for specific attendee count
+                            showAlertDialog("Checked-in attendees: " + attendeeNames.size());
                         }
+//                        if(attendeeNames.size() == 1){
+////                            sendNotification(eventName, "First Attendee Checked IN!");
+//                        }
+//                        if(attendeeNames.size() == 5  || attendeeNames.size() == 25 ||  attendeeNames.size() == 50 || attendeeNames.size() == 100
+//                        || attendeeNames.size() == 200 || attendeeNames.size() == 300){
+////                            sendNotification(eventName, "Checked-in attendees: " + attendeeNames.size());
+//                        }
                     }
                 } else {
                     Log.d(TAG, "Event document not found");
@@ -160,8 +169,20 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
-
-
+    // Method to show AlertDialog
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Close the dialog if needed
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     /**
      * Displays the list of attendees in a ListView and sets click listeners for each item.
