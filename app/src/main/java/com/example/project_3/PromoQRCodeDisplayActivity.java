@@ -1,8 +1,6 @@
 package com.example.project_3;
 
-/**
- * This activity displays the promo QR code for a specific event along with event details.
- */
+
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,7 +24,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
-
+/**
+ * This activity displays the promo QR code for a specific event along with event details.
+ */
 public class PromoQRCodeDisplayActivity extends AppCompatActivity {
     private String eventName;
     private String eventLocation;

@@ -51,11 +51,12 @@ import org.osmdroid.views.overlay.Marker;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-
-/*
+//Source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
+/**
  * This fragment displays a map with event locations and attendee check-ins.
- * Source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
+ *
  */
+
 public class EventMapFragment extends Fragment  {
     private MapView map;
     private FirebaseFirestore db;
