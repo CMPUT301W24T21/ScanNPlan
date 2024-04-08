@@ -7,8 +7,17 @@ import android.graphics.Typeface;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
-
+/**
+ * Class for generating placeholder images based on text.
+ */
 public class ImageGen {
+
+    /**
+     * Generates a placeholder image with the specified name.
+     *
+     * @param name The text to be displayed in the placeholder image.
+     * @return A Base64 encoded string representing the placeholder image.
+     */
 
     public static String generatePlaceholderImage(String name) {
         int width = 200;
