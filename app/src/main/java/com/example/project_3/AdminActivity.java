@@ -39,6 +39,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_homepage);
+
         this.manage_events = findViewById(R.id.manage_events);
         this.manage_event_images = findViewById(R.id.manage_event_images);
         this.manage_profile_images = findViewById(R.id.manage_profile_images);
