@@ -54,11 +54,15 @@ public class EventDetailsActivity extends AppCompatActivity {
     private static final String TAG = "EventDetailsActivity";
 
 
+    /**
+     * Initializes the activity and sets up the UI components to display event details.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
+        // Retrieve event details passed via Intent extras
         eventName = getIntent().getStringExtra("eventName");
         eventLocation = getIntent().getStringExtra("eventLocation");
         eventDetails = getIntent().getStringExtra("eventDetails");
@@ -76,6 +80,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             return;
         }
 
+        // Populate UI components with event details
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
@@ -93,18 +98,21 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
 
         TextView eventDetailsView = findViewById(R.id.details_event);
-        eventDetailsView.setText(eventDetails);
 
+        eventDetailsView.setText("Notes: " + eventDetails);
+
+        // Set up FloatingActionButton for editing event details
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
 
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
 
 
+        // Set up buttons for viewing event location on map and managing attendees
         Button map = findViewById(R.id.map_button);
         Button checkIns = findViewById(R.id.check_ins);
-
         Button signUps = findViewById(R.id.sign_ups);
 
+        // Button to view attendees who have signed up for the event
         signUps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,16 +133,20 @@ public class EventDetailsActivity extends AppCompatActivity {
         signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
         signUps.setTextColor(getResources().getColor(R.color.white));
 
+        // Button to view event location on map
         map.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View v) {
-                                       EventMapFragment map = new EventMapFragment(eventName);
-                                       getSupportFragmentManager().beginTransaction()
-                                               .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
-                                               .commit();
-                                       findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
-                                   }
-                               }
+
+            @Override
+            public void onClick(View v) {
+                // Start the EventMapFragment to display the event location on a map
+                EventMapFragment map = new EventMapFragment(eventName);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
+                        .commit();
+                findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
+                }
+            }
+
         );
 
 
@@ -144,7 +156,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Start the AttendeesCheckedInActivity when the button is clicked
                 Intent intent = new Intent(v.getContext(), AttendeesCheckedInActivity.class);
-                intent.putExtra("event_name", eventName); // Add event name as an extra
+                intent.putExtra("event_name", eventName);
                 startActivity(intent);
             }
         });
@@ -168,6 +180,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
 
+        // Retrieve event image from Firestore and display it in ImageView
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Events").document(eventName)
                 .get()
