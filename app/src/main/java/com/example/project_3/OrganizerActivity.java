@@ -135,11 +135,11 @@ public class OrganizerActivity extends AppCompatActivity {
 
         // This button is to add a new event
         FloatingActionButton fabAddEvent = findViewById(R.id.fab_add_event);
-        fabAddEvent.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
+        fabAddEvent.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.DarkSalmon)));
 
         // This button is to view notifications
         FloatingActionButton fabNotif = findViewById(R.id.notif_button);
-        fabNotif.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
+        fabNotif.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.DarkSalmon)));
         fabAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
