@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Organizer_button.setOnClickListener(V -> {
             OrganizerIntent = new Intent(this, OrganizerActivity.class);
+            OrganizerIntent.putExtra("profileID", profileId);
             startActivity(OrganizerIntent);
         });
         Admin_button.setOnClickListener(V -> {

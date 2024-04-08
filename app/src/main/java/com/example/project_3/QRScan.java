@@ -181,7 +181,6 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // Finish the current activity to go back to the previous one
 
     }
     @Override
