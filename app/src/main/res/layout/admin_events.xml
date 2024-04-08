@@ -15,29 +15,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/global_top_appbar"/>
-
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/global_top_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_events_text"
             style="@style/MaterialAlertDialog.Material3.Body.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#141414"
             android:textAlignment="center"
             android:text="List of Events"
+            android:background="#141414"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/appbar">
-        </com.google.android.material.textview.MaterialTextView>
+            app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
         <ListView
             android:id="@+id/list_events_admin"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/list_events_text"
+            android:layout_height="0dp"
             android:divider="#141414"
-            android:dividerHeight="20sp">
-        </ListView>
+            android:dividerHeight="20sp"
+            app:layout_constraintTop_toBottomOf="@id/list_events_text"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
