@@ -34,15 +34,17 @@ public class Event implements Serializable {
     /**
      * Constructs an event with specified details.
      *
-     * @param name     The name of the event.
-     * @param date     The date of the event.
-     * @param time     The time of the event.
-     * @param location The location of the event.
-     * @param details  Details of the event.
-     * @param reuse    Whether the event can be reused.
-     * @param image    The image associated with the event.
-     * @param qrCode    The QR code associated with the event.
-     * @param qrPromoCode    The Promo QR Code associated with the event.
+     * @param name         The name of the event.
+     * @param date         The date of the event.
+     * @param time         The time of the event.
+     * @param location     The location of the event.
+     * @param details      Details of the event.
+     * @param reuse        Whether the event can be reused.
+     * @param image        The image associated with the event.
+     * @param qrCode       The QR code associated with the event.
+     * @param qrPromoCode  The Promo QR Code associated with the event.
+     * @param link         The link associated with the event.
+     * @param announcementss The announcements associated with the event.
      */
     public Event(String name, String date, String time, String location,
                  String details, boolean reuse, String image, String qrCode,
@@ -59,6 +61,22 @@ public class Event implements Serializable {
         this.link = link;
         this.announcementss = announcementss;
     }
+
+    /**
+     * Constructs an event with specified details.
+     *
+     * @param name          The name of the event.
+     * @param date          The date of the event.
+     * @param time          The time of the event.
+     * @param location      The location of the event.
+     * @param details       Details of the event.
+     * @param announcements The announcements associated with the event.
+     * @param reuse         Whether the event can be reused.
+     * @param image         The image associated with the event.
+     * @param qrCode        The QR code associated with the event.
+     * @param qrPromoCode   The Promo QR Code associated with the event.
+     * @param link          The link associated with the event.
+     */
     public Event(String name, String date, String time, String location,
                  String details, ArrayList<Announcement> announcements,  boolean reuse, String image, String qrCode,
                  String qrPromoCode, String link) {
