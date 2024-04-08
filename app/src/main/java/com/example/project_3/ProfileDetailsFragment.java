@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -25,12 +26,14 @@ public class ProfileDetailsFragment extends Fragment {
     private Profile profile;
     private FirebaseFirestore db;
     private CollectionReference profilesref;
+    private Boolean isImage;
     /**
      *Constructs a new instance of the fragment with the selected profile
      * @param profile the profile with the details displayed
      */
-    public ProfileDetailsFragment(Profile profile) {
+    public ProfileDetailsFragment(Profile profile, Boolean isImage) {
         this.profile = profile;
+        this.isImage = isImage;
 
     }
     /**
@@ -78,6 +81,8 @@ public class ProfileDetailsFragment extends Fragment {
         contact_info.setText(profile.getContact_info());
         MaterialButton back = view.findViewById(R.id.back_button);
         MaterialButton deletes = view.findViewById(R.id.delete_profile_button);
+        //image delete button
+        MaterialButton deleteImage = view.findViewById(R.id.delete_profile_image_button);
         db = FirebaseFirestore.getInstance();
         profilesref = db.collection("Profiles");
         ImageView pfp = view.findViewById(R.id.profile_image);
@@ -87,6 +92,20 @@ public class ProfileDetailsFragment extends Fragment {
         else{
             pfp.setImageDrawable(null);
         }
+        //deletes the images,
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profilesref.document(profile.getProfileID()).update("profile_image",FieldValue.delete());
+                getParentFragmentManager().popBackStack();
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         //goes through the collection and identifies the document with a matching ID and deletes it
         deletes.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +113,12 @@ public class ProfileDetailsFragment extends Fragment {
             public void onClick(View v) {
                 profilesref.document(profile.getProfileID()).delete();
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
         //if back is clicked pop the stack and go back to the activity
@@ -102,7 +126,12 @@ public class ProfileDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 

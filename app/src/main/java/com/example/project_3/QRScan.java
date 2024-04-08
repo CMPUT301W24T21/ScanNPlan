@@ -78,11 +78,19 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         messageText.setText("Scan your Check-in or Promo QR Code");
         messageFormat = findViewById(R.id.textFormat);
         messageFormat.setText("Press the Scan button to continue!");
-        if (!hasLocationPermissions()){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_REQUEST_CODE);
-            Toast.makeText(this, "It is recommended to turn on location permissions for check-in. You can choose to hide your geolocation from the organizer anytime in your Edit Profile page!", Toast.LENGTH_LONG).show();
 
-        }
+        TextView appbar = findViewById(R.id.appbar_title);
+        appbar.setText("QRScanner");
+        Button back = findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), AttendeeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         // adding listener to the button
         scanBtn.setOnClickListener(this);
@@ -135,6 +143,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 profilesRef = db.collection("Profiles");
                 profileID = getIntent().getStringExtra("profileName");
                 if (intentResult.getContents().startsWith("Events/")) {
+                    // Handle event QR code scan
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
                     getSupportFragmentManager().beginTransaction()
@@ -148,6 +157,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
 
                 }
                 else if (intentResult.getContents().startsWith("QrCodes/")) {
+                    // Handle QR code scan for check-in
+                    // Update Firestore with check-in information
                     db.document(intentResult.getContents()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -162,7 +173,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                     getLocation(eventDoc);
                                     addEventCount(eventDoc);
                                     Toast.makeText(getBaseContext(), "Succesfully Checked-In!", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    Intent intent = new Intent(getBaseContext(), AttendeeActivity.class);
+                                    startActivity(intent);
 
                                 } else {
                                     Log.d("DEBUG", "No such document");
@@ -181,9 +193,15 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // Finish the current activity to go back to the previous one
 
     }
+
+    /**
+     * Handles location permission request result.
+     * @param requestCode The request code for permission request.
+     * @param permissions The requested permissions.
+     * @param grantResults The results of the permission request.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -198,10 +216,20 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
+
+    /**
+     * Checks if location permissions are granted.
+     * @return True if location permissions are granted, false otherwise.
+     */
     private boolean hasLocationPermissions() {
         return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
+
+    /**
+     * Retrieves the current location and updates Firestore with the check-in location.
+     * @param eventDoc The Firestore document reference for the event.
+     */
     private void getLocation(DocumentReference eventDoc){
         if (!isLocationUpdated) {
             String location_context = Context.LOCATION_SERVICE;
@@ -245,6 +273,11 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
+
+    /**
+     * Updates the event check-in count for the user in Firestore.
+     * @param eventDoc The Firestore document reference for the event.
+     */
     public void addEventCount(DocumentReference eventDoc){
         profilesRef.document(profileID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

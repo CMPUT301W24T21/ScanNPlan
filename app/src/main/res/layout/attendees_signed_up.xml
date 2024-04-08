@@ -22,19 +22,48 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="73dp"
             android:layout_marginBottom="14dp"
-            android:text="Attendees Registered"
+            android:text="Attendees Signed Up"
             android:textSize="25dp" />
 
+        <TextView
+            android:id="@+id/attendance_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/real_time_attendance_placeholder" />
+
+        <EditText
+            android:id="@+id/max_attendees_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="Max Attendees Limit"
+            android:inputType="number"
+            android:maxLength="3" />
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/max_attendees_edittext"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:text="Confirm" />
 
         <ListView
             android:id="@+id/attendees_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/textView"
+            android:layout_below="@id/confirm_button"
             android:layout_above="@id/attendance_count_text"
             android:padding="8dp" />
 
     </RelativeLayout>
-
-
 </RelativeLayout>

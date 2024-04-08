@@ -21,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminEventDetailsFragment extends Fragment {
@@ -28,9 +29,11 @@ public class AdminEventDetailsFragment extends Fragment {
     private Event event;
     private FirebaseFirestore db;
     private CollectionReference eventsref;
+    private Boolean isImage;
 
-    public AdminEventDetailsFragment(Event event) {
+    public AdminEventDetailsFragment(Event event, Boolean isImage) {
         this.event = event;
+        this.isImage = isImage;
 
     }
 
@@ -63,6 +66,8 @@ public class AdminEventDetailsFragment extends Fragment {
         TextView details = view.findViewById(R.id.event_details);
         details.setText(event.getDetails());
         MaterialButton delete = view.findViewById(R.id.delete_event_button);
+        //delete the event image
+        MaterialButton deleteImage = view.findViewById(R.id.delete_event_image_button);
         ImageView image = view.findViewById(R.id.event_poster);
         eventsref.document(event.getName()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -76,13 +81,34 @@ public class AdminEventDetailsFragment extends Fragment {
                     }
                 }
             }});
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //test idk if this will actually work
+                // or we can just set the image to be null
+                eventsref.document(event.getName()).update("Image", FieldValue.delete());
+                getParentFragmentManager().popBackStack();
+                // okay this will heavily depend on how we demo this
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 eventsref.document(event.getName()).delete();
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
         MaterialButton back = view.findViewById(R.id.back_button);
@@ -91,7 +117,12 @@ public class AdminEventDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 

@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -106,6 +108,17 @@ public class BrowseEventImagesFragment extends Fragment {
                     }
                     imagesAdapter.notifyDataSetChanged();
                 }
+            }
+        });
+        //takes us to the event so we can delete the image
+        GridImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Event selected_event = (Event) eventsImages.get(position);
+                AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event, Boolean.TRUE);
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.admin_events_images_fragment_container, fragment).addToBackStack(null).commit();
+                view.findViewById(R.id.rest_events_images_list).setVisibility(View.INVISIBLE);
             }
         });
 

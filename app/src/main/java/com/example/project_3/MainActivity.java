@@ -1,11 +1,13 @@
 package com.example.project_3;
 
+import android.Manifest;
 import android.app.NotificationManager;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference profilesRef;
     private Map<String, Object> profileDocDetails;
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 123;
     private CollectionReference tokenRef;
     private static final String TAG = "MainActivity";
     private String docPath;
@@ -60,7 +63,19 @@ public class MainActivity extends AppCompatActivity {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
         }
+        else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!hasLocationPermissions()) {
+                        requestLocationPermission();
+                    }
+                }
+                //Adding a delay to allow processing time between prompts
+            }, 200);
+        }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Organizer_button.setOnClickListener(V -> {
             OrganizerIntent = new Intent(this, OrganizerActivity.class);
+            OrganizerIntent.putExtra("profileID", profileId);
             startActivity(OrganizerIntent);
 
         });
@@ -227,5 +243,28 @@ public class MainActivity extends AppCompatActivity {
             // No permission required for pre-Oreo devices
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            // After notification permission has been requested then check location permission
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!hasLocationPermissions()) {
+                        requestLocationPermission();
+                    }
+                }
+            }, 200);
+        }
+    }
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+
+    }
+    private boolean hasLocationPermissions() {
+        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }

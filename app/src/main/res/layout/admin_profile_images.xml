@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/admin_profiles_images_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <include
-        android:id="@+id/images_topbar"
-        layout="@layout/global_top_appbar" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rest_profiles_images_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/global_top_appbar"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/list_of_Profile_Images"
@@ -28,7 +35,7 @@
         android:id="@+id/grid_Profile_images_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="4"
+        android:numColumns="2"
         app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +52,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

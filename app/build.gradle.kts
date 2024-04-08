@@ -35,6 +35,7 @@ android {
 dependencies {
 //    implementation("com.google.zxing:core:3.4.1")
 //    implementation("com.journeyapps:zxing-android-embedded:3.4.0")
+    compileOnly(files("${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"))
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.google.firebase:firebase-inappmessaging-display:20.4.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")

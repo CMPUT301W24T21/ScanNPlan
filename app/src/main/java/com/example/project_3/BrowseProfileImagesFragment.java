@@ -5,15 +5,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -36,6 +40,7 @@ public class BrowseProfileImagesFragment extends Fragment {
     private CollectionReference profilesRef;
     private ArrayList<Profile> profilesImages;
     private GridProfileImagesArrayAdapter imagesAdapter;
+    private String profileID;
     /**
      * Default constructor, initializes new instance of the fragment
      */
@@ -113,6 +118,18 @@ public class BrowseProfileImagesFragment extends Fragment {
                 }
             }
         });
+        //takes us to the profile so we can delete the image
+        GridImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Profile selected_profile = (Profile) profilesImages.get(position);
+                ProfileDetailsFragment fragment = new ProfileDetailsFragment(selected_profile, Boolean.TRUE);
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.admin_profiles_images_fragment_container, fragment).addToBackStack(null).commit();
+                view.findViewById(R.id.rest_profiles_images_list).setVisibility(View.INVISIBLE);
+            }
+        });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

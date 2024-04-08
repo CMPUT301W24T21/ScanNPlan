@@ -65,6 +65,7 @@ public class OrganizerActivity extends AppCompatActivity {
     private String base64QRCode;
     private String base64QRPromoCode;
     private String previousId = null;
+    private String profileID;
     private String info;
     private static final String TAG = "OrganizerActivity";
     private String docPath;
@@ -87,6 +88,7 @@ public class OrganizerActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
         qrRef = db.collection("QrCodes");
+        profileID = getIntent().getStringExtra("profileID");
 
         // Initializing the UI components
         eventDataList = new ArrayList<>();
@@ -168,22 +170,29 @@ public class OrganizerActivity extends AppCompatActivity {
                     eventDataList.clear();
                     for (QueryDocumentSnapshot doc : querySnapshots) {
                         // Retrieving the event data from Firestore and adding it to the list
-                        String event = doc.getId();// for displaying event name in ListView
-                        boolean reuse = false;
-                        String date = doc.getString("Date");
-                        String time = "No Time";
-                        String location = doc.getString("Location");// for displaying location in ListView
-                        String details = doc.getString("Details");
-                        String imageUri = doc.getString("Image");
-                        String qrCode = doc.getString("QRCode");
-                        String qrPromoCode = doc.getString("QRPromoCode");
-                        String link = doc.getString("link");
+                        if (doc.getString("profileID") != null) {
+                            if (doc.getString("profileID").equals(profileID)) {
+                                String event = doc.getId();// for displaying event name in ListView
+                                boolean reuse = false;
+                                String date = doc.getString("Date");
+                                String time = "No Time";
+                                String location = doc.getString("Location");// for displaying location in ListView
+                                String details = doc.getString("Details");
+                                String imageUri = doc.getString("Image");
+                                String qrCode = doc.getString("QRCode");
+                                String qrPromoCode = doc.getString("QRPromoCode");
+                                String link = doc.getString("link");
 
-                        ArrayList<Map<String, Object>> eventAnnouncements = new ArrayList<>();
+                                ArrayList<Map<String, Object>> eventAnnouncements = new ArrayList<>();
 
-                        eventDataList.add(0,new Event(event, date, time, location,
-                                details, reuse, imageUri, qrCode, qrPromoCode, link, eventAnnouncements));
-                    }
+                                eventDataList.add(0, new Event(event, date, time, location,
+                                        details, reuse, imageUri, qrCode, qrPromoCode, link, eventAnnouncements));
+                            }
+                        }
+                        else{
+                            continue;
+                        }
+                        }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
             }
@@ -212,6 +221,7 @@ public class OrganizerActivity extends AppCompatActivity {
         data.put("QR Code", event.getQrCode());
         data.put("QR Promo Code", event.getQrPromoCode());
         data.put("Link", event.getLink());
+        data.put("profileID", profileID);
         ArrayList<Map<String, Object>> announcements = event.getAnnouncementss();
         if (announcements != null) {
             data.put("announcements", announcements);
