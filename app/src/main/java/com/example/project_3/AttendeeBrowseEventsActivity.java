@@ -4,11 +4,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -16,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.inappmessaging.MessagesProto;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,6 +50,16 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
         eventList = findViewById(R.id.event_list);
         eventArrayAdapter = new EventArrayAdapter(this, eventDataList);
         eventList.setAdapter(eventArrayAdapter);
+        TextView appbarTitle = findViewById(R.id.appbar_title);
+        appbarTitle.setText("Browse All Events");
+
+        MaterialButton back = findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/global_top_appbar" />
+
     <ListView
         android:id="@+id/event_list"
         android:layout_width="match_parent"
