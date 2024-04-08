@@ -290,10 +290,21 @@ public class Event implements Serializable {
      */
     public void setQrPromoCode(String qrPromoCode) {this.qrPromoCode = qrPromoCode;}
 
+
+    /**
+     * Retrieves the list of announcements associated with the event.
+     *
+     * @return The list of announcements associated with the event.
+     */
     public ArrayList<Announcement> getAnnouncements() {
         return this.announcements;
     }
 
+    /**
+     * Sets the list of announcements associated with the event.
+     *
+     * @param announcements The list of announcements to be associated with the event.
+     */
     public void setAnnouncements(ArrayList<Announcement> announcements) {
         this.announcements = announcements;
     }
