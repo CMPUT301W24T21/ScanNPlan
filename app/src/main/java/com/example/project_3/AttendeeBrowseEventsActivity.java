@@ -20,6 +20,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Activity for browsing and selecting events as an attendee.
+ */
 public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
@@ -27,6 +30,9 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     private ArrayList<Event> eventDataList;
     private EventArrayAdapter eventArrayAdapter;
 
+    /**
+     * Initializes the activity and sets up the UI components and Firebase listener.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -51,12 +51,20 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         this.docPath = docPath;
     }
 
-
+    /**
+     * Called to do initial creation of the fragment.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    /**
+     * Called when a fragment is first attached to its context.
+     *
+     * @param context The context to attach to.
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
