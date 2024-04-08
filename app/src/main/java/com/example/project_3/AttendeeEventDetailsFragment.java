@@ -1,7 +1,11 @@
 package com.example.project_3;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +66,6 @@ public class AttendeeEventDetailsFragment extends androidx.fragment.app.Fragment
         appBar.setText(selectedEvent.getName());
 
         //Sets up the other fields
-        ImageView poster = view.findViewById(R.id.event_poster);
 
         TextView date = view.findViewById(R.id.event_date);
         date.setText(selectedEvent.getDate());
@@ -74,6 +77,21 @@ public class AttendeeEventDetailsFragment extends androidx.fragment.app.Fragment
         details.setText(selectedEvent.getDetails());
 
         MaterialButton back = view.findViewById(R.id.back_button);
+
+        String base64Image = selectedEvent.getImage();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            // Decode base64 string to bitmap
+            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+            if (decodedByte != null) {
+                // Set bitmap to ImageView
+                ImageView poster = view.findViewById(R.id.event_poster);
+                poster.setImageBitmap(decodedByte);
+            } else {
+                Log.e("Image Decoding", "Failed to decode base64 string into bitmap.");
+            }
+        }
         //if back is clicked pop the stack and go back to the activity
         /**
          * Handles the back button click event, popping the fragment from the stack sending you back.
