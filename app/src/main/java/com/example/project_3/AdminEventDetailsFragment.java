@@ -23,14 +23,20 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+/**
+ * This fragment displays the details of an event in the admin interface.
+ */
 public class AdminEventDetailsFragment extends Fragment {
 
     private Event event;
     private FirebaseFirestore db;
     private CollectionReference eventsref;
     private Boolean isImage;
-
+    /**
+     * Constructor for AdminEventDetailsFragment.
+     *
+     * @param event The event object for which details are to be displayed.
+     */
     public AdminEventDetailsFragment(Event event, Boolean isImage) {
         this.event = event;
         this.isImage = isImage;
