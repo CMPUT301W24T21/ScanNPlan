@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,32 +17,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include
-            android:id="@+id/appbar"
-            layout="@layout/global_top_appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+
+        <include layout="@layout/global_top_appbar"/>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_profiles_text"
             style="@style/MaterialAlertDialog.Material3.Body.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:background="@color/black"
             android:text="List of Profiles"
-            android:background="#141414"
+            android:textAlignment="center"
+            android:textColor="@color/OffWhite"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+            app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        </com.google.android.material.textview.MaterialTextView>
+
 
         <ListView
             android:id="@+id/list_profiles_admin"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:divider="#141414"
+
+            android:layout_height="wrap_content"
+            android:divider="@color/black"
             android:dividerHeight="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/list_profiles_text"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp">
+
+
+        </ListView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
