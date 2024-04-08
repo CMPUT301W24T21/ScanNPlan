@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/gradient_2">
+    android:background="@drawable/gradient_horizontal1">
 
     <ImageView
         android:id="@+id/profiles_list_image"

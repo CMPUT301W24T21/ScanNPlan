@@ -54,7 +54,7 @@
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#26202C"
+        android:background="@color/DarkerSalmon"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         />

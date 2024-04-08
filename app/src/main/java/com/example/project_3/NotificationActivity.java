@@ -51,6 +51,7 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
         TextView appBarText = findViewById(R.id.appbar_title);
+        appBarText.setTextSize(22);
         appBarText.setText("Announcements");
 
         // Todo:
