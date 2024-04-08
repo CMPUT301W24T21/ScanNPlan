@@ -89,11 +89,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-        if (!hasLocationPermissions()){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_REQUEST_CODE);
-            Toast.makeText(this, "It is recommended to turn on location permissions for check-in. You can choose to hide your geolocation from the organizer anytime in your Edit Profile page!", Toast.LENGTH_LONG).show();
 
-        }
+
 
         // adding listener to the button
         scanBtn.setOnClickListener(this);
