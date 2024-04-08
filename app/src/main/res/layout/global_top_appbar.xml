@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Back"
-
             android:textColor="@color/black"
             app:backgroundTint="@color/Beige"
 

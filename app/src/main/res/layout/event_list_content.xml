@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_2">
     <ImageView
         android:id="@+id/events_list_image"
         android:layout_width="100dp"
@@ -20,6 +21,7 @@
         android:layout_height="100dp"
         android:text="Event Title"
         android:textAlignment="center"
+        android:textColor="@color/OffWhite"
         android:textSize="15sp"
         android:gravity="center"
         style="@style/MaterialAlertDialog.Material3.Body.Text"

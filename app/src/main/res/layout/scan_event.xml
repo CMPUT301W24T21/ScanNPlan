@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_vertical1">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/scanner_fragment_container"
@@ -60,7 +61,7 @@
             android:layout_height="88dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:backgroundTint="#0F9D58"
+            android:backgroundTint="@color/Beige"
             android:text="Scan"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

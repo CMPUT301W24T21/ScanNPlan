@@ -64,6 +64,10 @@ public class AdminEventDetailsFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         eventsref = db.collection("Events");
         TextView date = view.findViewById(R.id.event_date);
+
+        //TextView eventName = view.findViewById(R.id.event_name);
+        //eventName.setText(event.getName());
+
         date.setText(event.getDate());
         TextView time = view.findViewById(R.id.event_time);
         time.setText(event.getTime());

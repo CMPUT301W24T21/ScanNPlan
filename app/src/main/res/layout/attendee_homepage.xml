@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_vertical1">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/attendee_fragment_container"
@@ -40,7 +41,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/BrowseEventsButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:backgroundTint="@color/DarkerSalmon"/>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -54,7 +56,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/EditProfile"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/BrowseEventsButton" />
+            app:layout_constraintStart_toEndOf="@+id/BrowseEventsButton"
+            app:backgroundTint="@color/DarkerSalmon"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/EditProfile"
@@ -67,7 +70,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/openCameraButton" />
+            app:layout_constraintStart_toEndOf="@+id/openCameraButton"
+            app:backgroundTint="@color/DarkerSalmon"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/BrowseEventsButton"
@@ -80,7 +84,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/openCameraButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/announcementsButton" />
+            app:layout_constraintStart_toEndOf="@+id/announcementsButton"
+            app:backgroundTint="@color/DarkerSalmon"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

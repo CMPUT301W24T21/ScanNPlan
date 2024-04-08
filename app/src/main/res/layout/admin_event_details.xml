@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_vertical1">
 
     <include
         android:id="@+id/appbar"
@@ -21,17 +22,20 @@
         app:layout_constraintTop_toBottomOf="@+id/appbar"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_event_image_button"
         android:layout_width="141dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="37dp"
         android:text="Delete Image"
+        android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/event_date"
+
+        app:backgroundTint="@color/Beige"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.903"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="231dp" />
 
 
     <com.google.android.material.textview.MaterialTextView
@@ -40,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/event_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -52,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/event_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -64,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/event_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -76,6 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Details"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/delete_event_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -85,6 +93,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_event_button"
         android:text="Delete"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,4 +103,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_details" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

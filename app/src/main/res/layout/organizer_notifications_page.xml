@@ -6,18 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/notification_page_layout"
-    tools:context=".NotificationsPage">
+    tools:context=".NotificationsPage"
+    android:background="@drawable/gradient_vertical1">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#26202C"
+        android:background="@color/DarkerSalmon"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/notifTextView"
@@ -27,6 +29,7 @@
         android:layout_alignParentEnd="true"
         android:gravity="center"
         android:text="Notifications"
+        android:textColor="@color/OffWhite"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="Back"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/materialToolbar" />
