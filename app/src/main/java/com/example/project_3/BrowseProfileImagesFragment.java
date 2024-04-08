@@ -123,7 +123,7 @@ public class BrowseProfileImagesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Profile selected_profile = (Profile) profilesImages.get(position);
-                ProfileDetailsFragment fragment = new ProfileDetailsFragment(selected_profile);
+                ProfileDetailsFragment fragment = new ProfileDetailsFragment(selected_profile, Boolean.TRUE);
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.admin_profiles_images_fragment_container, fragment).addToBackStack(null).commit();
                 view.findViewById(R.id.rest_profiles_images_list).setVisibility(View.INVISIBLE);

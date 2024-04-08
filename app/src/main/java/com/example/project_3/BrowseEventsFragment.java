@@ -113,7 +113,7 @@ public class BrowseEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Event selected_event = eventNamesList.get(position);
-                AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event);
+                AdminEventDetailsFragment fragment = new AdminEventDetailsFragment(selected_event, Boolean.FALSE);
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.admin_events_fragment_container, fragment).addToBackStack(null).commit();
                 view.findViewById(R.id.rest_events_list).setVisibility(View.INVISIBLE);

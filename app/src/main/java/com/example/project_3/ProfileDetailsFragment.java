@@ -26,12 +26,14 @@ public class ProfileDetailsFragment extends Fragment {
     private Profile profile;
     private FirebaseFirestore db;
     private CollectionReference profilesref;
+    private Boolean isImage;
     /**
      *Constructs a new instance of the fragment with the selected profile
      * @param profile the profile with the details displayed
      */
-    public ProfileDetailsFragment(Profile profile) {
+    public ProfileDetailsFragment(Profile profile, Boolean isImage) {
         this.profile = profile;
+        this.isImage = isImage;
 
     }
     /**
@@ -96,7 +98,12 @@ public class ProfileDetailsFragment extends Fragment {
             public void onClick(View v) {
                 profilesref.document(profile.getProfileID()).update("profile_image",FieldValue.delete());
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -106,7 +113,12 @@ public class ProfileDetailsFragment extends Fragment {
             public void onClick(View v) {
                 profilesref.document(profile.getProfileID()).delete();
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
         //if back is clicked pop the stack and go back to the activity
@@ -114,7 +126,12 @@ public class ProfileDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_profiles_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 
