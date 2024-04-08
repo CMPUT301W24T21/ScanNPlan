@@ -153,6 +153,7 @@ public class OrganizerActivity extends AppCompatActivity {
                 // Start the NotificationsPage when the button is clicked
                 Intent intent = new Intent(OrganizerActivity.this, NotificationsPage.class);
                 startActivity(intent);
+
             }
         });
 

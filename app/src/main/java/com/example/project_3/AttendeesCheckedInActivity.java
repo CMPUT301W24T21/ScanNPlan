@@ -29,11 +29,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,10 +50,13 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,11 +76,13 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     private static final String TAG = "AttendeesCheckedInActivity";
     private TextView attendanceCountTextView;
     private ListenerRegistration eventListener;
+    private boolean notificationSent = false;
 
     /**
      * Initializes the activity layout, Firestore instance, and necessary references.
      * Retrieves the event name from the intent and sets up UI components.
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,22 +158,17 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
                         displayAttendees(attendeeNames);
                         // Update real-time attendance count
                         updateRealTimeAttendance(attendeeNames.size());
-                        if(attendeeNames.size() == 1) {
-                            // Display AlertDialog for first attendee
-                            showAlertDialog("First Attendee Checked IN!");
+
+                        if (attendeeNames.size() == 1 && !notificationSent) {
+                            notificationSent = true;    // Set the flag to true to indicate that the notification has been sen
+                            showAlertDialog("First Attendee Checked IN!", eventName);
                         }
-                        if(attendeeNames.size() == 5 || attendeeNames.size() == 25 || attendeeNames.size() == 50 || attendeeNames.size() == 100
-                                || attendeeNames.size() == 200 || attendeeNames.size() == 300) {
-                            // Display AlertDialog for specific attendee count
-                            showAlertDialog("Checked-in attendees: " + attendeeNames.size());
+                        else if ((attendeeNames.size() == 5 || attendeeNames.size() == 25 || attendeeNames.size() == 50
+                                || attendeeNames.size() == 100 || attendeeNames.size() == 200 || attendeeNames.size() == 300)
+                                && !notificationSent) {
+                            notificationSent = true;    // Set the flag to true to indicate that the notification has been sent
+                            showAlertDialog("Checked-in attendees: " + attendeeNames.size(), eventName);
                         }
-//                        if(attendeeNames.size() == 1){
-////                            sendNotification(eventName, "First Attendee Checked IN!");
-//                        }
-//                        if(attendeeNames.size() == 5  || attendeeNames.size() == 25 ||  attendeeNames.size() == 50 || attendeeNames.size() == 100
-//                        || attendeeNames.size() == 200 || attendeeNames.size() == 300){
-////                            sendNotification(eventName, "Checked-in attendees: " + attendeeNames.size());
-//                        }
                     }
                 } else {
                     Log.d(TAG, "Event document not found");
@@ -169,20 +176,61 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
-    // Method to show AlertDialog
-    private void showAlertDialog(String message) {
+
+    private void showAlertDialog(final String message, final String title) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // Close the dialog if needed
+                        // Call a method to handle Firestore update
+                        updateFirestoreWithAnnouncement(message, title);
+                        // Close the dialog
                         dialog.dismiss();
                     }
                 });
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    private void updateFirestoreWithAnnouncement(String title , String message) {
+        Map<String, Object> announcement = new HashMap<>();
+        announcement.put("content", title + " - " + message); // Assuming title is a member variable of your class
+        announcement.put("event_name", eventName);
+        announcement.put("timestamp", new Timestamp(new Date()));
+        db.collection("Events").document(eventName).update("Milestones", FieldValue.arrayUnion(announcement))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Update successful
+                        Toast.makeText(getApplicationContext(), "Milestone added successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getApplicationContext(), "Failed to add announcement: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // Method to show Milestones
+//    private void showAlertDialog(String message) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(message)
+//                .setCancelable(false)
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // Close the dialog if needed
+//                        dialog.dismiss();
+//                    }
+//                });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//    }
 
     /**
      * Displays the list of attendees in a ListView and sets click listeners for each item.
@@ -205,8 +253,6 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
-
-
     /**
      * Displays a dialog with details of the selected attendee.
      * Fetches the attendee details from Firestore and presents them in the dialog.
@@ -273,8 +319,6 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     private void updateRealTimeAttendance(int count) {
         attendanceCountTextView.setText("Real time attendance: " + count);
     }
-
-
     /**
      * Cleans up resources when the activity is destroyed.
      * Removes the Firestore listener to avoid memory leaks.
@@ -289,69 +333,109 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
     }
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
-    void sendNotification(String title, String message) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
-
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Get the TokenList field as a List
-                    List<String> tokenList = (List<String>) document.get("OrganizerTokens");
-                    if (tokenList != null) {
-                        // Iterate over the TokenList and send notification to each token
-                        for (String token : tokenList) {
-                            try {
-                                JSONObject jsonObject = new JSONObject();
-
-                                JSONObject notificationObj = new JSONObject();
-                                notificationObj.put("title", title);
-                                notificationObj.put("body", message);
-
-                                JSONObject dataObj = new JSONObject();
-                                dataObj.put("userId", title);
-
-                                jsonObject.put("notification", notificationObj);
-                                jsonObject.put("data", dataObj);
-                                jsonObject.put("to", token);
-
-                                callApi(jsonObject);
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error sending notification to token: " + token, e);
-                            }
-                        }
-                    } else {
-                        Log.d(TAG, "OrganizerTokens is null");
-                    }
-                } else {
-                    Log.d(TAG, "No such document");
-                }
-            } else {
-                Log.d(TAG, "get failed with ", task.getException());
-            }
-        });
-    }
-    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
-    // describes how to use Firebase Messaging and FCM
-    void callApi(JSONObject jsonObject){
-        MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        String url = "https://fcm.googleapis.com/fcm/send";
-        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht") // you need to paste in the API KEY HERE. I removed it for safety purposes
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-            }
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-            }
-        });
-    }
+//    void sendNotification(String title, String message) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference tokenRef = db.collection("Tokens");
+//
+//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    // Get the TokenList field as a List
+//                    List<String> tokenList = (List<String>) document.get("OrganizerTokens");
+//                    if (tokenList != null) {
+//                        // Iterate over the TokenList and send notification to each token
+//                        for (String token : tokenList) {
+//                            try {
+//                                JSONObject jsonObject = new JSONObject();
+//
+//                                JSONObject notificationObj = new JSONObject();
+//                                notificationObj.put("title", title);
+//                                notificationObj.put("body", message);
+//
+//                                JSONObject dataObj = new JSONObject();
+//                                dataObj.put("userId", title);
+//
+//                                jsonObject.put("notification", notificationObj);
+//                                jsonObject.put("data", dataObj);
+//                                jsonObject.put("to", token);
+//
+//                                callApi(jsonObject);
+//
+//                            } catch (Exception e) {
+//                                Log.e(TAG, "Error sending notification to token: " + token, e);
+//                            }
+//                        }
+//                    } else {
+//                        Log.d(TAG, "OrganizerTokens is null");
+//                    }
+//                } else {
+//                    Log.d(TAG, "No such document");
+//                }
+//            } else {
+//                Log.d(TAG, "get failed with ", task.getException());
+//            }
+//        });
+//    }
+//    void sendNotification(String title, String message) {
+//        // Taken from: https://stackoverflow.com/questions/55948318/how-to-send-a-firebase-message-to-topic-from-android
+//
+//        RequestQueue mRequestQue = Volley.newRequestQueue(this);
+//
+//        JSONObject json = new JSONObject();
+//        try {
+//            json.put("to", "/topics/" + ("Events/" + eventName).hashCode());
+//            JSONObject notificationObj = new JSONObject();
+//            notificationObj.put("title", title);
+//            notificationObj.put("body", message);
+//            //replace notification with data when went send data
+//            json.put("notification", notificationObj);
+//
+//            String URL = "https://fcm.googleapis.com/fcm/send";
+//            JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
+//                    json,
+//                    response -> Log.d("MUR", "onResponse: "),
+//                    error -> Log.d("MUR", "onError: " + error.networkResponse)
+//            ) {
+//                @Override
+//                public Map<String, String> getHeaders() {
+//                    Map<String, String> header = new HashMap<>();
+//                    header.put("content-type", "application/json");
+//                    header.put("authorization", "key=AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht");
+//                    return header;
+//                }
+//            };
+//
+//
+//            mRequestQue.add(request);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        Map<String, Object> announcement = new HashMap<String, Object>();
+//        announcement.put("content", title + " - " + message);
+//        announcement.put("event_name", eventName);
+//        announcement.put("timestamp", new Timestamp(new Date()));
+//        db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
+//    }
+//    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
+//    // describes how to use Firebase Messaging and FCM
+//    void callApi(JSONObject jsonObject){
+//        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+//        OkHttpClient client = new OkHttpClient();
+//        String url = "https://fcm.googleapis.com/fcm/send";
+//        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(body)
+//                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht") // you need to paste in the API KEY HERE. I removed it for safety purposes
+//                .build();
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//            }
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//            }
+//        });
+//    }
 }

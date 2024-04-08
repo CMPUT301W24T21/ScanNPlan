@@ -73,6 +73,10 @@ public class EditEventDetails extends AppCompatActivity {
     private String imageUry;
     private String link;
     private String info;
+    private String info_1;
+    private String info_2;
+    private String info_3;
+    private String info_4;
     private FirebaseFirestore db;
 
 
@@ -110,6 +114,7 @@ public class EditEventDetails extends AppCompatActivity {
         ImageButton addPosterButton = findViewById(R.id.add_poster);
         ImageButton addLink = findViewById(R.id.add_link);
         ImageButton qrViewButton = findViewById(R.id.view_qrcode);
+        ImageButton editDetailsButton = findViewById(R.id.edit_details);
 
 
         // Alphabet Inc, 2024, YouTube, https://www.youtube.com/watch?v=vyt20Gg2Ckg
@@ -148,6 +153,14 @@ public class EditEventDetails extends AppCompatActivity {
         addLink.setOnClickListener(v -> {
             showAddLinkDialog();
         });
+        editDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditDialog();
+            }
+        });
+
+
         qrViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +177,37 @@ public class EditEventDetails extends AppCompatActivity {
             }
         });
 
+    }
+    public void showEditDialog(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_edit_details, null);
+        final EditText editDateF= view.findViewById(R.id.edit_date);
+        final EditText editTimeF= view.findViewById(R.id.edit_time);
+        final EditText editLocationF= view.findViewById(R.id.edit_location);
+        final EditText editDetailsF= view.findViewById(R.id.edit_details);
+        final EditText editMaxF= view.findViewById(R.id.edit_max_peeps);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view)
+                .setTitle("Edit Details for the Event")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    String eventNewDate = editDateF.getText().toString();
+                    String eventNewTime = editTimeF.getText().toString();
+                    String eventNewLocation = editLocationF.getText().toString();
+                    String eventNewDetails = editDetailsF.getText().toString();
+                    String eventNewMax = editMaxF.getText().toString();
+
+                    info = eventNewDate;
+                    info_1 = eventNewTime;
+                    info_2 = eventNewLocation;
+                    info_3 = eventNewDetails;
+                    info_4 = eventNewMax;
+
+                    updateDetails(info, info_1, info_2, info_3, info_4);
+
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
     public void showAddLinkDialog(){
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -415,6 +459,96 @@ public class EditEventDetails extends AppCompatActivity {
                     Toast.makeText(EditEventDetails.this, "Failed to update image", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Error updating image", e);
                 });
+    }
+    public void updateDetails(String date, String time, String location, String details
+    , String max){
+        // Get the Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Get the reference to the specific event document
+        DocumentReference eventRef = db.collection("Events").document(eventName);
+
+        // Create a map to update the image field
+        Map<String, Object> updates = new HashMap<>();
+        if(date!= null && !date.isEmpty()) {
+            updates.put("Date", date);
+            eventRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        sendNotification(eventName , "Date: Updated");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(EditEventDetails.this, "Failed to update Date", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error updating Date", e);
+                    });
+        }
+        if(time!= null && !time.isEmpty()) {
+            updates.put("Time", time);
+            eventRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        sendNotification(eventName , "Time: Updated");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(EditEventDetails.this, "Failed to update Time", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error updating Time", e);
+                    });
+        }
+        if(location!= null && !location.isEmpty()) {
+            updates.put("Location", location);
+            eventRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        sendNotification(eventName , "Location: Updated");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(EditEventDetails.this, "Failed to update Location", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error updating Location", e);
+                    });
+        }
+        if(details!= null && !details.isEmpty()) {
+            updates.put("Details", details);
+            eventRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        sendNotification(eventName , "Details: Updated");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(EditEventDetails.this, "Failed to update Details", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error updating Details", e);
+                    });
+        }
+        if(max!= null && !max.isEmpty()) {
+            updates.put("max_attendees", max);
+            eventRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle successful update
+                        sendNotification(eventName , "Max: Updated");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(EditEventDetails.this, "Failed to update Max", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error updating Max", e);
+                    });
+        }
+
+
+        // Update the document in the database
+//        eventRef.update(updates)
+//                .addOnSuccessListener(aVoid -> {
+//                    // Handle successful update
+//                    sendNotification(eventName , "Link: Updated");
+//                })
+//                .addOnFailureListener(e -> {
+//                    // Handle failure
+//                    Toast.makeText(EditEventDetails.this, "Failed to update link", Toast.LENGTH_SHORT).show();
+//                    Log.e(TAG, "Error updating link", e);
+//                });
+
     }
     private void updateLinkInDatabase(String link) {
         // Get the Firestore instance
