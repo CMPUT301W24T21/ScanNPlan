@@ -1,8 +1,6 @@
 package com.example.project_3;
 
-/**
- * This activity displays the list of attendees who have checked in to a particular event.
- */
+
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -57,7 +55,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+/**
+ * This activity displays the list of attendees who have checked in to a particular event.
+ */
 public class AttendeesCheckedInActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
