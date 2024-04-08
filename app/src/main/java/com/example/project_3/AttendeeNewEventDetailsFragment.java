@@ -31,6 +31,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * AttendeeNewEventDetailsFragment displays the details of a new event for attendees.
+ * It allows attendees to register for events and provides information about the event.
+ */
+
 public class AttendeeNewEventDetailsFragment extends Fragment {
     private TextView appBar;
     private ListView listEvents;
@@ -44,10 +49,11 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
 
 
     /**
-     *Constructs a new instance of the fragment with the specified event.
-     * @param docPath A firebase document path for the event to be registered for.
+     * Constructs a new instance of the fragment with the specified event.
+     *
+     * @param docPath   A firebase document path for the event to be registered for.
+     * @param isScanner A boolean indicating whether the fragment is launched from the scanner.
      */
-
     public AttendeeNewEventDetailsFragment(String docPath, Boolean isScanner) {
         this.docPath = docPath;
         this.isScanner = isScanner;
