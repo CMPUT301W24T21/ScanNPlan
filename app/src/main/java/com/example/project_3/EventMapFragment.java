@@ -51,7 +51,11 @@ import org.osmdroid.views.overlay.Marker;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-//source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
+
+/*
+ * This fragment displays a map with event locations and attendee check-ins.
+ * Source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
+ */
 public class EventMapFragment extends Fragment  {
     private MapView map;
     private FirebaseFirestore db;
@@ -60,6 +64,11 @@ public class EventMapFragment extends Fragment  {
     private String event;
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+
+    /**
+     * Constructor to set the event for this fragment.
+     * @param event The event ID to display on the map.
+     */
     public EventMapFragment(String event){
         this.event = event;
     }
@@ -67,17 +76,25 @@ public class EventMapFragment extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.map_fragment, container, false);
         Context context = getContext();
+
+        // Load configuration for OSMdroid
         Configuration.getInstance().load(context, PreferenceManager.getDefaultSharedPreferences(context));
+
         Toast.makeText(context, "Please be patient...", Toast.LENGTH_SHORT).show();
         db = FirebaseFirestore.getInstance();
         eventsRef = db.collection("Events");
         profilesRef = db.collection("Profiles");
+
+        // Initialize map view
         map = view.findViewById(R.id.map);
         TextView appbar = view.findViewById(R.id.appbar_title);
         appbar.setText("Map");
         Button back = view.findViewById(R.id.back_button);
+
+        // Set onClickListener for back button to navigate back and show event details
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,9 +104,15 @@ public class EventMapFragment extends Fragment  {
         });
         map = (MapView) view.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+
+        // Request necessary permissions
         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
         requestPermissionsIfNecessary(permissions);
+
+        // Get map controller
         IMapController mapController = map.getController();
+
+        // Retrieve event details from Firestore
         eventsRef.document(event).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -97,9 +120,11 @@ public class EventMapFragment extends Fragment  {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         if (document.get("checked_in") == null) {
+                            // If no attendees have checked in, show a message and navigate back
                             Toast.makeText(getActivity(), "No attendees have checked in yet!", Toast.LENGTH_LONG).show();
                             back.callOnClick();
                         } else {
+
                             if (document.get("check_in_locations") == null){
                                 mapController.setCenter(new org.osmdroid.util.GeoPoint(0.0, 0.0));
                                 back.callOnClick();
@@ -140,7 +165,7 @@ public class EventMapFragment extends Fragment  {
                     }
                 }
             }});
-
+        // Refresh the map and set zoom level
         map.invalidate();
         mapController.setZoom(12);
         return view;
@@ -172,6 +197,10 @@ public class EventMapFragment extends Fragment  {
         }
     }
 
+    /**
+     * Request permissions if necessary.
+     * @param permissions Array of permissions to request.
+     */
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
