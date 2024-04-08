@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 //source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java) for locations permission checking
+//source: https://github.com/zxing/zxing#trunk/core/src/com/google/zxing. for opening the camera and scanning the QRcode
 /**
  * Activity for scanning QR codes and barcodes using the ZXing library.
  */
