@@ -331,111 +331,86 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             eventListener.remove();
         }
     }
+
+    /**
+     * Sends a notification to the organizer about the specified event.
+     *
+     * @param title   The title of the notification.
+     * @param message The message body of the notification.
+     */
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
-//    void sendNotification(String title, String message) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference tokenRef = db.collection("Tokens");
-//
-//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                DocumentSnapshot document = task.getResult();
-//                if (document.exists()) {
-//                    // Get the TokenList field as a List
-//                    List<String> tokenList = (List<String>) document.get("OrganizerTokens");
-//                    if (tokenList != null) {
-//                        // Iterate over the TokenList and send notification to each token
-//                        for (String token : tokenList) {
-//                            try {
-//                                JSONObject jsonObject = new JSONObject();
-//
-//                                JSONObject notificationObj = new JSONObject();
-//                                notificationObj.put("title", title);
-//                                notificationObj.put("body", message);
-//
-//                                JSONObject dataObj = new JSONObject();
-//                                dataObj.put("userId", title);
-//
-//                                jsonObject.put("notification", notificationObj);
-//                                jsonObject.put("data", dataObj);
-//                                jsonObject.put("to", token);
-//
-//                                callApi(jsonObject);
-//
-//                            } catch (Exception e) {
-//                                Log.e(TAG, "Error sending notification to token: " + token, e);
-//                            }
-//                        }
-//                    } else {
-//                        Log.d(TAG, "OrganizerTokens is null");
-//                    }
-//                } else {
-//                    Log.d(TAG, "No such document");
-//                }
-//            } else {
-//                Log.d(TAG, "get failed with ", task.getException());
-//            }
-//        });
-//    }
-//    void sendNotification(String title, String message) {
-//        // Taken from: https://stackoverflow.com/questions/55948318/how-to-send-a-firebase-message-to-topic-from-android
-//
-//        RequestQueue mRequestQue = Volley.newRequestQueue(this);
-//
-//        JSONObject json = new JSONObject();
-//        try {
-//            json.put("to", "/topics/" + ("Events/" + eventName).hashCode());
-//            JSONObject notificationObj = new JSONObject();
-//            notificationObj.put("title", title);
-//            notificationObj.put("body", message);
-//            //replace notification with data when went send data
-//            json.put("notification", notificationObj);
-//
-//            String URL = "https://fcm.googleapis.com/fcm/send";
-//            JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.POST, URL,
-//                    json,
-//                    response -> Log.d("MUR", "onResponse: "),
-//                    error -> Log.d("MUR", "onError: " + error.networkResponse)
-//            ) {
-//                @Override
-//                public Map<String, String> getHeaders() {
-//                    Map<String, String> header = new HashMap<>();
-//                    header.put("content-type", "application/json");
-//                    header.put("authorization", "key=AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht");
-//                    return header;
-//                }
-//            };
-//
-//
-//            mRequestQue.add(request);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        Map<String, Object> announcement = new HashMap<String, Object>();
-//        announcement.put("content", title + " - " + message);
-//        announcement.put("event_name", eventName);
-//        announcement.put("timestamp", new Timestamp(new Date()));
-//        db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
-//    }
-//    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
-//    // describes how to use Firebase Messaging and FCM
-//    void callApi(JSONObject jsonObject){
-//        MediaType JSON = MediaType.get("application/json; charset=utf-8");
-//        OkHttpClient client = new OkHttpClient();
-//        String url = "https://fcm.googleapis.com/fcm/send";
-//        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .post(body)
-//                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht") // you need to paste in the API KEY HERE. I removed it for safety purposes
-//                .build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//            }
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//            }
-//        });
-//    }
+    void sendNotification(String title, String message) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference tokenRef = db.collection("Tokens");
+
+        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    // Get the TokenList field as a List
+                    List<String> tokenList = (List<String>) document.get("OrganizerTokens");
+                    if (tokenList != null) {
+                        // Iterate over the TokenList and send notification to each token
+                        for (String token : tokenList) {
+                            try {
+                                JSONObject jsonObject = new JSONObject();
+
+                                JSONObject notificationObj = new JSONObject();
+                                notificationObj.put("title", title);
+                                notificationObj.put("body", message);
+
+                                JSONObject dataObj = new JSONObject();
+                                dataObj.put("userId", title);
+
+                                jsonObject.put("notification", notificationObj);
+                                jsonObject.put("data", dataObj);
+                                jsonObject.put("to", token);
+
+                                callApi(jsonObject);
+
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error sending notification to token: " + token, e);
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "OrganizerTokens is null");
+                    }
+                } else {
+                    Log.d(TAG, "No such document");
+                }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
+            }
+        });
+    }
+
+    /**
+     * Makes an API call to send a notification using Firebase Cloud Messaging (FCM).
+     *
+     * @param jsonObject The JSON object containing notification data.
+     */
+
+    // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
+    // describes how to use Firebase Messaging and FCM
+    void callApi(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer AAAA_Dv0cdM:APA91bES7JC6yoQaMnguKlQUwdd6ac9uT3m3hMPRGVEMKn44frxPFLLmzKZHjH38m6sGsBN4pkUoe4Vt5VKMjxN3UWahrv6oyTPrVbmUD2-RudLD0DpzodDseZpEjnPs3zc044THL6ht") // you need to paste in the API KEY HERE. I removed it for safety purposes
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            }
+        });
+    }
 }

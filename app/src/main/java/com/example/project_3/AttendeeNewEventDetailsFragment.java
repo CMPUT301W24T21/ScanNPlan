@@ -31,6 +31,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * AttendeeNewEventDetailsFragment displays the details of a new event for attendees.
+ * It allows attendees to register for events and provides information about the event.
+ */
+
 public class AttendeeNewEventDetailsFragment extends Fragment {
     private TextView appBar;
     private ListView listEvents;
@@ -39,24 +44,35 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     private String profileID;
     private int max_attendees = Integer.MAX_VALUE;
     private int current_attendees = 0;
+    private Boolean isScanner;
     private FirebaseFirestore db;
 
 
     /**
-     *Constructs a new instance of the fragment with the specified event.
-     * @param docPath A firebase document path for the event to be registered for.
+     * Constructs a new instance of the fragment with the specified event.
+     *
+     * @param docPath   A firebase document path for the event to be registered for.
+     * @param isScanner A boolean indicating whether the fragment is launched from the scanner.
      */
-
-    public AttendeeNewEventDetailsFragment(String docPath) {
+    public AttendeeNewEventDetailsFragment(String docPath, Boolean isScanner) {
         this.docPath = docPath;
+        this.isScanner = isScanner;
     }
 
-
+    /**
+     * Called to do initial creation of the fragment.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    /**
+     * Called when a fragment is first attached to its context.
+     *
+     * @param context The context to attach to.
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -209,14 +225,20 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final boolean[] isProcessingClick = {true};
-                getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                if (!isScanner){
+                    Intent intent = new Intent(getActivity(), AttendeeBrowseEventsActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(getActivity(), AttendeeActivity.class);
+                    startActivity(intent);
+                }
                 new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         isProcessingClick[0] = false;
                     }
-                }, 500); // Adjust the delay time as needed
+                }, 500); // Adjust the delay time as needed\
 
             }
 

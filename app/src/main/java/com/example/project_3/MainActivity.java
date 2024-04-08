@@ -45,6 +45,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Main activity for the application, responsible for handling permissions and initializing the user profile.
+ */
 public class MainActivity extends AppCompatActivity {
     private Intent AttendeeIntent;
     private Intent AdminIntent;
@@ -58,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 123;
     private CollectionReference tokenRef;
     private static final String TAG = "MainActivity";
-    private String docPath;
+
+    /**
+     * Checks and requests notification permission if not granted.
+     */
     private void checkAndRequestNotificationPermission() {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
@@ -76,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Initializes the activity, checks and requests notification permission, and sets up button listeners.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,6 +237,11 @@ public class MainActivity extends AppCompatActivity {
 //                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
 //                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
 //    }
+    /**
+     * Checks if notification permission is granted.
+     *
+     * @return True if notification permission is granted, false otherwise.
+     */
     private boolean hasNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -233,6 +249,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return true; // On versions lower than Oreo, no permission is required.
     }
+
+    /**
+     * Requests notification permission.
+     */
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Request permission for notification
@@ -244,6 +264,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
     }
+
+    /**
+     * Handles the result of permission requests.
+     *
+     * @param requestCode  The request code.
+     * @param permissions  The requested permissions.
+     * @param grantResults The results of the permission requests.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -259,10 +287,21 @@ public class MainActivity extends AppCompatActivity {
             }, 200);
         }
     }
+
+    /**
+     * Requests location permission.
+     */
     private void requestLocationPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
 
     }
+
+    /**
+     * Checks if location permissions are granted.
+     *
+     * @return True if location permissions are granted, false otherwise.
+     */
+
     private boolean hasLocationPermissions() {
         return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;

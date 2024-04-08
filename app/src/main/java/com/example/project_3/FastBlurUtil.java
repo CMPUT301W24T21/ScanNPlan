@@ -7,8 +7,22 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
+/**
+ * FastBlurUtil provides a utility method for applying fast blur effect on a Bitmap.
+ * It utilizes RenderScript for efficient blur computation.
+ */
+
 public class FastBlurUtil {
     // OpenAI, 2024, ChatGPT, https://chat.openai.com/share/6f264b56-28c5-4983-9b7c-b93dd728336c
+
+    /**
+     * Apply fast blur effect on the given Bitmap.
+     *
+     * @param context    The context.
+     * @param sentBitmap The Bitmap to be blurred.
+     * @param radius     The blur radius.
+     * @return The blurred Bitmap.
+     */
     public static Bitmap fastblur(Context context, Bitmap sentBitmap, int radius) {
 
         // Try to reuse the bitmap if possible
@@ -26,6 +40,7 @@ public class FastBlurUtil {
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
+            // Return the original bitmap if an error occurs
             return sentBitmap;
         }
     }

@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 //source: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java) for locations permission checking
+//source: https://github.com/zxing/zxing#trunk/core/src/com/google/zxing. for opening the camera and scanning the QRcode
 /**
  * Activity for scanning QR codes and barcodes using the ZXing library.
  */
@@ -147,7 +148,7 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                     //toggleRestOfPageVisibility();
                     findViewById(R.id.REST_OF_PAGE).setVisibility(View.INVISIBLE);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents()))
+                            .replace(R.id.scanner_fragment_container, new AttendeeNewEventDetailsFragment("/" + intentResult.getContents(), Boolean.TRUE))
                             .addToBackStack(null)
                             .commit();
 

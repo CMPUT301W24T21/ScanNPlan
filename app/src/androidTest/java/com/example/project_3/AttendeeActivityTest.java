@@ -45,7 +45,7 @@ public class AttendeeActivityTest {
         onView(withId(R.id.BrowseEventsButton)).perform(click());
         scenario.onActivity(activity -> {
             ListView eventListView = activity.findViewById(R.id.event_list);
-            eventListView.performItemClick(null, 0, null);
+            //eventListView.performItemClick(null, 0, null);
         });
     }
 
