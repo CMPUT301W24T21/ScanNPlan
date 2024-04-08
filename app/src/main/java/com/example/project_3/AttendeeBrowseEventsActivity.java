@@ -49,7 +49,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                 Event selectedEvent = (Event) eventArrayAdapter.getItem(position);
                 if (selectedEvent != null) {
                     String docPath = "Events/" + selectedEvent.getName();
-                    AttendeeNewEventDetailsFragment fragment = new AttendeeNewEventDetailsFragment(docPath);
+                    AttendeeNewEventDetailsFragment fragment = new AttendeeNewEventDetailsFragment(docPath, Boolean.FALSE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
                             .addToBackStack(null)

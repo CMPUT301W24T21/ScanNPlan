@@ -39,6 +39,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     private String profileID;
     private int max_attendees = Integer.MAX_VALUE;
     private int current_attendees = 0;
+    private Boolean isScanner;
     private FirebaseFirestore db;
 
 
@@ -47,8 +48,9 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
      * @param docPath A firebase document path for the event to be registered for.
      */
 
-    public AttendeeNewEventDetailsFragment(String docPath) {
+    public AttendeeNewEventDetailsFragment(String docPath, Boolean isScanner) {
         this.docPath = docPath;
+        this.isScanner = isScanner;
     }
 
 
@@ -209,14 +211,20 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final boolean[] isProcessingClick = {true};
-                getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.REST_OF_PAGE).setVisibility(View.VISIBLE);
+                if (!isScanner){
+                    Intent intent = new Intent(getActivity(), AttendeeBrowseEventsActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(getActivity(), AttendeeActivity.class);
+                    startActivity(intent);
+                }
                 new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         isProcessingClick[0] = false;
                     }
-                }, 500); // Adjust the delay time as needed
+                }, 500); // Adjust the delay time as needed\
 
             }
 
