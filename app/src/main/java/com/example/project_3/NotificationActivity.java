@@ -21,11 +21,19 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Activity responsible for displaying notifications to the user.
+ */
 public class NotificationActivity extends AppCompatActivity {
     ListView announcementsListView;
     AnnouncementArrayAdapter announcementAdapter;
     ArrayList<Announcement> allAnnouncementList;
 
+    /**
+     * Initializes the activity, sets up the layout, and populates the list view with announcements.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,11 +4,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -16,10 +18,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.inappmessaging.MessagesProto;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Activity for browsing and selecting events as an attendee.
+ */
 public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
@@ -27,6 +33,9 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     private ArrayList<Event> eventDataList;
     private EventArrayAdapter eventArrayAdapter;
 
+    /**
+     * Initializes the activity and sets up the UI components and Firebase listener.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +50,16 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
         eventList = findViewById(R.id.event_list);
         eventArrayAdapter = new EventArrayAdapter(this, eventDataList);
         eventList.setAdapter(eventArrayAdapter);
+        TextView appbarTitle = findViewById(R.id.appbar_title);
+        appbarTitle.setText("Browse All Events");
+
+        MaterialButton back = findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,12 +68,12 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                 Event selectedEvent = (Event) eventArrayAdapter.getItem(position);
                 if (selectedEvent != null) {
                     String docPath = "Events/" + selectedEvent.getName();
-                    AttendeeNewEventDetailsFragment fragment = new AttendeeNewEventDetailsFragment(docPath);
+                    AttendeeNewEventDetailsFragment fragment = new AttendeeNewEventDetailsFragment(docPath, Boolean.FALSE);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
                             .addToBackStack(null)
                             .commit();
-
+                    findViewById(R.id.browse_events_appbar).setVisibility(View.INVISIBLE);
                     eventList.setVisibility(View.INVISIBLE);
                 }
             }

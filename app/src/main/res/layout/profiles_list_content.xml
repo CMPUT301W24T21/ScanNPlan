@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_2">
+
     <ImageView
         android:id="@+id/profiles_list_image"
         android:layout_width="100dp"
@@ -23,10 +25,10 @@
         android:gravity="center"
         android:text="@string/username"
         android:textAlignment="center"
+        android:textColor="@color/OffWhite"
         android:textSize="20sp"
-
-        app:layout_constraintStart_toEndOf="@id/profiles_list_image"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profiles_list_image"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.google.android.material.textview.MaterialTextView>
