@@ -24,6 +24,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * This fragment displays the details of an event in the admin interface.
+ */
+
 public class AdminEventDetailsFragment extends Fragment {
 
     private Event event;
@@ -31,6 +35,11 @@ public class AdminEventDetailsFragment extends Fragment {
     private CollectionReference eventsref;
     private Boolean isImage;
 
+    /**
+     * Constructor for AdminEventDetailsFragment.
+     *
+     * @param event The event object for which details are to be displayed.
+     */
     public AdminEventDetailsFragment(Event event, Boolean isImage) {
         this.event = event;
         this.isImage = isImage;
@@ -55,13 +64,10 @@ public class AdminEventDetailsFragment extends Fragment {
         TextView appBar = view.findViewById(R.id.appbar_title);
         //set appbar title to reflect the fragment
         appBar.setText(event.getName());
-        String title = event.getName();
-        if (title.length() > 15) {
-            title = title.substring(0, 15) + "...";
-        }
-        appBar.setText(title);
+
         db = FirebaseFirestore.getInstance();
         eventsref = db.collection("Events");
+        // Set various event details
         TextView date = view.findViewById(R.id.event_date);
         TextView eventName = view.findViewById(R.id.event_name);
         eventName.setText(event.getName());
@@ -75,6 +81,7 @@ public class AdminEventDetailsFragment extends Fragment {
         MaterialButton delete = view.findViewById(R.id.delete_event_button);
         //delete the event image
         MaterialButton deleteImage = view.findViewById(R.id.delete_event_image_button);
+        // Load event image from Firestore
         ImageView image = view.findViewById(R.id.event_poster);
         eventsref.document(event.getName()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -105,11 +112,15 @@ public class AdminEventDetailsFragment extends Fragment {
             }
         });
 
+        // Delete button functionality
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Delete event from Firestore
                 eventsref.document(event.getName()).delete();
+                // Pop back stack to return to previous fragment
                 getParentFragmentManager().popBackStack();
+                // Make the events list visible again
                 if (!isImage) {
                     getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
                 }
@@ -120,10 +131,14 @@ public class AdminEventDetailsFragment extends Fragment {
         });
         MaterialButton back = view.findViewById(R.id.back_button);
         //if back is clicked pop the stack and go back to the activity
+
+        // Back button functionality
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Pop back stack to return to previous fragment
                 getParentFragmentManager().popBackStack();
+                // Make the events list visible again
                 if (!isImage) {
                     getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
                 }
