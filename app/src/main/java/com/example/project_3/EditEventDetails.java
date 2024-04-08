@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -255,6 +256,7 @@ public class EditEventDetails extends AppCompatActivity {
         // Show the dialog
         dialog.show();
     }
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void sendNotification(String title, String message) {
@@ -296,8 +298,6 @@ public class EditEventDetails extends AppCompatActivity {
         announcement.put("event_name", eventName);
         announcement.put("timestamp", new Timestamp(new Date()));
         db.collection("Events").document(eventName).update("announcements", FieldValue.arrayUnion(announcement));
-
-
     }
 
 //        void sendNotification(String title , String message){

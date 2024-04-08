@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -78,6 +79,8 @@ public class ProfileDetailsFragment extends Fragment {
         contact_info.setText(profile.getContact_info());
         MaterialButton back = view.findViewById(R.id.back_button);
         MaterialButton deletes = view.findViewById(R.id.delete_profile_button);
+        //image delete button
+        MaterialButton deleteImage = view.findViewById(R.id.delete_profile_image_button);
         db = FirebaseFirestore.getInstance();
         profilesref = db.collection("Profiles");
         ImageView pfp = view.findViewById(R.id.profile_image);
@@ -87,6 +90,15 @@ public class ProfileDetailsFragment extends Fragment {
         else{
             pfp.setImageDrawable(null);
         }
+        //deletes the images,
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profilesref.document(profile.getProfileID()).update("profile_image",FieldValue.delete());
+                getParentFragmentManager().popBackStack();
+                getActivity().findViewById(R.id.rest_profiles_list).setVisibility(View.VISIBLE);
+            }
+        });
 
         //goes through the collection and identifies the document with a matching ID and deletes it
         deletes.setOnClickListener(new View.OnClickListener() {

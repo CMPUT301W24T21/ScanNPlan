@@ -11,16 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/REST_OF_PAGE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity"
-        android:id="@+id/REST_OF_PAGE">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="58dp">
 
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/global_top_appbar" />
 
 
         <TextView
@@ -29,24 +32,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:text="messageContent"/>
+            android:layout_marginBottom="24dp"
+            android:text="messageContent"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/textFormat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
         <TextView
             android:id="@+id/textFormat"
-            android:text="messageFormat"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:layout_height="wrap_content" />
+            android:textSize="20dp"
+            android:text="messageFormat"
+            app:layout_constraintBottom_toTopOf="@+id/scanBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar"
+            app:layout_constraintVertical_bias="0.783" />
 
         <Button
             android:id="@+id/scanBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="212dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center"
             android:layout_margin="10dp"
             android:backgroundTint="#0F9D58"
-            android:layout_gravity="center"
-            android:text="Scan"/>
+            android:text="Scan"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

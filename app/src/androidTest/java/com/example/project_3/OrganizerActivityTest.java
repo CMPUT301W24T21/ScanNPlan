@@ -26,7 +26,6 @@ import android.content.ComponentName;
 public class OrganizerActivityTest {
     @Rule
     public IntentsTestRule<OrganizerActivity> mActivityRule = new IntentsTestRule<>(OrganizerActivity.class);
-
     // this test is good
     @Test
     public void testActivityChangeOnListPress() {
@@ -51,6 +50,7 @@ public class OrganizerActivityTest {
         // Check if the intent to start the NotificationsPage is sent
         intended(hasComponent(new ComponentName(getTargetContext(), NotificationsPage.class)));
     }
+
 
 
     @Test

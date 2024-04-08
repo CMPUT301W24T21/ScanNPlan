@@ -1,22 +1,14 @@
 package com.example.project_3;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,27 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference profilesRef;
     private Map<String, Object> profileDocDetails;
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 101;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 102;
     private CollectionReference tokenRef;
     private static final String TAG = "MainActivity";
-
     private void checkAndRequestNotificationPermission() {
         if (!hasNotificationPermission()) {
             requestNotificationPermission();
         }
-        else {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!hasLocationPermissions()) {
-                            requestLocationPermission();
-                        }
-                    }
-                    //Adding a delay to allow processing time between prompts
-                }, 200);
-            }
-        }
-
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Organizer_button.setOnClickListener(V -> {
             OrganizerIntent = new Intent(this, OrganizerActivity.class);
+            OrganizerIntent.putExtra("profileID", profileId);
             startActivity(OrganizerIntent);
         });
         Admin_button.setOnClickListener(V -> {
@@ -109,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         });
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
-        getFcmToken();
+//        getFcmToken();
 
         profileId = "This is an admin profile";
         profileId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -142,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                             user.getUserProfile().setProfileID(doc.getId());
                         }
                     }
-                    if (!idFound) {
+                    if (!idFound){
                         user = new User(new Profile(null,
                                 "New User!",
                                 "",
@@ -177,61 +156,58 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void getFcmToken() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
-            if (task.isSuccessful()) {
-                String token = task.getResult();
-                Log.i("My token", token);
-                saveTokenToFirestore(token);
-            }
-        });
-    }
-
-    void saveTokenToFirestore(String token) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tokenRef = db.collection("Tokens");
-
-        // Check if document exists and retrieve its data
-        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    // Document exists, retrieve token list and update
-                    List<String> tokensList = (List<String>) document.get("TokenList");
-                    if (tokensList != null && !tokensList.isEmpty()) {
-                        // Add the new token to the end of the list
-                        tokensList.add(token);
-                    } else {
-                        // Token list is empty, create a new list with the token
-                        tokensList = new ArrayList<>();
-                        tokensList.add(token);
-                    }
-                    // Update Firestore with the modified token list
-                    updateTokenListInFirestore(tokenRef, tokensList);
-                } else {
-                    // Document doesn't exist, create a new one with the token
-                    List<String> tokensList = new ArrayList<>();
-                    tokensList.add(token);
-                    // Update Firestore with the new token list
-                    updateTokenListInFirestore(tokenRef, tokensList);
-                }
-            } else {
-                Log.e("Firestore", "Error getting document", task.getException());
-            }
-        });
-    }
-
-    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
-        // Create a HashMap to store the token list
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("TokenList", tokensList);
-
-        // Update Firestore with the token list
-        tokenRef.document("tokenz").set(data)
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
-    }
-
+//    void getFcmToken(){
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener((OnCompleteListener<String>) task -> {
+//            if(task.isSuccessful()){
+//                String token = task.getResult();
+//                Log.i("My token", token);
+//                saveTokenToFirestore(token);
+//            }
+//        });
+//    }
+//    void saveTokenToFirestore(String token) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference tokenRef = db.collection("Tokens");
+//
+//        // Check if document exists and retrieve its data
+//        tokenRef.document("tokenz").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    // Document exists, retrieve token list and update
+//                    List<String> tokensList = (List<String>) document.get("TokenList");
+//                    if (tokensList != null && !tokensList.isEmpty()) {
+//                        // Add the new token to the end of the list
+//                        tokensList.add(token);
+//                    } else {
+//                        // Token list is empty, create a new list with the token
+//                        tokensList = new ArrayList<>();
+//                        tokensList.add(token);
+//                    }
+//                    // Update Firestore with the modified token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                } else {
+//                    // Document doesn't exist, create a new one with the token
+//                    List<String> tokensList = new ArrayList<>();
+//                    tokensList.add(token);
+//                    // Update Firestore with the new token list
+//                    updateTokenListInFirestore(tokenRef, tokensList);
+//                }
+//            } else {
+//                Log.e("Firestore", "Error getting document", task.getException());
+//            }
+//        });
+//    }
+//    void updateTokenListInFirestore(CollectionReference tokenRef, List<String> tokensList) {
+//        // Create a HashMap to store the token list
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("TokenList", tokensList);
+//
+//        // Update Firestore with the token list
+//        tokenRef.document("tokenz").set(data)
+//                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Token list updated in Firestore"))
+//                .addOnFailureListener(e -> Log.e("Firestore", "Error updating token list in Firestore", e));
+//    }
     private boolean hasNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -239,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true; // On versions lower than Oreo, no permission is required.
     }
-
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Request permission for notification
@@ -251,34 +226,4 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Notification permission not required for pre-Oreo devices.");
         }
     }
-
-    private boolean hasLocationPermissions() {
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
-            // After notification permission has been requested then check location permission
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!hasLocationPermissions()) {
-                        requestLocationPermission();
-                    }
-                }
-            }, 200);
-        }
-    }
-
-    private void requestLocationPermission() {
-        // Ask the user for location permissions
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-
-    }
-
-
-    }
-
-
+}

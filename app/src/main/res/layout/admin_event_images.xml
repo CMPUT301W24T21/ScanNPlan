@@ -5,11 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/admin_events_images_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <include
-        android:id="@+id/images_topbar"
-        layout="@layout/global_top_appbar" />
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rest_events_images_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/global_top_appbar"/>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/list_of_Event_Images"
         style="@style/MaterialAlertDialog.Material3.Body.Text"
@@ -48,6 +54,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,6 +78,17 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
         messageText.setText("Scan your Check-in or Promo QR Code");
         messageFormat = findViewById(R.id.textFormat);
         messageFormat.setText("Press the Scan button to continue!");
+
+        TextView appbar = findViewById(R.id.appbar_title);
+        appbar.setText("QRScanner");
+        Button back = findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), AttendeeActivity.class);
+                startActivity(intent);
+            }
+        });
         if (!hasLocationPermissions()){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_REQUEST_CODE);
             Toast.makeText(this, "It is recommended to turn on location permissions for check-in. You can choose to hide your geolocation from the organizer anytime in your Edit Profile page!", Toast.LENGTH_LONG).show();
@@ -165,7 +176,8 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
                                     getLocation(eventDoc);
                                     addEventCount(eventDoc);
                                     Toast.makeText(getBaseContext(), "Succesfully Checked-In!", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    Intent intent = new Intent(getBaseContext(), AttendeeActivity.class);
+                                    startActivity(intent);
 
                                 } else {
                                     Log.d("DEBUG", "No such document");
@@ -184,7 +196,6 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // Finish the current activity to go back to the previous one
 
     }
 

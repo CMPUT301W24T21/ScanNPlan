@@ -1,5 +1,4 @@
 package com.example.project_3;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -74,18 +74,22 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                     eventDataList.clear();
                     for (QueryDocumentSnapshot doc : querySnapshots) {
                         // Retrieving the event data from Firestore and adding it to the list
-                        String event = doc.getId();
-                        boolean reuse = false;
+                        String eventId = doc.getId();
+                        boolean reuse = doc.getBoolean("Reuse"); // Assuming there's a field named "Reuse" indicating whether the event can be reused
                         String date = doc.getString("Date");
-                        String time = "No Time";
+                        String time = doc.getString("Time"); // Assuming there's a field named "Time" for event time
                         String location = doc.getString("Location");
                         String details = doc.getString("Details");
                         String imageUri = doc.getString("Image");
                         String qrCode = doc.getString("QRCode");
                         String qrPromoCode = doc.getString("QRPromoCode");
-                        String link = doc.getString("link");
-                        eventDataList.add(new Event(event, date, time, location,
-                                details, reuse, imageUri, qrCode, qrPromoCode, link));
+                        String link = doc.getString("Link");
+
+                        // Initialize the announcements ArrayList if needed
+                        ArrayList<Map<String, Object>> announcements = new ArrayList<>();
+
+                        eventDataList.add(new Event(eventId, date, time, location,
+                                details, reuse, imageUri, qrCode, qrPromoCode, link, announcements));
                     }
                     eventArrayAdapter.notifyDataSetChanged();
                 }
