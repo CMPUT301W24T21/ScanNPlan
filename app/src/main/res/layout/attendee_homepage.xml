@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--Displays the homepage for the attendees-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,15 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/your_events_textview"
-            style=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Events"
-            app:layout_constraintBottom_toTopOf="@+id/event_listView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <include
+            android:id="@+id/attendee_homepage_bar"
+            layout="@layout/global_top_appbar"/>
 
 
         <ListView
@@ -35,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_events_textview" />
+            app:layout_constraintTop_toBottomOf="@id/attendee_homepage_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/announcementsButton"

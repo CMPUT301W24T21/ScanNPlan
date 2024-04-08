@@ -32,7 +32,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class EventDetailsTest {
+public class
+EventDetailsTest {
     @Test
     public void testBackButton() {
         // Create a test event name

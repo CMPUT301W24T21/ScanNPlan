@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Give the admin the event details-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,8 +13,8 @@
 
     <ImageView
         android:id="@+id/event_poster"
-        android:layout_width="256dp"
-        android:layout_height="182dp"
+        android:layout_width="284dp"
+        android:layout_height="231dp"
         app:layout_constraintBottom_toTopOf="@+id/event_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,11 +30,13 @@
         android:text="Delete Image"
         android:textColor="@color/black"
         android:textSize="15sp"
+
         app:backgroundTint="@color/Beige"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.825"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="231dp" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_date"

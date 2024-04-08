@@ -1,8 +1,6 @@
 package com.example.project_3;
 
-/**
- * This activity displays the list of attendees who have signed up to a particular event.
- */
+
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -34,7 +32,9 @@ import com.google.firebase.firestore.ListenerRegistration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * This activity displays the list of attendees who have signed up to a particular event.
+ */
 public class AttendeesSignedUpActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ListView attendeesListView;
