@@ -127,7 +127,7 @@ public class BrowseProfilesFragment extends Fragment {
 
             }
         });
-        // takes us to the new view to see the profile detaails weve clicked
+        // takes us to the new view to see the profile details we've clicked
         listProfiles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
