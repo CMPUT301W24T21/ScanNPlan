@@ -29,9 +29,11 @@ public class AdminEventDetailsFragment extends Fragment {
     private Event event;
     private FirebaseFirestore db;
     private CollectionReference eventsref;
+    private Boolean isImage;
 
-    public AdminEventDetailsFragment(Event event) {
+    public AdminEventDetailsFragment(Event event, Boolean isImage) {
         this.event = event;
+        this.isImage = isImage;
 
     }
 
@@ -87,7 +89,12 @@ public class AdminEventDetailsFragment extends Fragment {
                 eventsref.document(event.getName()).update("Image", FieldValue.delete());
                 getParentFragmentManager().popBackStack();
                 // okay this will heavily depend on how we demo this
-                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -96,7 +103,12 @@ public class AdminEventDetailsFragment extends Fragment {
             public void onClick(View v) {
                 eventsref.document(event.getName()).delete();
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
         MaterialButton back = view.findViewById(R.id.back_button);
@@ -105,7 +117,12 @@ public class AdminEventDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().popBackStack();
-                getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                if (!isImage) {
+                    getActivity().findViewById(R.id.rest_events_list).setVisibility(View.VISIBLE);
+                }
+                else{
+                    getActivity().findViewById(R.id.rest_events_images_list).setVisibility(View.VISIBLE);
+                }
             }
         });
 
