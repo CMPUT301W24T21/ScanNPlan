@@ -26,17 +26,33 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
+/**
+ * Custom ArrayAdapter for displaying Event objects in a ListView.
+ */
 public class EventArrayAdapter extends ArrayAdapter<Event> {
     private ArrayList<Event> events;
     private final Context context;
 
+    /**
+     * Constructor for the EventArrayAdapter.
+     *
+     * @param context The context of the activity.
+     * @param events  The list of events to display.
+     */
     public EventArrayAdapter(Context context, ArrayList<Event> events) {
         super(context, 0, events);
         this.events = events;
         this.context = context;
     }
 
+    /**
+     * Gets a view that displays the data at the specified position in the data set.
+     *
+     * @param position    The position of the item within the adapter's data set.
+     * @param convertView The old view to reuse, if possible.
+     * @param parent      The parent that this view will eventually be attached to.
+     * @return A View corresponding to the data at the specified position.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -70,6 +86,13 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
         return view;
     }
 
+    /**
+     * Loads the event image asynchronously.
+     *
+     * @param event     The event object.
+     * @param imageView The ImageView to load the image into.
+     * @return An AsyncTask for loading the image.
+     */
     private AsyncTask<Void, Void, Bitmap> loadEventImage(Event event, ImageView imageView) {
         return new AsyncTask<Void, Void, Bitmap>() {
             @Override
@@ -107,6 +130,12 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
     }
     // OpenAI, 2024, ChatGPT, https://chat.openai.com/share/6f264b56-28c5-4983-9b7c-b93dd728336c
     // in regards to blur and implementation of the blur in an ArrayAdapter
+    /**
+     * Blurs the given bitmap.
+     *
+     * @param bitmap The bitmap to blur.
+     * @return The blurred bitmap.
+     */
     private Bitmap blurBitmap(Bitmap bitmap) {
         float scaleFactor = 0.1f; // Adjust this value to control the amount of blur
         int blurRadius = 4; // Adjust this value to control the blur radius
@@ -116,6 +145,9 @@ public class EventArrayAdapter extends ArrayAdapter<Event> {
         return FastBlurUtil.fastblur(context, scaledBitmap, blurRadius);
     }
 
+    /**
+     * ViewHolder pattern to improve ListView performance.
+     */
     static class ViewHolder {
         TextView eventName;
         TextView eventLocation;
