@@ -1,4 +1,5 @@
 package com.example.project_3;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +58,8 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getBaseContext(), AttendeeActivity.class);
+                startActivity(intent);
             }
         });
 
