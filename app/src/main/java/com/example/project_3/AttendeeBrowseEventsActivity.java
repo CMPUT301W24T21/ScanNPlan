@@ -73,7 +73,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                             .replace(R.id.fragment_container, fragment)
                             .addToBackStack(null)
                             .commit();
-
+                    findViewById(R.id.browse_events_appbar).setVisibility(View.INVISIBLE);
                     eventList.setVisibility(View.INVISIBLE);
                 }
             }

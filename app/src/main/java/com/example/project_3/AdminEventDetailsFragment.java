@@ -55,16 +55,9 @@ public class AdminEventDetailsFragment extends Fragment {
         TextView appBar = view.findViewById(R.id.appbar_title);
         //set appbar title to reflect the fragment
         appBar.setText(event.getName());
-        String title = event.getName();
-        if (title.length() > 15) {
-            title = title.substring(0, 15) + "...";
-        }
-        appBar.setText(title);
         db = FirebaseFirestore.getInstance();
         eventsref = db.collection("Events");
         TextView date = view.findViewById(R.id.event_date);
-        TextView eventName = view.findViewById(R.id.event_name);
-        eventName.setText(event.getName());
         date.setText(event.getDate());
         TextView time = view.findViewById(R.id.event_time);
         time.setText(event.getTime());
