@@ -14,13 +14,16 @@ import androidx.test.filters.LargeTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+/**
+ *Test File that tests AdminActivity and navigation between the fragments and activity
+ */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class AdminTest {
 
     @Rule
     public ActivityScenarioRule<AdminActivity> scenario = new ActivityScenarioRule<AdminActivity>(AdminActivity.class);
+
 
     @Test
     public void testAdminSwapProfiles(){
