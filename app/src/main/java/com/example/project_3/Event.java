@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,7 @@ import java.util.Map;
 /**
  * Represents an event with various details.
  */
-
-public class Event {
+public class Event implements Serializable {
     private String name;
     private Boolean promo;
     private Boolean reuse;

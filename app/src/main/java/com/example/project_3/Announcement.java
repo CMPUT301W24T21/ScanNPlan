@@ -42,3 +42,4 @@ public class Announcement implements Serializable {
         this.eventName = eventName;
     }
 }
+
