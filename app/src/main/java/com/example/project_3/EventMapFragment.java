@@ -132,7 +132,8 @@ public class EventMapFragment extends Fragment  {
                             }
                             else{
                                 Map<String, GeoPoint> checkedIn = (Map<String, GeoPoint>) document.get("check_in_locations");
-                                //https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+                                //Source: https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+                                //Was not sure how to iterate a Map object but this one helped.
                                 for (Map.Entry<String, GeoPoint> entry : checkedIn.entrySet()) {
                                     String profileId = entry.getKey();
                                     GeoPoint point = entry.getValue();
