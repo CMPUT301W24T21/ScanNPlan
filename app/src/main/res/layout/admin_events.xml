@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="List of Events"
-            android:background="#141414"
+            android:textColor="@color/OffWhite"
+            android:background="@color/black"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
@@ -37,7 +38,7 @@
             android:id="@+id/list_events_admin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:divider="#141414"
+            android:divider="@color/black"
             android:dividerHeight="20sp"
             app:layout_constraintTop_toBottomOf="@id/list_events_text"
             app:layout_constraintBottom_toBottomOf="parent" />
