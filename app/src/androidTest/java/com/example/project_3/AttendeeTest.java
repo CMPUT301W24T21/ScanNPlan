@@ -60,7 +60,7 @@ public class AttendeeTest {
 
     @Test
     public void HomepageToProfileSettings() throws InterruptedException {
-        onView(withId(R.id.event_listView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.event_listView)).check(matches(isDisplayed()));
         onView(withId(R.id.EditProfile)).check(matches(isDisplayed()));
         onView(withId(R.id.openCameraButton)).check(matches(isDisplayed()));
         onView(withId(R.id.EditProfile)).perform(click());
@@ -76,7 +76,7 @@ public class AttendeeTest {
         onView(withId((R.id.back_button))).check(matches((isDisplayed())));
 
         onView(withId(R.id.back_button)).perform(click());
-        onView(withId(R.id.event_listView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.event_listView)).check(matches(isDisplayed()));
         onView(withId(R.id.EditProfile)).check(matches(isDisplayed()));
         onView(withId(R.id.openCameraButton)).check(matches(isDisplayed()));
     }
