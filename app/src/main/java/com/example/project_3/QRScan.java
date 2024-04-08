@@ -232,6 +232,11 @@ public class QRScan extends AppCompatActivity implements View.OnClickListener {
      * @param eventDoc The Firestore document reference for the event.
      */
     private void getLocation(DocumentReference eventDoc){
+        //https://stackoverflow.com/a/9873351
+        //https://stackoverflow.com/questions/9873190/my-current-location-always-returns-null-how-can-i-fix-this
+        //Used this stack overflow post and answer to figure out how to use Location providers and how to use current location.
+        //previously I was using LastKnownLocation() but it was not working since it needs access to location access of other apps.
+        //this method was successful.
         if (!isLocationUpdated) {
             String location_context = Context.LOCATION_SERVICE;
             final LocationManager locationManager = (LocationManager) getBaseContext().getSystemService(location_context);

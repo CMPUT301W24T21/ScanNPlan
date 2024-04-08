@@ -14,13 +14,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/admin_homepage_rest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_vertical1">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/manage_events"
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:text="Manage Events"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
@@ -38,7 +42,10 @@
             app:layout_constraintBottom_toTopOf="@id/manage_event_images"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Manage Profiles">
+            android:text="Manage Profiles"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -50,7 +57,10 @@
             app:layout_constraintBottom_toTopOf="@id/manage_profile_images"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Manage Event Images">
+            android:text="Manage Event Images"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -62,7 +72,10 @@
             app:layout_constraintBottom_toTopOf="@id/Logout_button_admin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Manage Profile Images">
+            android:text="Manage Profile Images"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -74,7 +87,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Logout">
+            android:text="Logout"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige">
 
         </com.google.android.material.button.MaterialButton>
     </androidx.constraintlayout.widget.ConstraintLayout>

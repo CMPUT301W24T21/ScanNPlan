@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_vertical1">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/admin_profiles_images_fragment_container"
         android:layout_width="match_parent"
@@ -16,40 +17,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/global_top_appbar"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/list_of_Profile_Images"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="List of Profile Images"
-        android:textAlignment="center"
-        android:background="#141414"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/images_topbar"
-        tools:ignore="MissingConstraints">
+        <include
+            android:id="@+id/include2"
+            layout="@layout/global_top_appbar" />
 
-    </com.google.android.material.textview.MaterialTextView>
+        <GridView
+            android:id="@+id/grid_Profile_images_admin"
+            android:layout_width="407dp"
+            android:layout_height="509dp"
+            android:layout_marginBottom="47dp"
+            android:numColumns="2"
+            app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include2"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints">
 
-    <GridView
-        android:id="@+id/grid_Profile_images_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numColumns="2"
-        app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_of_Profile_Images"
-        tools:ignore="MissingConstraints">
+        </GridView>
 
-    </GridView>
-
-    <com.google.android.material.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_image_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Delete Image"
+        android:text="Select image to view profile"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />

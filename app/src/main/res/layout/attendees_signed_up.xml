@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/attendee_list_layout">
+    android:id="@+id/attendee_list_layout"
+    android:background="@drawable/gradient_vertical1">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/organizer_events_fragment_container"
         android:layout_width="match_parent"
@@ -45,6 +46,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:hint="Max Attendees Limit"
+            android:textColor="@color/OffWhite"
             android:inputType="number"
             android:maxLength="3" />
 
@@ -56,7 +58,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_alignParentEnd="true"
-            android:text="Confirm" />
+            android:text="Confirm"
+            app:backgroundTint="@color/Beige"/>
 
         <ListView
             android:id="@+id/attendees_list_view"

@@ -1,8 +1,6 @@
 package com.example.project_3;
 
-/**
- * This activity displays the list of attendees who have checked in to a particular event.
- */
+
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -57,7 +55,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+/**
+ * This activity displays the list of attendees who have checked in to a particular event.
+ */
 public class AttendeesCheckedInActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference eventsRef;
@@ -266,6 +266,14 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             eventListener.remove();
         }
     }
+
+    /**
+     * Sends a notification to the organizer about the specified event.
+     *
+     * @param title   The title of the notification.
+     * @param message The message body of the notification.
+     */
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void sendNotification(String title, String message) {
@@ -312,6 +320,13 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Makes an API call to send a notification using Firebase Cloud Messaging (FCM).
+     *
+     * @param jsonObject The JSON object containing notification data.
+     */
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void callApi(JSONObject jsonObject){

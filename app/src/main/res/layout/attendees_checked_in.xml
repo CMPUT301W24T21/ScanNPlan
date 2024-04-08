@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/attendee_list_layout">
+    android:id="@+id/attendee_list_layout"
+    android:background="@drawable/gradient_vertical1">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/organizer_events_fragment_container"
         android:layout_width="match_parent"

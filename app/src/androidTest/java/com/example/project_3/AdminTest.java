@@ -41,12 +41,27 @@ public class AdminTest {
         onView(withId(R.id.list_events_text)).check(doesNotExist());
     }
     @Test
-    public void testAdminSwapImages(){
+    public void testAdminSwapProfileImages(){
         onView(withId(R.id.manage_events)).check(matches(isDisplayed()));
         onView(withId(R.id.manage_profiles)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_profile_images)).perform(click());
+        onView(withId(R.id.rest_profiles_images_list)).check(matches(isDisplayed()));
+    }
+    @Test
+    public void testAdminSwapEventImages(){
+        onView(withId(R.id.manage_events)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_profiles)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_event_images)).perform(click());
+        onView(withId(R.id.grid_Event_images_admin)).check(matches(isDisplayed()));
         onView(withId(R.id.back_button)).perform(click());
     }
-    
+    @Test
+    public void testAdminSwapEventImagesDetails(){
+        onView(withId(R.id.manage_events)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_profiles)).check(matches(isDisplayed()));
+        onView(withId(R.id.manage_event_images)).perform(click());
+        onView(withId(R.id.grid_Event_images_admin)).check(matches(isDisplayed()));
+    }
 
 
 

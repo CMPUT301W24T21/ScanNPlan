@@ -9,7 +9,7 @@ Gives the activity event details
     android:id="@+id/event_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/gradient_vertical1"
     tools:layout_editor_absoluteX="-2dp"
     tools:layout_editor_absoluteY="0dp">
     <androidx.fragment.app.FragmentContainerView
@@ -25,7 +25,7 @@ Gives the activity event details
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#26202C"
+        android:background="@color/DarkerSalmon"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@ Gives the activity event details
         android:gravity="center_vertical|center_horizontal"
         android:text="Event Name"
         android:textSize="24sp"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintEnd_toStartOf="@+id/floatingEditButton"
         app:layout_constraintHorizontal_bias="0.242"
@@ -73,6 +74,9 @@ Gives the activity event details
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         android:text="Back"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -80,49 +84,59 @@ Gives the activity event details
 
         <Button
             android:id="@+id/map_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="125dp"
+            android:layout_height="65dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="4dp"
-            android:text="    Map   "
+            android:text="Map"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
             app:layout_constraintBottom_toBottomOf="@+id/check_ins"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/check_ins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="125dp"
+            android:layout_height="65dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:text="Check Ins"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/map_button"
             app:layout_constraintStart_toEndOf="@+id/sign_ups" />
 
         <Button
             android:id="@+id/sign_ups"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="125dp"
+            android:layout_height="65dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:text="Sign Ups "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-        android:id="@+id/date_event"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:hint="Date:"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/targetImage" />
+            android:id="@+id/date_event"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:hint="Date:"
+            android:textColor="@color/OffWhite"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/targetImage" />
 
     <TextView
         android:id="@+id/location_event"
@@ -132,6 +146,7 @@ Gives the activity event details
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:hint="Location:"
+        android:textColor="@color/OffWhite"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,23 +160,25 @@ Gives the activity event details
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:hint="Details:"
+        android:textColor="@color/OffWhite"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_event" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingEditButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:clickable="true"
-        android:contentDescription="Edit"
-        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
-        app:layout_constraintTop_toTopOf="@+id/materialToolbar"
-        app:srcCompat="@drawable/baseline_edit_24" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:contentDescription="Edit"
+            app:backgroundTint="@color/Salmon"
+            app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+            app:layout_constraintEnd_toEndOf="@+id/materialToolbar"
+            app:layout_constraintTop_toTopOf="@+id/materialToolbar"
+            app:srcCompat="@drawable/baseline_edit_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

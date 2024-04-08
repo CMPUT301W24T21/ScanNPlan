@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_vertical1">
 
     <include
         android:id="@+id/appbar"
@@ -26,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
+        android:textColor="@color/OffWhite"
         style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_time"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
+        android:textColor="@color/OffWhite"
         style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_location"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
+        android:textColor="@color/OffWhite"
         style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toTopOf="@+id/event_details"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Details"
+        android:textColor="@color/OffWhite"
         style="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

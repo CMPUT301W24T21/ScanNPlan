@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_vertical1">
 
     <include
         android:id="@+id/appbar"
@@ -26,6 +27,8 @@
         android:layout_height="60dp"
         android:layout_marginBottom="37dp"
         android:text="Delete Image"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_name_editText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile name"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/homepage_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Homepage"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/contact_info_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact info"
+        android:textColor="@color/OffWhite"
         app:layout_constraintBottom_toTopOf="@+id/delete_profile_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Profile"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/Beige"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

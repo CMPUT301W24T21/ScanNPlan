@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_main_layout"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/gradient_vertical1">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/notif_button"
@@ -24,6 +25,7 @@
         app:elevation="6dp"
         app:fabSize="normal"
         app:maxImageSize="24dp"
+        app:backgroundTint="@color/DarkSalmon"
         app:srcCompat="@drawable/baseline_notifications_24" />
 
     <ListView
@@ -45,15 +47,17 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/DarkSalmon"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#26202C"
+        android:background="@color/DarkerSalmon"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        />
 
     <Button
         android:id="@+id/button"
@@ -61,7 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:text="Back" />
+        android:text="Back"
+        app:backgroundTint="@color/Beige"/>
 
     <TextView
         android:id="@+id/textView"

@@ -122,15 +122,15 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         });
 
-        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_green_100)));
-
-        checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        checkIns.setTextColor(getResources().getColor(R.color.white));
-        map.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        map.setTextColor(getResources().getColor(R.color.white));
-
-        signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
-        signUps.setTextColor(getResources().getColor(R.color.white));
+        editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Salmon)));
+//
+//        checkIns.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+//        checkIns.setTextColor(getResources().getColor(R.color.white));
+//        map.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+//        map.setTextColor(getResources().getColor(R.color.white));
+//
+//        signUps.setBackgroundColor(getResources().getColor(R.color.light_blue_100));
+//        signUps.setTextColor(getResources().getColor(R.color.white));
 
         // Button to view event location on map
         map.setOnClickListener(new View.OnClickListener() {

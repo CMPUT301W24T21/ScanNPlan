@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_vertical1">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/admin_events_images_fragment_container"
         android:layout_width="match_parent"
@@ -16,42 +17,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/global_top_appbar"/>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/list_of_Event_Images"
-        style="@style/MaterialAlertDialog.Material3.Body.Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="List of Event Images"
-        android:textAlignment="center"
-        android:background="#141414"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/images_topbar"
-        tools:ignore="MissingConstraints">
 
-    </com.google.android.material.textview.MaterialTextView>
+        <include
+            android:id="@+id/include"
+            layout="@layout/global_top_appbar" />
 
-    <GridView
-        android:id="@+id/grid_Event_images_admin"
-        android:layout_width="401dp"
-        android:layout_height="570dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:numColumns="2"
-        app:layout_constraintBottom_toTopOf="@+id/delete_image_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_of_Event_Images"
-        >
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/list_of_Event_Images"
+            style="@style/MaterialAlertDialog.Material3.Body.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="160dp"
+            android:background="@color/DarkerSalmon"
+            android:text="List of Event Images"
+            android:textColor="@color/OffWhite"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/grid_Event_images_admin"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp">
 
-    </GridView>
+        </com.google.android.material.textview.MaterialTextView>
 
-    <com.google.android.material.button.MaterialButton
+        <GridView
+            android:id="@+id/grid_Event_images_admin"
+            android:layout_width="408dp"
+            android:layout_height="564dp"
+            android:layout_marginTop="107dp"
+            android:layout_marginBottom="60dp"
+            android:numColumns="2"
+            app:layout_constraintBottom_toBottomOf="@+id/delete_image_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/include"
+            app:layout_constraintVertical_bias="0.0">
+
+        </GridView>
+
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_image_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Delete Image"
+        android:text="Select image to view event"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/Beige"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
