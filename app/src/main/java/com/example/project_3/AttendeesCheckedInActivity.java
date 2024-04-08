@@ -266,6 +266,14 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             eventListener.remove();
         }
     }
+
+    /**
+     * Sends a notification to the organizer about the specified event.
+     *
+     * @param title   The title of the notification.
+     * @param message The message body of the notification.
+     */
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void sendNotification(String title, String message) {
@@ -312,6 +320,13 @@ public class AttendeesCheckedInActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Makes an API call to send a notification using Firebase Cloud Messaging (FCM).
+     *
+     * @param jsonObject The JSON object containing notification data.
+     */
+
     // Alphabet Inc., 2024, YouTube, https://www.youtube.com/watch?v=YjNZO90yVsE&t=1s
     // describes how to use Firebase Messaging and FCM
     void callApi(JSONObject jsonObject){
