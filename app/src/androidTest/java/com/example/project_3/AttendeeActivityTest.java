@@ -134,6 +134,9 @@ public class AttendeeActivityTest {
         });
     }
 
+    /**
+     * Test case to check if the Firebase profile information matches the displayed data.
+     */
     @Test
     public void testFirebaseProfileInformationMatches() {
         ActivityScenario<AttendeeActivity> scenario = ActivityScenario.launch(AttendeeActivity.class);
@@ -178,60 +181,15 @@ public class AttendeeActivityTest {
         });
     }
 
-//    @Test
-//    public void testFirebaseDataMatchesDisplayedDataBrowseEvents() {
-//        ActivityScenario<AttendeeActivity> scenario = ActivityScenario.launch(AttendeeActivity.class);
-//        scenario.onActivity(activity -> {
-//            // Navigate to the Browse Events page
-//            onView(withId(R.id.BrowseEventsButton)).perform(click());
-//
-//            // Get the count of items displayed on the Browse Events page
-//            ListView eventListView = activity.findViewById(R.id.event_list);
-//            int displayedItemCount = eventListView.getCount();
-//
-//            // Close the current activity to prevent interference with other tests
-//            scenario.close();
-//
-//            // Perform Firebase operations in a new ActivityScenario
-//            ActivityScenario<AttendeeActivity> firebaseScenario = ActivityScenario.launch(AttendeeActivity.class);
-//            firebaseScenario.onActivity(firebaseActivity -> {
-//                // Assuming you have a Firebase database reference
-//                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("your_firebase_path");
-//
-//                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        // Get the count of items in Firebase
-//                        long firebaseItemCount = dataSnapshot.getChildrenCount();
-//
-//                        // Compare the counts
-//                        if (firebaseItemCount == displayedItemCount) {
-//                            Log.d("FirebaseTest", "Counts match: " + firebaseItemCount);
-//                        } else {
-//                            Log.e("FirebaseTest", "Counts do not match. Firebase count: " + firebaseItemCount + ", Displayed count: " + displayedItemCount);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        Log.e("FirebaseTest", "Firebase data fetch failed: " + databaseError.getMessage());
-//                    }
-//                });
-//            });
-//
-//            // Close the Firebase scenario
-//            firebaseScenario.close();
-//        });
-//    }
 
-
-
-
+    /**
+     * Test case to check if the count of items in Firebase matches the count of displayed items.
+     */
     @Test
     public void z_testFirebaseDataMatchesDisplayedData() {
         ActivityScenario<AttendeeActivity> scenario = ActivityScenario.launch(AttendeeActivity.class);
         scenario.onActivity(activity -> {
-            // Assuming you have a Firebase database reference
+
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("your_firebase_path");
 
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -240,7 +198,6 @@ public class AttendeeActivityTest {
                     // Get the count of items in Firebase
                     long firebaseItemCount = dataSnapshot.getChildrenCount();
 
-                    // Navigate to the Browse Events page
                     onView(withId(R.id.BrowseEventsButton)).perform(click());
 
                     // Get the count of items displayed on the Browse Events page
@@ -257,7 +214,6 @@ public class AttendeeActivityTest {
                     // Navigate back to the previous page
                     pressBack();
 
-                    // Verify that we are back on the original page
                     onView(withId(R.id.BrowseEventsButton)).check(matches(isDisplayed()));
                 }
 
