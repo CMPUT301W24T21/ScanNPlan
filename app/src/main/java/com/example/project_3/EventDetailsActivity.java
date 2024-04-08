@@ -27,7 +27,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -48,6 +50,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     private String link;
     private String all;
     private Boolean promoChecker;
+    private ListenerRegistration eventDetailsListener;
+    private static final String TAG = "EventDetailsActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         imageUri = getIntent().getStringExtra("imageUri");
         link = getIntent().getStringExtra("link");
 
-        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null ) {
+        if (eventName == null || eventLocation == null || eventDate == null || eventTime == null) {
             // Handle missing event details
             Toast.makeText(this, "Event details are missing.", Toast.LENGTH_SHORT).show();
             finish();
@@ -74,30 +79,25 @@ public class EventDetailsActivity extends AppCompatActivity {
         TextView eventTextView = findViewById(R.id.event_name_text_view);
         eventTextView.setText(eventName);
 
-
         TextView eventDateView = findViewById(R.id.date_event);
-        eventDateView.setText("Date: " + eventDate);
-
+        eventDateView.setText(eventDate);
         TextView eventLocationView = findViewById(R.id.location_event);
-        eventLocationView.setText("Place: " + eventLocation);
+        eventLocationView.setText(eventLocation);
         Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), OrganizerActivity.class);
                 startActivity(intent);
-
             }
         });
 
         TextView eventDetailsView = findViewById(R.id.details_event);
-        eventDetailsView.setText("Notes: " + eventDetails);
-
+        eventDetailsView.setText(eventDetails);
 
         FloatingActionButton editEventButton = findViewById(R.id.floatingEditButton);
 
         editEventButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_orange_100)));
-
 
 
         Button map = findViewById(R.id.map_button);
@@ -126,15 +126,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         signUps.setTextColor(getResources().getColor(R.color.white));
 
         map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventMapFragment map = new EventMapFragment(eventName);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
-                        .commit();
-                findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
-                }
-            }
+                                   @Override
+                                   public void onClick(View v) {
+                                       EventMapFragment map = new EventMapFragment(eventName);
+                                       getSupportFragmentManager().beginTransaction()
+                                               .replace(R.id.organizer_events_fragment_container, map).addToBackStack(null)
+                                               .commit();
+                                       findViewById(R.id.rest_event_details).setVisibility(View.INVISIBLE);
+                                   }
+                               }
         );
 
 
@@ -207,6 +207,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                     }
 
                 });
-    }
 
+    }
 }
