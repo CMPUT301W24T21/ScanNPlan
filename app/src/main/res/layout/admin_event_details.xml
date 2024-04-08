@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/event_poster"
-        android:layout_width="256dp"
-        android:layout_height="182dp"
+        android:layout_width="284dp"
+        android:layout_height="231dp"
         app:layout_constraintBottom_toTopOf="@+id/event_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -27,22 +27,11 @@
         android:layout_marginBottom="37dp"
         android:text="Delete Image"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/event_name"
+        app:layout_constraintBottom_toTopOf="@+id/event_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="parent" />
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/event_name"
-        style="@style/TextAppearance.Material3.DisplaySmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/event_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_poster" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_date"
@@ -54,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_name" />
+        app:layout_constraintTop_toBottomOf="@+id/event_poster" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/event_time"
@@ -102,39 +91,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_details" />
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#141414"
-        app:layout_constraintTop_toBottomOf="@+id/event_name" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#141414"
-        app:layout_constraintTop_toBottomOf="@+id/event_date" />
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#141414"
-        app:layout_constraintTop_toBottomOf="@+id/event_time" />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#141414"
-        app:layout_constraintTop_toBottomOf="@+id/event_location" />
-
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#141414"
         app:layout_constraintTop_toBottomOf="@+id/event_details" />
 </androidx.constraintlayout.widget.ConstraintLayout>
