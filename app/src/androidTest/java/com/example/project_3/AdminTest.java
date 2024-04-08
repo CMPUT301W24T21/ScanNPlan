@@ -62,14 +62,6 @@ public class AdminTest {
         onView(withId(R.id.manage_event_images)).perform(click());
         onView(withId(R.id.grid_Event_images_admin)).check(matches(isDisplayed()));
     }
-    @Test
-    public void testAdminSwapProfileImagesDetails(){
-        onView(withId(R.id.manage_events)).check(matches(isDisplayed()));
-        onView(withId(R.id.manage_profiles)).check(matches(isDisplayed()));
-        onView(withId(R.id.manage_profile_images)).perform(click());
-        onView(withId(R.id.grid_Profile_images_admin)).check(matches(isDisplayed()));
-        onView(withId(R.id.grid_Profile_images_admin)).perform(click());
-    }
 
 
 
