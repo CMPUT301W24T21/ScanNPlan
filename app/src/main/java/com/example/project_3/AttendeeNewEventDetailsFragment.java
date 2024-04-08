@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -92,6 +93,7 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
         Context context = view.getContext();
         //Universal appbar and the back button as well
         TextView appBar = view.findViewById(R.id.appbar_title);
+        disableAllTextInputEditText(view);
 
         db = FirebaseFirestore.getInstance();
 
@@ -256,5 +258,16 @@ public class AttendeeNewEventDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void disableAllTextInputEditText(View view) {
+        if (view instanceof TextInputEditText) {
+            ((TextInputEditText) view).setEnabled(false);
+        } else if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                disableAllTextInputEditText(viewGroup.getChildAt(i));
+            }
+        }
     }
 }
