@@ -109,7 +109,8 @@ public class AttendeeEditProfileFragment extends Fragment {
             }
         });
 
-        profile_image.setOnClickListener(new View.OnClickListener() {
+        MaterialButton uploadNew = view.findViewById(R.id.upload_new_button);
+        uploadNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -213,7 +214,28 @@ public class AttendeeEditProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("Firestore", "Profile image deleted successfully");
+
+                                // Generate a new placeholder image using the profile name
+                                String profileName = nameTextView.getText().toString();
+                                String placeholderBase64Image = generatePlaceholderImage(profileName);
+                                Bitmap placeholderBitmap = decodeImage(placeholderBase64Image);
                                 profile_image.setImageBitmap(placeholderBitmap);
+
+                                // Update the profile document with the new placeholder image
+                                db.collection("Profiles").document(profileID)
+                                        .update("profile_image", placeholderBase64Image)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("Firestore", "Placeholder image saved successfully");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("Firestore", "Error saving placeholder image", e);
+                                            }
+                                        });
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
