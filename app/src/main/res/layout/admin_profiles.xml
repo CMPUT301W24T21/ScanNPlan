@@ -13,45 +13,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rest_profiles_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/global_top_appbar"/>
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/list_profiles_text"
-            style="@style/MaterialAlertDialog.Material3.Body.Text"
+        <LinearLayout
+            android:id="@+id/rest_profiles_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:text="List of Profiles"
-            android:textAlignment="center"
-            android:textColor="@color/OffWhite"
-            android:textSize="20sp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            app:layout_constraintTop_toBottomOf="@+id/appbar">
-
-        </com.google.android.material.textview.MaterialTextView>
+           <include layout="@layout/global_top_appbar" />
 
 
-        <ListView
-            android:id="@+id/list_profiles_admin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/list_profiles_text"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/list_profiles_text"
+                style="@style/MaterialAlertDialog.Material3.Body.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="List of Profiles"
+                android:textAlignment="center"
+                android:textColor="@color/OffWhite"
+                android:textSize="20sp" />
 
-
-        </ListView>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+            <ListView
+                android:id="@+id/list_profiles_admin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
