@@ -39,7 +39,7 @@ public class BrowseProfileImagesFragment extends Fragment {
     private FirebaseFirestore db;
     private CollectionReference profilesRef;
     private ArrayList<Profile> profilesImages;
-    private GridProfileImagesArrayAdapter imagesAdapter;
+    private ProfileArrayAdapter imagesAdapter;
     private String profileID;
     /**
      * Default constructor, initializes new instance of the fragment
@@ -84,7 +84,7 @@ public class BrowseProfileImagesFragment extends Fragment {
         profilesRef = db.collection("Profiles");
         GridImages = view.findViewById(R.id.grid_Profile_images_admin);
         profilesImages = new ArrayList<>();
-        imagesAdapter = new GridProfileImagesArrayAdapter(view.getContext(), profilesImages);
+        imagesAdapter = new ProfileArrayAdapter(view.getContext(), profilesImages);
         GridImages.setAdapter(imagesAdapter);
         //updates the UI with the image data
 

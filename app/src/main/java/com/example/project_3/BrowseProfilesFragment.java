@@ -48,7 +48,7 @@ public class BrowseProfilesFragment extends Fragment {
     private CollectionReference profilesRef;
     private ArrayList<Profile> profilesNames;
 
-    private ListProfileArrayAdapter profileArrayAdapter;
+    private ProfileArrayAdapter profileArrayAdapter;
     /**
      * Default constructor for the browse profile fragment, initializes a new instance
      */
@@ -87,7 +87,7 @@ public class BrowseProfilesFragment extends Fragment {
         profilesRef = db.collection("Profiles");
         listProfiles = view.findViewById(R.id.list_profiles_admin);
         profilesNames = new ArrayList<>();
-        profileArrayAdapter = new ListProfileArrayAdapter(view.getContext(), profilesNames);
+        profileArrayAdapter = new ProfileArrayAdapter(view.getContext(), profilesNames);
         listProfiles.setAdapter(profileArrayAdapter);
         //updates UI with the profiles data
         profilesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
